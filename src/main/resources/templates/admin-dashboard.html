@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<!-- হেডার -->
+<header>
+    <h2>Admin Control Panel</h2>
+    <ul>
+        <li><a href="/admin">Dashboard Home</a></li>
+        <li><a href="/">View Live Site</a></li>
+    </ul>
+</header>
+
+<hr>
+
+<h1>Product Management</h1>
+<p>Manage your inventory here.</p>
+
+<!-- নতুন প্রোডাক্ট অ্যাড করার বাটন -->
+<p>
+    <a href="/prodF">
+        <button type="button">+ Add New Product</button>
+    </a>
+</p>
+
+<hr>
+
+<!-- অল প্রোডাক্টস টেবিল (স্ট্যাটিক ডামি ডাটা) -->
+<h3>All Registered Products</h3>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price ($)</th>
+        <th>Stock</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- ডামি প্রোডাক্ট ১ -->
+    <tr th:each="cattt : ${catalogue}" >
+        <td th:text="${cattt.id}"></td>
+        <td>
+            <img th:text="${cattt.imageUrl}" alt="Product Image" width="60" height="60">
+        </td>
+        <td th:text="${cattt.name}" ></td>
+        <td th:text="${cattt.category}"></td>
+        <td th:text="${cattt.price}"></td>
+        <td th:text="${cattt.stock}"></td>
+        <td>
+            <a href="/prodF">
+                <button type="button">Edit</button>
+            </a>
+            <a href="/prodF" onclick="return confirm('Are you sure?');">
+                <button type="button">Delete</button>
+            </a>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+<hr>
+
+<footer>
+    <p>Admin Panel - Pure Static HTML Version</p>
+</footer>
+
+</body>
+</html>
