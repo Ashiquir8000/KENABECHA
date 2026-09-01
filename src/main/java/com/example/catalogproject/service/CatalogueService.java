@@ -42,6 +42,17 @@ public class CatalogueService {
     }
 
     public User saveUserInfo(User user) {
+        if (user.getUserName() != null) user.setUserName(user.getUserName().trim());
+        if (user.getUserPassword() != null) user.setUserPassword(user.getUserPassword().trim());
+        if (user.getRole() == null || user.getRole().isEmpty()) user.setRole("ROLE_USER");
+
+        if (user.getMobileNumbers() != null) {
+            List<String> validNumbers = user.getMobileNumbers().stream()
+                    .filter(num -> num != null && !num.trim().isEmpty())
+                    .map(String::trim)
+                    .toList();
+            user.setMobileNumbers(validNumbers);
+        }
         return userRepository.save(user);
     }
 
