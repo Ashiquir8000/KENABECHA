@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - KENABECHA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --ruby-red: #9B111E;
+            --text-dark: #2B1810;
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --confirm-green: #117822; /* আপনার দেওয়া সবুজ বাটনের প্রিমিয়াম শেড */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            padding-top: 120px; /* Fixed Header এর জন্য জায়গা ছাড়া হয়েছে */
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Glassmorphic Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            box-sizing: border-box;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        header h2 {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            color: var(--ruby-red);
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Main Section & Glass Card */
+        .checkout-container {
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            padding: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(155, 17, 30, 0.12);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--ruby-red);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(155, 17, 30, 0.15);
+            padding-bottom: 15px;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.15);
+            margin: 30px 0;
+        }
+
+        /* Order Details Styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.1rem;
+        }
+
+        ul li {
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .total-amount {
+            color: var(--ruby-red);
+            font-size: 1.8rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Form Styling */
+        label {
+            font-weight: 600;
+            font-size: 1.05rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.7);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--ruby-red);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 10px rgba(155, 17, 30, 0.15);
+        }
+
+        .payment-info {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin: 25px 0;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Button Styling */
+        button[type="submit"] {
+            width: 100%;
+            background-color: var(--confirm-green);
+            color: white;
+            padding: 16px 25px;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(17, 120, 34, 0.3);
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0d5c1a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(17, 120, 34, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2><i class="fa-solid fa-crown"></i> KENABECHA E-Commerce</h2>
+</header>
+
+<section class="checkout-container">
+    <h1><i class="fa-solid fa-file-invoice-dollar"></i> Checkout / Order Summary</h1>
+
+    <h3><i class="fa-solid fa-box-open"></i> Order Details:</h3>
+    <ul>
+        <li th:each="item : ${cartItems}">
+            <span>
+                <i class="fa-solid fa-check" style="color: var(--confirm-green); margin-right: 8px;"></i>
+                <span th:text="${item.product.name}"></span> -
+                <span th:text="${item.quantity} + ' pcs'"></span>
+            </span>
+            <strong>(<span th:text="'৳ ' + (${item.product.price * item.quantity}) + ' BDT'"></span>)</strong>
+        </li>
+    </ul>
+
+    <div class="total-section">
+        <h2>Total Payable:</h2>
+        <span class="total-amount" th:text="'৳ ' + ${totalAmount} + ' BDT'"></span>
+    </div>
+
+    <hr>
+
+    <h3><i class="fa-solid fa-truck-fast"></i> Shipping Information:</h3>
+    <form th:action="@{/place-order}" method="post">
+        <p>
+            <label><i class="fa-solid fa-location-dot"></i> Confirm Delivery Address:</label><br>
+            <textarea name="shippingAddress" rows="4" required
+                      th:text="${user.address.streetAddress + ', ' + user.address.city + ', House No: ' + user.address.houseNo + ', Post Code: ' + user.address.postCode}"></textarea>
+        </p>
+
+        <p class="payment-info">
+            <i class="fa-solid fa-hand-holding-dollar" style="color: var(--ruby-red);"></i>
+            <strong>Payment Method:</strong> Cash on Delivery (COD)
+        </p>
+
+        <button type="submit">
+            <i class="fa-solid fa-circle-check"></i> Confirm Order
+        </button>
+    </form>
+</section>
+
+<footer>
+    <p>KENABECHA Project - 2026</p>
+</footer>
+
+</body>
+</html>

@@ -2,77 +2,1127 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - KENABECHA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --ruby-red: #9B111E;
+            --text-dark: #2B1810;
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+            color: var(--text-dark);
+            display: flex;
+        }
+
+        /* ---------------------------------
+           Glassmorphic Sidebar
+           --------------------------------- */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 0 20px 30px 20px;
+            border-bottom: 1px solid rgba(155, 17, 30, 0.15);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header i {
+            font-size: 3rem;
+            color: var(--ruby-red);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 3px 5px rgba(155, 17, 30, 0.3));
+        }
+
+        .sidebar-header h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            margin: 0;
+            font-weight: 900;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+            padding: 0 20px;
+        }
+
+        .sidebar-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--ruby-red);
+            color: white;
+            box-shadow: 0 5px 15px rgba(155, 17, 30, 0.2);
+            transform: translateX(5px);
+        }
+
+        /* ---------------------------------
+           Main Content Area (Vertical Flow)
+           --------------------------------- */
+        .main-content {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            padding: 40px;
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        /* Dashboard Banner */
+        .dashboard-banner {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background-image: url('/images/back1.jpg');
+            background-size: cover;
+            background-position: center 40%;
+            padding: 50px 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dashboard-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(155, 17, 30, 0.85) 0%, rgba(43, 24, 16, 0.7) 100%);
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+
+        .banner-text {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .banner-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .banner-text p {
+            font-size: 1.05rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .btn-add-product {
+            position: relative;
+            z-index: 2;
+            background: #fff;
+            color: var(--ruby-red);
+            text-decoration: none;
+            padding: 14px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-add-product:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            background: #fdfdfd;
+        }
+
+        /* Quick Analytics Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: rgba(155, 17, 30, 0.1);
+            color: var(--ruby-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+        }
+
+        .stat-info h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .stat-info h2 {
+            margin: 5px 0 0 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+        }
+
+        /* ---------------------------------
+           Dedicated Central Staff Intercom Section
+           --------------------------------- */
+        .intercom-section {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: var(--ruby-red);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid rgba(155, 17, 30, 0.15);
+            padding-bottom: 12px;
+        }
+
+        .intercom-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            height: 420px;
+        }
+
+        .staff-list-pane {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 18px;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .staff-list-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #555;
+            text-transform: uppercase;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .staff-input-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .staff-input-group input {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(155, 17, 30, 0.2);
+            outline: none;
+            background: #fff;
+            font-size: 0.85rem;
+        }
+
+        .staff-input-group button {
+            background: var(--ruby-red);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .chat-console-pane {
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 18px;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-console-header {
+            background: rgba(155, 17, 30, 0.08);
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--ruby-red);
+            border-bottom: 1px solid rgba(155, 17, 30, 0.1);
+        }
+
+        .chat-console-body {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-msg {
+            padding: 10px 16px;
+            border-radius: 15px;
+            max-width: 75%;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .msg-mine {
+            background: var(--ruby-red);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .msg-other {
+            background: #fff;
+            color: var(--text-dark);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .msg-sender {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            opacity: 0.8;
+        }
+
+        .chat-console-footer {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-console-input {
+            flex-grow: 1;
+            padding: 12px 18px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 25px;
+            outline: none;
+            background: #fff;
+            font-size: 0.95rem;
+        }
+
+        .chat-console-send {
+            background: var(--ruby-red);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+        .chat-console-send:hover { transform: scale(1.05); }
+
+        /* ---------------------------------
+           Search & Filter Control Bar
+           --------------------------------- */
+        .filter-container {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 42px;
+            border-radius: 12px;
+            border: 1px solid rgba(155, 17, 30, 0.2);
+            background: rgba(255, 255, 255, 0.7);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            background: #fff;
+            border-color: var(--ruby-red);
+            box-shadow: 0 0 10px rgba(155, 17, 30, 0.15);
+        }
+
+        .filter-select {
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(155, 17, 30, 0.2);
+            background: rgba(255, 255, 255, 0.7);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-select:focus {
+            background: #fff;
+            border-color: var(--ruby-red);
+        }
+
+        .btn-reset-filters {
+            background: rgba(0, 0, 0, 0.08);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-reset-filters:hover {
+            background: rgba(155, 17, 30, 0.1);
+            color: var(--ruby-red);
+        }
+
+        .no-records-row {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* ---------------------------------
+           Glassmorphic Data Table
+           --------------------------------- */
+        .table-container {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(155, 17, 30, 0.15);
+            padding-bottom: 15px;
+        }
+
+        .table-header h3 {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--ruby-red);
+        }
+
+        .btn-trash-gateway {
+            background: rgba(155, 17, 30, 0.15);
+            color: var(--ruby-red);
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            border: 1px solid rgba(155, 17, 30, 0.2);
+        }
+
+        .btn-trash-gateway:hover {
+            background: var(--ruby-red);
+            color: white;
+            box-shadow: 0 5px 15px rgba(155, 17, 30, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            color: #555;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255,255,255,0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.3s;
+            vertical-align: middle;
+        }
+
+        td:first-child {
+            border-left: 1px solid rgba(255,255,255,0.8);
+            border-radius: 15px 0 0 15px;
+            font-weight: 600;
+        }
+        td:last-child {
+            border-right: 1px solid rgba(255,255,255,0.8);
+            border-radius: 0 15px 15px 0;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-name {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-category { background: rgba(155, 17, 30, 0.1); color: var(--ruby-red); border: 1px solid rgba(155, 17, 30, 0.2); }
+        .badge-stock { background: rgba(46, 125, 50, 0.1); color: #2e7d32; border: 1px solid rgba(46, 125, 50, 0.2); }
+        .badge-low-stock { background: rgba(255, 152, 0, 0.1); color: #e65100; border: 1px solid rgba(255, 152, 0, 0.2); }
+        .badge-out-stock { background: rgba(211, 47, 47, 0.1); color: #d32f2f; border: 1px solid rgba(211, 47, 47, 0.2); }
+        .badge-cart { background: rgba(255, 152, 0, 0.1); color: #e65100; border: 1px solid rgba(255, 152, 0, 0.2); }
+
+        .action-btns { display: flex; gap: 10px; }
+        .btn-action {
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+        .btn-edit { background: rgba(33, 150, 243, 0.15); color: #1976D2; }
+        .btn-edit:hover { background: #1976D2; color: white; }
+        .btn-delete { background: rgba(211, 47, 47, 0.15); color: #d32f2f; }
+        .btn-delete:hover { background: #d32f2f; color: white; }
+
+        /* ---------------------------------
+           Soft Delete Modal (Glassmorphic)
+           --------------------------------- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 1000; justify-content: center; align-items: center;
+        }
+
+        .modal-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 35px; border-radius: 20px; width: 450px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            border-top: 5px solid var(--ruby-red);
+        }
+
+        .modal-header { font-size: 1.3rem; font-family: 'Cinzel', serif; font-weight: 900; color: var(--ruby-red); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        .modal-product-info {
+            display: flex; gap: 15px; background: rgba(0,0,0,0.04);
+            padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .modal-product-info img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; }
+        .modal-stats { margin-top: 8px; font-size: 0.9rem; color: #555; }
+        .modal-notice {
+            font-size: 0.85rem; color: #666; background: rgba(255, 193, 7, 0.15);
+            padding: 15px; border-left: 4px solid #ffc107; margin-bottom: 25px; border-radius: 5px; line-height: 1.5;
+        }
+
+        .modal-actions { display: flex; justify-content: flex-end; gap: 12px; }
+        .btn-cancel { background: #e0e0e0; color: #333; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif;}
+        .btn-confirm { background: var(--ruby-red); color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; font-family: 'Poppins', sans-serif;}
+
+        footer { margin-top: 20px; text-align: center; padding: 20px; color: #666; font-size: 0.95rem; font-weight: 500; }
+        hr { display: none; }
+    </style>
 </head>
 <body>
 
-<!-- হেডার -->
-<header>
-    <h2>Admin Control Panel</h2>
-    <ul>
-        <li><a href="/admin">Dashboard Home</a></li>
-        <li><a href="/">View Live Site</a></li>
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <i class="fa-solid fa-chess-king"></i>
+        <h2>Admin Panel</h2>
+    </div>
+    <ul class="sidebar-menu">
+        <li>
+            <a href="/adminF" class="active"><i class="fa-solid fa-gauge-high"></i> Dashboard Home</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/archived}"><i class="fa-solid fa-trash-can"></i> Trash Bin</a>
+        </li>
+        <li>
+            <a href="/home"><i class="fa-solid fa-globe"></i> View Live Site</a>
+        </li>
     </ul>
-</header>
+</aside>
 
-<hr>
+<!-- Single Column Scrollable Vertical Flow -->
+<div class="main-content">
 
-<h1>Product Management</h1>
-<p>Manage your inventory here.</p>
+    <!-- 1. Top Banner -->
+    <div class="dashboard-banner">
+        <div class="banner-text">
+            <h1>Product Management Console</h1>
+            <p>Monitor, manage, and update your premium inventory from one place.</p>
+        </div>
+        <a href="/prodF" class="btn-add-product">
+            <i class="fa-solid fa-circle-plus"></i> Add New Product
+        </a>
+    </div>
 
-<!-- নতুন প্রোডাক্ট অ্যাড করার বাটন -->
-<p>
-    <a href="/prodF">
-        <button type="button">+ Add New Product</button>
-    </a>
-</p>
+    <!-- 2. KPI Metrics Grid -->
+    <div class="analytics-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+            <div class="stat-info">
+                <h4>Total Active</h4>
+                <h2 th:text="${#lists.size(catalogue)}">0</h2>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="color: #1976D2; background: rgba(33,150,243,0.1);"><i class="fa-solid fa-tags"></i></div>
+            <div class="stat-info">
+                <h4>Categories</h4>
+                <h2>Active</h2>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="color: #2e7d32; background: rgba(46,125,50,0.1);"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="stat-info">
+                <h4>Inventory Status</h4>
+                <h2>Live</h2>
+            </div>
+        </div>
+    </div>
 
-<hr>
+    <!-- 3. Dedicated Central Staff Intercom Section -->
+    <div class="intercom-section">
+        <div class="section-header">
+            <i class="fa-solid fa-comments"></i> Central Staff Intercom
+        </div>
+        <div class="intercom-grid">
+            <!-- Left: Staff Selector Pane -->
+            <div class="staff-list-pane">
+                <div class="staff-list-title"><i class="fa-solid fa-user-gear"></i> Connect Staff</div>
+                <div style="font-size: 0.85rem; color: #666; line-height: 1.4;">
+                    Enter a staff member's ID to open a direct live messaging channel.
+                </div>
+                <div class="staff-input-group">
+                    <input type="number" id="receiverIdInput" placeholder="Staff ID (e.g. 2)">
+                    <button onclick="startStaffChat()">Connect</button>
+                </div>
+                <div style="margin-top: auto; font-size: 0.75rem; color: #888; text-align: center;">
+                    Secure STOMP WebSocket Protocol
+                </div>
+            </div>
 
-<!-- অল প্রোডাক্টস টেবিল (স্ট্যাটিক ডামি ডাটা) -->
-<h3>All Registered Products</h3>
+            <!-- Right: Chat Console Pane -->
+            <div class="chat-console-pane">
+                <div class="chat-console-header" id="chatHeaderTitle">
+                    <i class="fa-solid fa-circle-dot" style="color: #2e7d32; font-size: 0.7rem;"></i> Select a staff ID to start messaging
+                </div>
+                <div class="chat-console-body" id="chatBody">
+                    <div style="text-align: center; color: #888; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">
+                        <i class="fa-regular fa-comment-dots" style="font-size: 2rem; color: #ccc; display: block; margin-bottom: 8px;"></i>
+                        No active conversation selected.
+                    </div>
+                </div>
+                <div class="chat-console-footer">
+                    <input type="text" id="messageInput" class="chat-console-input" placeholder="Type your message..." onkeypress="handleEnter(event)" disabled>
+                    <button class="chat-console-send" id="sendBtn" onclick="sendMessage()" disabled>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<table border="1" cellpadding="10" cellspacing="0">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Price ($)</th>
-        <th>Stock</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- ডামি প্রোডাক্ট ১ -->
-    <tr th:each="cattt : ${catalogue}" >
-        <td th:text="${cattt.id}"></td>
-        <td>
-            <img th:text="${cattt.imageUrl}" alt="Product Image" width="60" height="60">
-        </td>
-        <td th:text="${cattt.name}" ></td>
-        <td th:text="${cattt.category}"></td>
-        <td th:text="${cattt.price}"></td>
-        <td th:text="${cattt.stock}"></td>
-        <td>
-            <a href="/prodF">
-                <button type="button">Edit</button>
+    <!-- 4. Search & Filter Control Bar -->
+    <div class="filter-container">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Search by Product Name or ID..." onkeyup="applyFilters()">
+        </div>
+
+        <select id="categoryFilter" class="filter-select" onchange="applyFilters()">
+            <option value="">All Categories</option>
+            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+        </select>
+
+        <select id="stockFilter" class="filter-select" onchange="applyFilters()">
+            <option value="">All Stock Status</option>
+            <option value="in_stock">In Stock (&gt; 5)</option>
+            <option value="low_stock">Low Stock (1 - 5)</option>
+            <option value="out_of_stock">Out of Stock (0)</option>
+        </select>
+
+        <select id="sortOption" class="filter-select" onchange="applySorting()">
+            <option value="default">Sort by: Default</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="stock_asc">Stock: Low to High</option>
+            <option value="stock_desc">Stock: High to Low</option>
+        </select>
+
+        <button type="button" class="btn-reset-filters" onclick="resetAllFilters()">
+            <i class="fa-solid fa-rotate-right"></i> Reset
+        </button>
+    </div>
+
+    <!-- 5. Master Product Catalog Table -->
+    <div class="table-container">
+        <div class="table-header">
+            <h3><i class="fa-solid fa-list-check"></i> Live Product Catalog</h3>
+
+            <!-- Trash Bin Gateway Button -->
+            <a th:href="@{/admin/archived}" class="btn-trash-gateway">
+                <i class="fa-solid fa-trash-can"></i> Trash Bin (<span th:text="${archivedCount}">0</span>)
             </a>
-            <a href="/prodF" onclick="return confirm('Are you sure?');">
-                <button type="button">Delete</button>
-            </a>
-        </td>
-    </tr>
+        </div>
 
-    </tbody>
-</table>
+        <table id="productTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price ($)</th>
+                <th>Stock</th>
+                <th>Active Carts</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="productTableBody">
+            <tr th:each="cattt : ${catalogue}"
+                class="product-row"
+                th:data-id="${cattt.id}"
+                th:data-name="${cattt.name.toLowerCase()}"
+                th:data-category="${cattt.category}"
+                th:data-price="${cattt.price}"
+                th:data-stock="${cattt.stock}">
 
-<hr>
+                <td th:text="${cattt.id}"></td>
+                <td><img th:src="${cattt.imageUrl}" alt="Product Image" class="product-img"></td>
+                <td class="product-name" th:text="${cattt.name}"></td>
+                <td><span class="badge badge-category" th:text="${cattt.category}"></span></td>
+                <td style="font-weight: 700; color: var(--text-dark);" th:text="${cattt.price}"></td>
 
-<footer>
-    <p>Admin Panel - Pure Static HTML Version</p>
-</footer>
+                <!-- Dynamic Stock Badge -->
+                <td>
+                    <span th:if="${cattt.stock > 5}" class="badge badge-stock" th:text="${cattt.stock} + ' pcs'"></span>
+                    <span th:if="${cattt.stock > 0 and cattt.stock <= 5}" class="badge badge-low-stock" th:text="${cattt.stock} + ' pcs (Low)'"></span>
+                    <span th:if="${cattt.stock == 0}" class="badge badge-out-stock">Out of Stock</span>
+                </td>
+
+                <!-- Active Carts Column -->
+                <td>
+                    <span class="badge badge-cart">
+                        <i class="fa-solid fa-cart-shopping"></i> <span th:text="${cartCounts.get(cattt.id) ?: 0}"></span>
+                    </span>
+                </td>
+
+                <td>
+                    <div class="action-btns">
+                        <a th:href="@{'/edit/' + ${cattt.id}}" class="btn-action btn-edit">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                        </a>
+
+                        <!-- Soft Delete Modal Trigger -->
+                        <button type="button" class="btn-action btn-delete"
+                                th:data-id="${cattt.id}"
+                                th:data-name="${cattt.name}"
+                                th:data-stock="${cattt.stock}"
+                                th:data-carts="${cartCounts.get(cattt.id) ?: 0}"
+                                th:data-img="${cattt.imageUrl}"
+                                onclick="openDeleteModal(this)">
+                            <i class="fa-solid fa-trash-can"></i> Delete
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Message when no products match filters -->
+        <div id="noMatchMessage" class="no-records-row">
+            <i class="fa-solid fa-filter-circle-xmark" style="font-size: 2.5rem; color: #bbb; margin-bottom: 10px; display: block;"></i>
+            No matching products found! Try adjusting your search or filters.
+        </div>
+    </div>
+
+    <footer>
+        <p>KENABECHA Admin Console - Powered by Spring Boot & Thymeleaf</p>
+    </footer>
+
+</div>
+
+<!-- Soft Delete Modal Overlay -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+        <div class="modal-header"><i class="fa-solid fa-triangle-exclamation"></i> Move Product to Trash?</div>
+
+        <div class="modal-product-info">
+            <img id="m-img" src="" alt="Product">
+            <div>
+                <strong id="m-name" style="color: var(--text-dark); display: block; font-size: 1.05rem; margin-bottom: 5px;"></strong>
+                <div class="modal-stats">
+                    • Warehouse Stock: <strong id="m-stock"></strong> pcs<br>
+                    • Active Carts: <i class="fa-solid fa-cart-shopping"></i> <strong id="m-carts" style="color: var(--ruby-red);"></strong> Users
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-notice">
+            <strong>ℹ️ What this action means:</strong><br>
+            • Product will be hidden from the store immediately.<br>
+            • Customers who already added it can still checkout!<br>
+            • It will wait in the Trash Bin for final review.
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+            <a href="#" id="m-confirm-btn" class="btn-confirm"><i class="fa-solid fa-trash-arrow-up"></i> Move to Trash Bin</a>
+        </div>
+    </div>
+</div>
+
+<!-- SockJS & STOMP Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<!-- Modal & Filter & Chat Scripts -->
+<script th:inline="javascript">
+    // Delete Modal Logic
+    function openDeleteModal(btn) {
+        document.getElementById('m-img').src = btn.getAttribute('data-img');
+        document.getElementById('m-name').innerText = btn.getAttribute('data-name');
+        document.getElementById('m-stock').innerText = btn.getAttribute('data-stock');
+        document.getElementById('m-carts').innerText = btn.getAttribute('data-carts');
+        document.getElementById('m-confirm-btn').href = '/delete/' + btn.getAttribute('data-id');
+
+        document.getElementById('deleteModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    // Filter Logic
+    function applyFilters() {
+        const query = document.getElementById('searchInput').value.trim().toLowerCase();
+        const selectedCat = document.getElementById('categoryFilter').value;
+        const selectedStock = document.getElementById('stockFilter').value;
+
+        const rows = document.querySelectorAll('.product-row');
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const id = row.getAttribute('data-id');
+            const name = row.getAttribute('data-name');
+            const category = row.getAttribute('data-category');
+            const stock = parseInt(row.getAttribute('data-stock'));
+
+            const matchesQuery = query === '' || name.includes(query) || id.includes(query);
+            const matchesCategory = selectedCat === '' || category === selectedCat;
+
+            let matchesStock = true;
+            if (selectedStock === 'in_stock') {
+                matchesStock = stock > 5;
+            } else if (selectedStock === 'low_stock') {
+                matchesStock = stock > 0 && stock <= 5;
+            } else if (selectedStock === 'out_of_stock') {
+                matchesStock = stock === 0;
+            }
+
+            if (matchesQuery && matchesCategory && matchesStock) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        const emptyMsg = document.getElementById('noMatchMessage');
+        emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // Sorting Logic
+    function applySorting() {
+        const sortType = document.getElementById('sortOption').value;
+        const tbody = document.getElementById('productTableBody');
+        const rows = Array.from(tbody.querySelectorAll('.product-row'));
+
+        if (sortType === 'default') {
+            rows.sort((a, b) => parseInt(a.getAttribute('data-id')) - parseInt(b.getAttribute('data-id')));
+        } else if (sortType === 'price_asc') {
+            rows.sort((a, b) => parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price')));
+        } else if (sortType === 'price_desc') {
+            rows.sort((a, b) => parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price')));
+        } else if (sortType === 'stock_asc') {
+            rows.sort((a, b) => parseInt(a.getAttribute('data-stock')) - parseInt(b.getAttribute('data-stock')));
+        } else if (sortType === 'stock_desc') {
+            rows.sort((a, b) => parseInt(b.getAttribute('data-stock')) - parseInt(a.getAttribute('data-stock')));
+        }
+
+        rows.forEach(row => tbody.appendChild(row));
+    }
+
+    // Reset Form
+    function resetAllFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('stockFilter').value = '';
+        document.getElementById('sortOption').value = 'default';
+        applyFilters();
+        applySorting();
+    }
+
+    // ---------------------------------
+    // WebSocket Central Intercom Logic
+    // ---------------------------------
+    let stompClient = null;
+    let currentReceiverId = null;
+
+    const currentAdminId = /*[[${session.loggedInUser != null ? session.loggedInUser.id : 0}]]*/ 0;
+    const currentAdminName = /*[[${session.loggedInUser != null ? session.loggedInUser.userName : 'Admin'}]]*/ 'Admin';
+
+    function connectWebSocket() {
+        if(stompClient !== null) return;
+
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.debug = null;
+
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/topic/user/' + currentAdminId, function (payload) {
+                const message = JSON.parse(payload.body);
+                if (message.senderId == currentReceiverId || message.senderId == currentAdminId) {
+                    displayMessage(message);
+                }
+            });
+        });
+    }
+
+    // Automatically connect WebSocket on page load
+    window.addEventListener('load', () => {
+        if(currentAdminId > 0) connectWebSocket();
+    });
+
+    function startStaffChat() {
+        const inputId = parseInt(document.getElementById('receiverIdInput').value);
+        if(!inputId) return alert("Please enter a valid Staff ID!");
+
+        currentReceiverId = inputId;
+        document.getElementById('messageInput').disabled = false;
+        document.getElementById('sendBtn').disabled = false;
+        document.getElementById('messageInput').placeholder = "Type message to Staff ID: " + currentReceiverId + "...";
+        document.getElementById('chatHeaderTitle').innerHTML = `<i class="fa-solid fa-circle-dot" style="color: #2e7d32; font-size: 0.7rem;"></i> Connected with Staff ID: ${currentReceiverId}`;
+
+        loadChatHistory();
+    }
+
+    function loadChatHistory() {
+        const chatBody = document.getElementById('chatBody');
+        chatBody.innerHTML = '<div style="text-align: center; color: #888; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">Loading history...</div>';
+
+        fetch(`/chat/staff/history/${currentAdminId}/${currentReceiverId}`)
+            .then(response => response.json())
+            .then(data => {
+                chatBody.innerHTML = '';
+                if(data.length === 0) {
+                    chatBody.innerHTML = '<div style="text-align: center; color: #888; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">No previous messages. Start a new conversation!</div>';
+                } else {
+                    data.forEach(msg => displayMessage(msg));
+                }
+            })
+            .catch(error => console.error('Error fetching history:', error));
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('messageInput');
+        const content = input.value.trim();
+
+        if(content && stompClient && currentReceiverId) {
+            const requestPayload = {
+                senderId: currentAdminId,
+                receiverId: currentReceiverId,
+                content: content
+            };
+
+            stompClient.send("/app/staffchat.send", {}, JSON.stringify(requestPayload));
+            input.value = '';
+        }
+    }
+
+    function handleEnter(event) {
+        if(event.key === 'Enter') sendMessage();
+    }
+
+    function displayMessage(message) {
+        const chatBody = document.getElementById('chatBody');
+
+        if(chatBody.innerHTML.includes('No previous messages') || chatBody.innerHTML.includes('No active conversation selected') || chatBody.innerHTML.includes('Loading history')) {
+            chatBody.innerHTML = '';
+        }
+
+        const isMine = (message.senderId == currentAdminId);
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('chat-msg', isMine ? 'msg-mine' : 'msg-other');
+
+        msgDiv.innerHTML = `
+            ${!isMine ? `<div class="msg-sender">${message.senderName || 'Staff'}</div>` : ''}
+            <div>${message.content}</div>
+        `;
+
+        chatBody.appendChild(msgDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+</script>
 
 </body>
 </html>

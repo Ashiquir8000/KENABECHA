@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KENABECHA - Home</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SockJS and STOMP for Real-time Chat -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <style>
+        :root {
+            --ruby-red: #9B111E;
+            --text-dark: #2B1810;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+            overflow-x: hidden;
+            color: var(--text-dark);
+        }
+
+        /* --- Existing Styles Maintained --- */
+        header { position: fixed; top: 0; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 100; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.4); box-sizing: border-box; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); }
+        header h2 { margin: 0; font-family: 'Cinzel', serif; color: var(--ruby-red); font-weight: 900; }
+        nav ul { list-style: none; display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; }
+        nav a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        nav a:hover { color: var(--ruby-red); }
+        .image-search-label { cursor: pointer; color: var(--text-dark); font-weight: 600; transition: color 0.3s; display: flex; align-items: center; gap: 5px; margin: 0; }
+        .image-search-label:hover { color: var(--ruby-red); }
+        .logout-btn { background-color: var(--ruby-red); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(155, 17, 30, 0.2); display: flex; align-items: center; gap: 8px; }
+        .logout-btn:hover { background-color: #7A0D17; transform: translateY(-2px); }
+        .hero-section { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; background-image: url('/images/back1.jpg'); background-size: cover; background-position: center center; }
+        .hero-section::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 15vh; background: linear-gradient(to top, rgba(0,0,0,0.1), transparent); z-index: 3; pointer-events: none; }
+        .hero-title { position: absolute; top: 25%; font-family: 'Cinzel', serif; font-size: 14vw; font-weight: 900; color: rgba(155, 17, 30, 0.9); z-index: 1; user-select: none; }
+        .models-container { position: absolute; bottom: 0; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: flex-end; z-index: 2; pointer-events: none; }
+        .saree-model { height: 90vh; z-index: 1; object-fit: contain; margin-right: -4%; }
+        .urban-model { height: 85vh; z-index: 2; margin-left: -8%; object-fit: contain; }
+        .welcome-section { display: flex; justify-content: center; position: relative; z-index: 10; margin-top: -12vh; padding: 0 20px 40px 20px; }
+        .welcome-box { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); padding: 40px 60px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.9); text-align: center; max-width: 800px; width: 100%; }
+        .welcome-box h1 { font-size: 2.5rem; margin: 0 0 15px 0; font-family: 'Cinzel', serif; color: var(--ruby-red); }
+        .category-section { padding: 40px 10% 120px 10%; position: relative; z-index: 5; }
+        .category-section h3 { font-family: 'Cinzel', serif; font-size: 2.8rem; text-align: center; color: var(--ruby-red); margin-bottom: 60px; }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; list-style: none; padding: 0; margin: 0; }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 20px; padding: 50px 30px; display: flex; flex-direction: column; align-items: center; text-align: center; transition: all 0.4s ease; }
+        .glass-card:hover { transform: translateY(-15px); background: rgba(255, 255, 255, 0.6); }
+        .category-icon { font-size: 4rem; color: var(--ruby-red); margin-bottom: 10px; }
+        .glass-card button { background-color: var(--ruby-red); color: #FFFFFF; border: none; padding: 15px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; width: 100%; transition: 0.3s; }
+        .glass-card button:hover { background-color: #7A0D17; transform: scale(1.05); }
+        footer { text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); }
+
+        /* --- NEW: Floating Chat Widget Styles --- */
+        .chat-widget-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--ruby-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(155, 17, 30, 0.4);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+        .chat-widget-btn:hover { transform: scale(1.1); }
+
+        .chat-box {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 450px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--ruby-red);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header i { cursor: pointer; }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .msg-bubble {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .msg-customer {
+            background: var(--ruby-red);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 3px;
+        }
+        .msg-moderator {
+            background: #f0f0f0;
+            color: var(--text-dark);
+            align-self: flex-start;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #eee;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        .chat-input-area button {
+            background: var(--ruby-red);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .chat-input-area button:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>KENABECHA E-Commerce</h2>
+    <nav>
+        <ul>
+            <li><a th:href="@{/home}">Home</a></li>
+            <li>
+                <form th:action="@{/search/visual}" method="post" enctype="multipart/form-data" style="margin: 0; display: flex; align-items: center;">
+                    <label for="visualImageInput" class="image-search-label" title="Upload an image to find similar products">
+                        <i class="fa-solid fa-camera"></i> Image Search
+                    </label>
+                    <input type="file" id="visualImageInput" name="imageFile" accept="image/*" style="display: none;" onchange="this.form.submit();" />
+                </form>
+            </li>
+            <li><a th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+
+            <!-- Admin Link -->
+            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'admin'}">
+                <a th:href="@{/adminF}">Admin Dashboard</a>
+            </li>
+
+            <!-- Moderator Link -->
+            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'moderator'}">
+                <a th:href="@{/moderator}">Moderator Hub</a>
+            </li>
+
+            <!-- Inventory Manager Link -->
+            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'inventory'}">
+                <a th:href="@{/inventory}">Warehouse Panel</a>
+            </li>
+
+            <li th:if="${session.loggedInUser == null}">
+                <a th:href="@{/login}">Login / Register</a>
+            </li>
+            <li th:if="${session.loggedInUser != null}">
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout (<span th:text="${session.loggedInUser.userName}"></span>)
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero-section">
+    <div class="hero-title" id="heroText">KENABECHA</div>
+    <div class="models-container">
+        <img th:src="@{/images/woman.png}" class="saree-model" alt="Saree Model">
+        <img th:src="@{/images/man.png}" class="urban-model" alt="Urban Model">
+    </div>
+</section>
+
+<div class="welcome-section">
+    <div class="welcome-box">
+        <h1>Welcome to Our Store</h1>
+        <p>Find the best products across multiple categories.</p>
+    </div>
+</div>
+
+<section class="category-section">
+    <h3>Browse by Category</h3>
+    <ul class="category-grid">
+        <li class="glass-card">
+            <i class="fa-solid fa-shirt category-icon"></i>
+            <a th:href="@{/category/DRESS}"><button type="button">Dress Collection</button></a>
+        </li>
+        <li class="glass-card">
+            <i class="fa-solid fa-basket-shopping category-icon"></i>
+            <a th:href="@{/category/FMCG}"><button type="button">FMCG Products</button></a>
+        </li>
+        <li class="glass-card">
+            <i class="fa-solid fa-plug category-icon"></i>
+            <a th:href="@{/category/ELECTRONICS}"><button type="button">Electronics</button></a>
+        </li>
+        <li class="glass-card">
+            <i class="fa-solid fa-blender category-icon"></i>
+            <a th:href="@{/category/HOME_APPLIANCES}"><button type="button">Home Appliances</button></a>
+        </li>
+    </ul>
+</section>
+
+<footer>
+    <p>KENABECHA Project - 2026</p>
+</footer>
+
+<!-- ========================================== -->
+<!-- 💬 NEW: LIVE CHAT WIDGET (ONLY FOR LOGGED-IN CUSTOMERS) -->
+<!-- ========================================== -->
+<th:block th:if="${session.loggedInUser != null and session.loggedInUser.userName != 'admin' and session.loggedInUser.userName != 'moderator' and session.loggedInUser.userName != 'inventory'}">
+
+    <!-- Chat Toggle Button -->
+    <div class="chat-widget-btn" onclick="toggleChat()">
+        <i class="fa-regular fa-comment-dots"></i>
+    </div>
+
+    <!-- Chat Box Window -->
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <span><i class="fa-solid fa-headset"></i> Live Support</span>
+            <i class="fa-solid fa-xmark" onclick="toggleChat()"></i>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="msg-bubble msg-moderator">Hello! How can we help you today?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Audio Element for Notification Ping -->
+    <audio id="chatAudio" src="/sounds/notification.mp3" preload="auto"></audio>
+
+    <!-- Chat Logic -->
+    <script th:inline="javascript">
+        const currentUserId = /*[[${session.loggedInUser.id}]]*/ null;
+        let stompClient = null;
+        let isHistoryLoaded = false; // হিস্ট্রি একবার লোড করার জন্য ফ্ল্যাগ
+
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+                chatBox.style.display = 'flex';
+                connectWebSocket();
+
+                // চ্যাট বক্স ওপেন করলে হিস্ট্রি ফেচ করবে
+                if (!isHistoryLoaded) {
+                    loadChatHistory();
+                }
+            } else {
+                chatBox.style.display = 'none';
+            }
+        }
+
+        // ডেটাবেস থেকে পূর্বের চ্যাট হিস্ট্রি আনার ফাংশন
+        function loadChatHistory() {
+            const chatMessages = document.getElementById('chatMessages');
+            fetch('/chat/history/' + currentUserId)
+                .then(res => res.json())
+                .then(data => {
+                    chatMessages.innerHTML = '<div class="msg-bubble msg-moderator">Hello! How can we help you today?</div>';
+                    data.forEach(msg => {
+                        appendMessage(msg.content, msg.senderType === 'CUSTOMER' ? 'msg-customer' : 'msg-moderator');
+                    });
+                    isHistoryLoaded = true;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(err => console.error("Error loading history:", err));
+        }
+
+        function connectWebSocket() {
+            if (stompClient !== null) return;
+
+            const socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            stompClient.debug = null;
+
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/topic/user/' + currentUserId, function (message) {
+                    const receivedMsg = JSON.parse(message.body);
+                    if(receivedMsg.senderType === 'MODERATOR') {
+                        appendMessage(receivedMsg.content, 'msg-moderator');
+                        const audio = document.getElementById('chatAudio');
+                        if (audio) audio.play().catch(e => {});
+                    }
+                });
+            });
+        }
+
+        function sendMessage() {
+            const inputField = document.getElementById('chatInput');
+            const content = inputField.value.trim();
+
+            if (content && stompClient) {
+                const messageData = {
+                    userId: currentUserId,
+                    senderType: 'CUSTOMER',
+                    content: content
+                };
+
+                stompClient.send("/app/chat.send", {}, JSON.stringify(messageData));
+                appendMessage(content, 'msg-customer');
+                inputField.value = '';
+            }
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function appendMessage(text, className) {
+            const chatMessages = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg-bubble ' + className;
+            msgDiv.innerText = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</th:block>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const heroText = document.getElementById('heroText');
+        const heroSection = document.querySelector('.hero-section');
+
+        heroSection.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+            const offsetX = ((clientX / innerWidth) - 0.5) * 40;
+            const offsetY = ((clientY / innerHeight) - 0.5) * 20;
+            heroText.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            heroText.style.transform = 'translate(0px, 0px)';
+        });
+    });
+</script>
+</body>
+</html>

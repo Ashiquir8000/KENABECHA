@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - KENABECHA</title>
+
+    <!-- Premium Google Fonts: Playfair Display for Title, Lora for Description, Cinzel & Poppins for General UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SockJS and STOMP for Real-time Chat -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <style>
+        :root {
+            --ruby-red: #9B111E;
+            --text-dark: #2B1810;
+            --glass-bg: rgba(255, 255, 255, 0.35);
+            --glass-border: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+            overflow-x: hidden;
+            color: var(--text-dark);
+        }
+
+        /* ---------------------------------
+           Premium Glassmorphic Header
+           --------------------------------- */
+        header { position: fixed; top: 0; width: 100%; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; z-index: 100; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255, 255, 255, 0.6); box-sizing: border-box; box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08); }
+        .logo-section { display: flex; align-items: center; gap: 12px; }
+        .logo-section i { font-size: 2rem; color: var(--ruby-red); filter: drop-shadow(0 2px 4px rgba(155, 17, 30, 0.3)); }
+        header h2 { margin: 0; font-family: 'Cinzel', serif; color: var(--ruby-red); font-weight: 900; font-size: 1.8rem; text-shadow: 0 2px 5px rgba(255, 255, 255, 0.8); }
+        nav ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0; align-items: center; }
+        nav a { text-decoration: none; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.3s; padding: 8px 15px; border-radius: 20px; }
+        nav a:hover { color: white; background: var(--ruby-red); box-shadow: 0 4px 10px rgba(155, 17, 30, 0.3); }
+
+        /* ---------------------------------
+           Detail Banner
+           --------------------------------- */
+        .detail-banner { position: relative; height: 30vh; margin-top: 75px; background-image: url('/images/back1.jpg'); background-size: cover; background-position: center 40%; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+        .detail-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(155, 17, 30, 0.75) 0%, rgba(43, 24, 16, 0.5) 100%); backdrop-filter: blur(3px); z-index: 1; }
+        .banner-text { position: relative; z-index: 2; color: #fff; font-family: 'Cinzel', serif; font-size: 3rem; text-shadow: 0 5px 15px rgba(0,0,0,0.5); letter-spacing: 2px; }
+
+        /* ---------------------------------
+           Main Content Area
+           --------------------------------- */
+        .main-content { padding: 60px 8% 100px 8%; position: relative; z-index: 5; }
+
+        .product-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; background: var(--glass-bg); backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 25px; padding: 50px; box-shadow: 0 15px 45px rgba(155, 17, 30, 0.15); margin-bottom: 60px; }
+        .image-side { border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); background: #fff; display: flex; align-items: center; justify-content: center; max-height: 550px; }
+        .image-side img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .image-side:hover img { transform: scale(1.1); }
+        .info-side { display: flex; flex-direction: column; justify-content: center; }
+        .category-badge { display: inline-block; align-self: flex-start; background: rgba(155, 17, 30, 0.1); color: var(--ruby-red); padding: 6px 18px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; border: 1px solid rgba(155, 17, 30, 0.3); }
+        .product-title { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--text-dark); margin: 0 0 20px 0; line-height: 1.1; }
+        .price-tag { font-size: 2.5rem; color: var(--ruby-red); font-weight: 700; margin-bottom: 5px; font-family: 'Poppins', sans-serif; }
+        .stock-tag { font-size: 1rem; color: #2e7d32; font-weight: 600; margin-bottom: 30px; display: flex; align-items: center; gap: 8px; }
+        .product-desc-box { font-family: 'Lora', serif; font-size: 1.15rem; color: #4a3b32; line-height: 1.8; margin-bottom: 40px; background: rgba(255,255,255,0.5); padding: 25px; border-radius: 15px; border-left: 4px solid var(--ruby-red); box-shadow: inset 0 2px 10px rgba(0,0,0,0.03); }
+        .product-desc-box strong { font-family: 'Poppins', sans-serif; display: block; margin-bottom: 10px; color: var(--ruby-red); font-size: 1.1rem; }
+
+        .action-buttons { display: flex; gap: 20px; align-items: center; }
+        .btn-add { background-color: var(--ruby-red); color: #fff; border: none; padding: 15px 30px; border-radius: 30px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 15px rgba(155, 17, 30, 0.2); font-family: 'Poppins', sans-serif; display: flex; align-items: center; gap: 10px; }
+        .btn-add:hover { background-color: #7A0D17; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(155, 17, 30, 0.4); }
+        .btn-buy { background-color: #2B1810; color: #fff; padding: 15px 35px; border-radius: 30px; font-size: 1.1rem; font-weight: 600; text-decoration: none; transition: all 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); font-family: 'Poppins', sans-serif; display: flex; align-items: center; gap: 10px; }
+        .btn-buy:hover { background-color: #1a0f0a; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
+
+        .reviews-section { background: rgba(255,255,255,0.3); backdrop-filter: blur(20px); border-radius: 20px; padding: 40px; border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; }
+        .reviews-section h3 { font-family: 'Cinzel', serif; color: var(--ruby-red); font-size: 2rem; margin-top: 0; border-bottom: 2px solid rgba(155, 17, 30, 0.2); padding-bottom: 15px; margin-bottom: 30px; }
+        .review-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px; }
+        .review-card { background: rgba(255,255,255,0.7); border-radius: 15px; padding: 25px; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .review-card:hover { transform: translateX(10px); background: rgba(255,255,255,0.9); }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .reviewer-name { font-weight: 600; font-size: 1.1rem; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        .review-rating { color: #d4af37; font-weight: 600; font-size: 0.95rem; background: rgba(212, 175, 55, 0.1); padding: 5px 12px; border-radius: 20px; }
+        .review-comment { font-family: 'Lora', serif; color: #444; font-size: 1.1rem; line-height: 1.7; margin: 0 0 15px 0; }
+        .btn-delete { background: rgba(211, 47, 47, 0.1); color: #d32f2f; border: 1px solid #d32f2f; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-delete:hover { background: #d32f2f; color: #fff; }
+
+        .review-form-container { background: rgba(255,255,255,0.45); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .review-form-container h4 { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--text-dark); margin-top: 0; margin-bottom: 25px; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 10px; color: var(--text-dark); }
+        .form-control { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(155, 17, 30, 0.3); background: rgba(255,255,255,0.8); font-family: 'Poppins', sans-serif; font-size: 1rem; transition: all 0.3s; box-sizing: border-box; }
+        .form-control:focus { outline: none; background: #fff; border-color: var(--ruby-red); box-shadow: 0 0 15px rgba(155, 17, 30, 0.15); }
+        .btn-submit { background-color: var(--text-dark); color: #fff; border: none; padding: 12px 30px; border-radius: 30px; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: 'Poppins', sans-serif; }
+        .btn-submit:hover { background-color: var(--ruby-red); box-shadow: 0 5px 15px rgba(155, 17, 30, 0.3); }
+
+        .nav-links { margin-top: 40px; display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; padding: 10px 25px; background: rgba(255,255,255,0.5); border-radius: 30px; border: 1px solid rgba(255,255,255,0.8); transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+        .nav-links a:hover { background: var(--ruby-red); color: #fff; border-color: var(--ruby-red); }
+
+        footer { text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, 0.8); font-weight: 600; letter-spacing: 1px; color: var(--text-dark); }
+        hr { display: none; }
+
+        @media (max-width: 900px) { .product-showcase { grid-template-columns: 1fr; } .image-side { max-height: 400px; } }
+
+        /* --- Floating Chat Widget Styles --- */
+        .chat-widget-btn {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--ruby-red); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; cursor: pointer; box-shadow: 0 10px 25px rgba(155, 17, 30, 0.4); z-index: 1000; transition: transform 0.3s;
+        }
+        .chat-widget-btn:hover { transform: scale(1.1); }
+
+        .chat-box {
+            position: fixed; bottom: 100px; right: 30px; width: 350px; height: 450px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); display: none; flex-direction: column; z-index: 1000; border: 1px solid rgba(255, 255, 255, 0.5); overflow: hidden;
+        }
+        .chat-header { background: var(--ruby-red); color: white; padding: 15px 20px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .chat-header i { cursor: pointer; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg-bubble { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; line-height: 1.4; }
+        .msg-customer { background: var(--ruby-red); color: white; align-self: flex-end; border-bottom-right-radius: 3px; }
+        .msg-moderator { background: #f0f0f0; color: var(--text-dark); align-self: flex-start; border-bottom-left-radius: 3px; }
+        .chat-input-area { display: flex; padding: 15px; background: rgba(255, 255, 255, 0.9); border-top: 1px solid #eee; }
+        .chat-input-area input { flex: 1; padding: 10px 15px; border: 1px solid #ccc; border-radius: 20px; outline: none; font-family: 'Poppins', sans-serif; }
+        .chat-input-area button { background: var(--ruby-red); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; margin-left: 10px; cursor: pointer; transition: 0.3s; }
+        .chat-input-area button:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-section">
+        <i class="fa-solid fa-crown"></i>
+        <h2>KENABECHA E-Commerce</h2>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/home"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="/adminF"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="detail-banner">
+    <div class="banner-text">Product Details</div>
+</div>
+
+<section class="main-content">
+    <div class="product-showcase">
+        <div class="image-side">
+            <img th:src="${product.imageUrl}" alt="Product Image">
+        </div>
+
+        <div class="info-side">
+            <span class="category-badge"><i class="fa-solid fa-tags"></i> <span th:text="${product.category}">Category</span></span>
+            <h2 class="product-title" th:text="${product.name}">Product Name</h2>
+            <div class="price-tag">$<span th:text="${product.price}">0.00</span></div>
+            <div class="stock-tag">
+                <i class="fa-solid fa-circle-check"></i> Stock Available: <span th:text="${product.stock}">0</span> pcs
+            </div>
+            <div class="product-desc-box">
+                <strong>Description:</strong>
+                <span th:text="${product.details}">Product details...</span>
+            </div>
+
+            <div class="action-buttons">
+                <form th:action="@{/cart/add}" method="post" style="margin: 0;">
+                    <input type="hidden" name="productId" th:value="${product.id}" />
+                    <button type="submit" class="btn-add">
+                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                    </button>
+                </form>
+
+                <a th:href="@{/buy/{id}(id=${product.id})}" class="btn-buy">
+                    <i class="fa-solid fa-bolt"></i> Buy Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews-section">
+        <h3>Customer Reviews</h3>
+        <ul class="review-list">
+            <li class="review-card" th:each="review : ${product.reviews}">
+                <div class="review-header">
+                    <div class="reviewer-name">
+                        <i class="fa-solid fa-user-circle" style="font-size: 1.5rem; color: var(--ruby-red);"></i>
+                        <span th:text="${review.user.userName}">User</span>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fa-solid fa-star"></i> <span th:text="${review.rating}"></span> / 5
+                    </div>
+                </div>
+                <p class="review-comment" th:text="${review.comment}"></p>
+
+                <form th:if="${session.loggedInUser != null and session.loggedInUser.id == review.user.id}"
+                      th:action="@{/deleteReview/{id}(id=${review.id})}" method="post" style="margin:0;">
+                    <input type="hidden" name="productId" th:value="${product.id}"/>
+                    <button type="submit" class="btn-delete">
+                        <i class="fa-solid fa-trash-can"></i> Delete My Review
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+        <p th:if="${#lists.isEmpty(product.reviews)}" style="font-size: 1.1rem; color: #555; text-align: center; margin-top: 20px;">
+            <i class="fa-regular fa-comment-dots"></i> No reviews yet. Be the first to review!
+        </p>
+    </div>
+
+    <div class="review-form-container" th:if="${session.loggedInUser != null}">
+        <h4>Leave a Review</h4>
+        <form th:action="@{/addReview}" method="post">
+            <input type="hidden" name="productId" th:value="${product.id}" />
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-ranking-star" style="color: var(--ruby-red);"></i> Rating (1-5):</label>
+                <input type="number" name="rating" min="1" max="5" class="form-control" placeholder="Rate out of 5" required>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fa-solid fa-pen-nib" style="color: var(--ruby-red);"></i> Your Comment:</label>
+                <textarea name="comment" rows="4" class="form-control" placeholder="Share your experience..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Review</button>
+        </form>
+    </div>
+
+    <div class="review-form-container" th:if="${session.loggedInUser == null}" style="text-align: center;">
+        <i class="fa-solid fa-lock" style="font-size: 2rem; color: var(--ruby-red); margin-bottom: 15px;"></i>
+        <h4 style="margin-bottom: 10px;">Want to share your thoughts?</h4>
+        <p style="margin-bottom: 20px;">You must be logged in to leave a review.</p>
+        <a th:href="@{/login(redirectTo='/proDetail/' + ${product.id})}" class="btn-submit" style="text-decoration: none; display: inline-block;">
+            Login Here
+        </a>
+    </div>
+
+    <div class="nav-links">
+        <a th:href="@{'/category/' + ${product.category}}">
+            <i class="fa-solid fa-arrow-left"></i> Back to Category
+        </a>
+        <a href="/home">
+            <i class="fa-solid fa-house"></i> Back to Home
+        </a>
+    </div>
+</section>
+
+<footer>
+    <p>KENABECHA Project - 2026</p>
+</footer>
+
+<!-- ========================================== -->
+<!-- 💬 LIVE CHAT WIDGET (ONLY FOR LOGGED-IN USERS) -->
+<!-- ========================================== -->
+<th:block th:if="${session.loggedInUser != null}">
+
+    <div class="chat-widget-btn" onclick="toggleChat()">
+        <i class="fa-regular fa-comment-dots"></i>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <span><i class="fa-solid fa-headset"></i> Live Support</span>
+            <i class="fa-solid fa-xmark" onclick="toggleChat()"></i>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="msg-bubble msg-moderator">Hello! How can we help you today?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <audio id="chatAudio" src="/sounds/notification.mp3" preload="auto"></audio>
+
+    <script th:inline="javascript">
+        const currentUserId = /*[[${session.loggedInUser.id}]]*/ null;
+        let stompClient = null;
+        let isHistoryLoaded = false; // হিস্ট্রি একবার লোড করার জন্য ফ্ল্যাগ
+
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+                chatBox.style.display = 'flex';
+                connectWebSocket();
+
+                // চ্যাট বক্স ওপেন করলে হিস্ট্রি ফেচ করবে
+                if (!isHistoryLoaded) {
+                    loadChatHistory();
+                }
+            } else {
+                chatBox.style.display = 'none';
+            }
+        }
+
+        // ডেটাবেস থেকে পূর্বের চ্যাট হিস্ট্রি আনার ফাংশন
+        function loadChatHistory() {
+            const chatMessages = document.getElementById('chatMessages');
+            fetch('/chat/history/' + currentUserId)
+                .then(res => res.json())
+                .then(data => {
+                    chatMessages.innerHTML = '<div class="msg-bubble msg-moderator">Hello! How can we help you today?</div>';
+                    data.forEach(msg => {
+                        appendMessage(msg.content, msg.senderType === 'CUSTOMER' ? 'msg-customer' : 'msg-moderator');
+                    });
+                    isHistoryLoaded = true;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                })
+                .catch(err => console.error("Error loading history:", err));
+        }
+
+        function connectWebSocket() {
+            if (stompClient !== null) return;
+
+            const socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            stompClient.debug = null;
+
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/topic/user/' + currentUserId, function (message) {
+                    const receivedMsg = JSON.parse(message.body);
+                    if(receivedMsg.senderType === 'MODERATOR') {
+                        appendMessage(receivedMsg.content, 'msg-moderator');
+                        const audio = document.getElementById('chatAudio');
+                        if (audio) audio.play().catch(e => {});
+                    }
+                });
+            });
+        }
+
+        function sendMessage() {
+            const inputField = document.getElementById('chatInput');
+            const content = inputField.value.trim();
+
+            if (content && stompClient) {
+                const messageData = {
+                    userId: currentUserId,
+                    senderType: 'CUSTOMER',
+                    content: content
+                };
+
+                stompClient.send("/app/chat.send", {}, JSON.stringify(messageData));
+                appendMessage(content, 'msg-customer');
+                inputField.value = '';
+            }
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function appendMessage(text, className) {
+            const chatMessages = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg-bubble ' + className;
+            msgDiv.innerText = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</th:block>
+
+</body>
+</html>

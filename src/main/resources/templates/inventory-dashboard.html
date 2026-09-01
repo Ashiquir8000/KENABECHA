@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouse Panel - KENABECHA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SockJS and STOMP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <style>
+        :root { --ruby-red: #9B111E; --text-dark: #2B1810; --bg-light: #f9f9f9; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); }
+
+        /* Navbar */
+        header { background: #fff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        header h2 { margin: 0; font-family: 'Cinzel', serif; color: var(--ruby-red); }
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .btn-logout { background: var(--ruby-red); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; text-decoration: none;}
+
+        /* Layout */
+        .container { display: flex; flex-direction: column; padding: 30px 40px; gap: 20px; }
+        .tabs { display: flex; gap: 10px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        .tab-btn { background: none; border: none; font-size: 1.1rem; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; padding: 10px 20px; color: #666; transition: 0.3s; }
+        .tab-btn.active { color: var(--ruby-red); border-bottom: 3px solid var(--ruby-red); }
+
+        .tab-content { display: none; background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .tab-content.active { display: block; }
+
+        /* Restock Queue UI */
+        .request-card { border: 1px solid #eee; border-left: 5px solid var(--ruby-red); padding: 15px; margin-bottom: 15px; border-radius: 5px; background: #fafafa; }
+        .request-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 600; }
+        .stock-info { color: #555; font-size: 0.95rem; margin-bottom: 15px; }
+        .action-area { display: flex; gap: 10px; align-items: center; background: #fff; padding: 10px; border-radius: 5px; border: 1px solid #ddd; }
+        .action-area input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100px; }
+        .action-area button { background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: 600; }
+
+        /* Split-View Staff Desk */
+        .chat-container { display: flex; height: 60vh; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+        .staff-list { width: 30%; background: #f4f4f4; border-right: 1px solid #ddd; overflow-y: auto; }
+        .staff-item { padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .staff-item:hover { background: #eaeaea; }
+        .staff-item.active { background: #fff; border-left: 4px solid var(--ruby-red); }
+
+        .chat-box { width: 70%; display: flex; flex-direction: column; background: #fff; opacity: 0.5; pointer-events: none; transition: 0.3s; }
+        .chat-box.active { opacity: 1; pointer-events: auto; }
+        .chat-header { padding: 15px; background: #eee; border-bottom: 1px solid #ddd; font-weight: 600; display: flex; justify-content: space-between; }
+
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #fafafa; }
+        .msg-bubble { max-width: 75%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; clear: both; }
+        .msg-me { background: var(--ruby-red); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .msg-other { background: #e0e0e0; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
+
+        .chat-input { display: flex; padding: 15px; border-top: 1px solid #ddd; background: #fff; }
+        .chat-input input { flex: 1; padding: 10px 15px; border: 1px solid #ccc; border-radius: 20px; margin-right: 10px; outline: none; }
+        .chat-input button { background: var(--ruby-red); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>WAREHOUSE PANEL</h2>
+    <div class="nav-actions">
+        <span><i class="fa-solid fa-user-shield"></i> <span th:text="${session.loggedInUser.userName}"></span></span>
+        <a th:href="@{/home}" class="btn-logout" style="background: #444;"><i class="fa-solid fa-house"></i> Store</a>
+        <form th:action="@{/logout}" method="post" style="margin:0;">
+            <button type="submit" class="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('restock')"><i class="fa-solid fa-clipboard-list"></i> Pending Restock Queue</button>
+        <button class="tab-btn" onclick="switchTab('staffchat')"><i class="fa-solid fa-building"></i> Internal Staff Chat Desk</button>
+    </div>
+
+    <!-- TAB 1: Restock Queue -->
+    <div id="restock" class="tab-content active">
+        <h3><i class="fa-solid fa-triangle-exclamation" style="color:var(--ruby-red);"></i> Actionable Restock Requisitions</h3>
+
+        <div th:if="${#lists.isEmpty(pendingRequests)}">
+            <p style="color: #666; font-style: italic;">No pending restock requests right now.</p>
+        </div>
+
+        <div th:each="req : ${pendingRequests}" class="request-card">
+            <div class="request-header">
+                <span th:text="${'[🔴 PENDING] ' + req.product.name}"></span>
+                <span style="font-size: 0.85rem; color: #777;" th:text="${#temporals.format(req.requestTime, 'hh:mm a')}"></span>
+            </div>
+            <div class="stock-info">
+                Requested By: <strong th:text="${req.requestedBy.userName}"></strong> |
+                Current Stock: <strong th:text="${req.product.stock}"></strong> pcs |
+                Suggested Target: <strong th:text="${req.requestedQuantity}"></strong> pcs
+            </div>
+
+            <form th:action="@{/inventory/restock/fulfill}" method="post" class="action-area">
+                <input type="hidden" name="requestId" th:value="${req.id}">
+                <label>+ Add Quantity:</label>
+                <input type="number" name="addedQuantity" th:value="${req.requestedQuantity}" min="1" required>
+                <button type="submit"><i class="fa-solid fa-check"></i> Fulfill & Update Stock</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TAB 2: Staff Chat Desk -->
+    <div id="staffchat" class="tab-content">
+        <div class="chat-container">
+            <!-- Left Panel: Dynamic Moderator List -->
+            <div class="staff-list" id="modList">
+                <div style="padding: 10px 15px; font-weight: 600; color: #666; font-size: 0.9rem; border-bottom: 1px solid #ddd;">
+                    <i class="fa-solid fa-headset"></i> COMMAND DESK (MODERATORS)
+                </div>
+
+                <div class="staff-item" th:each="m : ${moderators}"
+                     th:if="${m != null}"
+                     th:data-id="${m?.id}"
+                     th:data-name="${m?.userName}"
+                     onclick="selectModerator(this)">
+                    <span><i class="fa-solid fa-circle-user" style="color:var(--ruby-red);"></i> <span th:text="${m?.userName}"></span></span>
+                </div>
+
+                <div th:if="${#lists.isEmpty(moderators)}" style="padding: 20px; text-align: center; color: #999; font-size: 0.9rem;">
+                    No moderators found.
+                </div>
+            </div>
+
+            <!-- Right Panel: Dynamic Chat Box -->
+            <div class="chat-box" id="chatBox">
+                <div class="chat-header">
+                    <span>💬 Chat with: <strong id="activeModName">None</strong></span>
+                    <span id="connStatus" style="color: #999; font-size: 0.8rem;"><i class="fa-solid fa-circle"></i> Connecting...</span>
+                </div>
+                <div class="chat-messages" id="chatThread">
+                    <div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto;">Select a moderator from the list to start chatting.</div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="staffMsgInput" placeholder="Reply to Moderator..." onkeypress="handleEnter(event)">
+                    <button onclick="sendStaffMsg()"><i class="fa-solid fa-paper-plane"></i> Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<audio id="chatAudio" src="/sounds/notification.mp3" preload="auto"></audio>
+
+<script th:inline="javascript">
+    let stompClient = null;
+    let currentActiveModId = null;
+    const inventoryId = /*[[${session.loggedInUser != null ? session.loggedInUser.id : 0}]]*/ 0;
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function connectStaffDesk() {
+        if(inventoryId === 0) return;
+
+        const socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.debug = null;
+
+        stompClient.connect({}, function (frame) {
+            document.getElementById('connStatus').style.color = '#28a745';
+            document.getElementById('connStatus').innerHTML = '<i class="fa-solid fa-circle"></i> Live';
+
+            // Subscribe to personal queue for incoming staff messages
+            stompClient.subscribe('/topic/user/' + inventoryId, function (message) {
+                const msg = JSON.parse(message.body);
+
+                const audio = document.getElementById('chatAudio');
+                if (audio) audio.play().catch(e => {});
+
+                // If currently chatting with the sender, show message immediately
+                if (currentActiveModId && String(msg.senderId) === String(currentActiveModId)) {
+                    appendMessage(msg.content, 'msg-other');
+                } else if (String(msg.senderId) !== String(inventoryId)) {
+                    // Alert if message is from someone else
+                    alert("New message from Moderator: " + msg.senderName);
+                }
+            });
+        });
+    }
+
+    function selectModerator(element) {
+        // UI Selection
+        document.querySelectorAll('.staff-item').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+
+        const modId = element.getAttribute('data-id');
+        const modName = element.getAttribute('data-name');
+
+        currentActiveModId = modId;
+        document.getElementById('activeModName').innerText = modName;
+        document.getElementById('chatBox').classList.add('active');
+
+        const chatThread = document.getElementById('chatThread');
+        chatThread.innerHTML = '<div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto;">Loading history...</div>';
+
+        // Fetch History
+        fetch('/chat/staff/history/' + inventoryId + '/' + modId)
+            .then(res => res.json())
+            .then(data => {
+                chatThread.innerHTML = '';
+                if(data.length === 0) {
+                    chatThread.innerHTML = '<div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto;">No previous conversation.</div>';
+                }
+                data.forEach(msg => {
+                    const isMe = String(msg.senderId) === String(inventoryId);
+                    appendMessage(msg.content, isMe ? 'msg-me' : 'msg-other');
+                });
+            })
+            .catch(err => {
+                chatThread.innerHTML = '<div style="text-align:center; color: red; font-size: 0.9rem; margin-top: auto;">Failed to load history.</div>';
+            });
+    }
+
+    function sendStaffMsg() {
+        const inputField = document.getElementById('staffMsgInput');
+        const content = inputField.value.trim();
+
+        if (content && stompClient && currentActiveModId) {
+            const messageData = {
+                senderId: inventoryId,
+                receiverId: currentActiveModId,
+                content: content
+            };
+
+            stompClient.send("/app/staffchat.send", {}, JSON.stringify(messageData));
+            appendMessage(content, 'msg-me');
+            inputField.value = '';
+        }
+    }
+
+    function handleEnter(event) {
+        if (event.key === 'Enter') sendStaffMsg();
+    }
+
+    function appendMessage(text, className) {
+        const chatThread = document.getElementById('chatThread');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'msg-bubble ' + className;
+        msgDiv.innerText = text;
+        chatThread.appendChild(msgDiv);
+        chatThread.scrollTop = chatThread.scrollHeight;
+    }
+
+    window.onload = function() {
+        connectStaffDesk();
+    };
+</script>
+</body>
+</html>

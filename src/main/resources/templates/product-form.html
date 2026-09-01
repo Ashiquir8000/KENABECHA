@@ -1,90 +1,479 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add / Manage Product - KENABECHA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --ruby-red: #9B111E;
+            --text-dark: #2B1810;
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+            color: var(--text-dark);
+            display: flex;
+        }
+
+        /* ---------------------------------
+           Glassmorphic Sidebar (Match Admin)
+           --------------------------------- */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 0 20px 30px 20px;
+            border-bottom: 1px solid rgba(155, 17, 30, 0.15);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header i {
+            font-size: 3rem;
+            color: var(--ruby-red);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 3px 5px rgba(155, 17, 30, 0.3));
+        }
+
+        .sidebar-header h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            margin: 0;
+            font-weight: 900;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+            padding: 0 20px;
+        }
+
+        .sidebar-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--ruby-red);
+            color: white;
+            box-shadow: 0 5px 15px rgba(155, 17, 30, 0.2);
+            transform: translateX(5px);
+        }
+
+        /* ---------------------------------
+           Main Content Area
+           --------------------------------- */
+        .main-content {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            padding: 40px;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        /* Dashboard Banner (back1.jpg) */
+        .dashboard-banner {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background-image: url('/images/back1.jpg');
+            background-size: cover;
+            background-position: center 30%;
+            padding: 50px 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dashboard-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(155, 17, 30, 0.85) 0%, rgba(43, 24, 16, 0.7) 100%);
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+
+        .banner-text {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .banner-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin: 0 0 10px 0;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            letter-spacing: 1px;
+        }
+
+        .banner-text p {
+            font-size: 1.1rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        /* ---------------------------------
+           Glassmorphic Form Section
+           --------------------------------- */
+        .form-container {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            padding: 50px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(155, 17, 30, 0.15);
+            padding-bottom: 15px;
+        }
+
+        .form-header h3 {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--ruby-red);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* CSS Grid for 2 Columns */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        /* Standardize Inputs, Selects, Textareas */
+        .form-control {
+            width: 100%;
+            padding: 12px 15px 12px 42px;
+            border: 2px solid rgba(155, 17, 30, 0.15);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        textarea.form-control {
+            padding: 15px; /* No left icon for textarea */
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* File Upload Styling */
+        input[type="file"].form-control {
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.7);
+            border: 2px dashed rgba(155, 17, 30, 0.4);
+            cursor: pointer;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--ruby-red);
+            box-shadow: 0 0 10px rgba(155, 17, 30, 0.15);
+        }
+
+        .input-wrapper input:focus + i,
+        .input-wrapper select:focus + i {
+            color: var(--ruby-red);
+        }
+
+        /* Form Actions (Buttons) */
+        .form-actions {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-top: 1px solid rgba(155, 17, 30, 0.15);
+            padding-top: 25px;
+        }
+
+        .btn-save {
+            background-color: var(--ruby-red);
+            color: #fff;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(155, 17, 30, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-save:hover {
+            background-color: #7A0D17;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(155, 17, 30, 0.35);
+        }
+
+        .btn-cancel {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: 2px solid #ccc;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-cancel:hover {
+            background: #eee;
+            color: var(--text-dark);
+            border-color: #bbb;
+        }
+
+        /* ---------------------------------
+           Footer
+           --------------------------------- */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        hr { display: none; }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- হেডার -->
-<header>
-    <h2>Admin Control Panel</h2>
-    <ul>
-        <li><a href="/admin">Dashboard Home</a></li>
-        <li><a href="/">View Live Site</a></li>
+<!-- Glassmorphic Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <i class="fa-solid fa-chess-king"></i>
+        <h2>Admin Panel</h2>
+    </div>
+    <ul class="sidebar-menu">
+        <li>
+            <a href="/home"><i class="fa-solid fa-gauge-high"></i> Dashboard Home</a>
+        </li>
+        <li>
+            <a href="/adminF" class="active"><i class="fa-solid fa-box-open"></i> Product Catalog</a>
+        </li>
     </ul>
-</header>
+</aside>
 
-<hr>
+<!-- Main Content Area -->
+<div class="main-content">
 
-<h1>Add New Product</h1>
-<p>Please fill out the form to add a product.</p>
+    <!-- Dashboard Banner -->
+    <div class="dashboard-banner">
+        <div class="banner-text">
+            <h1>Product Engine</h1>
+            <p>Add new products or update existing inventory details seamlessly.</p>
+        </div>
+    </div>
 
-<hr>
+    <!-- Glassmorphic Form Container -->
+    <div class="form-container">
 
-<!-- একদম সাদামাটা HTML Form -->
-<!-- ফাইল আপলোডের জন্য enctype="multipart/form-data" যোগ করা হয়েছে -->
-<form action="/admin/products/save" method="post" enctype="multipart/form-data">
+        <div class="form-header">
+            <h3><i class="fa-solid fa-layer-group"></i> Product Details Form</h3>
+        </div>
 
+        <!-- Thymeleaf Form Starts Here -->
+        <form method="post" th:action="@{/prodF}" th:object="${product}" enctype="multipart/form-data">
 
-    <p>
-        <label for="id">Product ID</label> <br>
-        <input type="number" id="id" name="id" required>
-    </p>
-    <!-- ১. Product Name -->
-    <p>
-        <label for="name">Product Name:</label><br>
-        <input type="text" id="name" name="name" placeholder="e.g. T-Shirt or Smart TV" required>
-    </p>
+            <div class="form-grid">
 
-    <!-- ২. Category Dropdown -->
-    <p>
-        <label for="category">Select Category:</label><br>
-        <select id="category" name="category" required>
-            <option value="">-- Choose Category --</option>
-            <option value="DRESS">Dress Collection</option>
-            <option value="FMCG">FMCG</option>
-            <option value="ELECTRONICS">Electronics</option>
-            <option value="HOME_APPLIANCES">Home Appliances</option>
-        </select>
-    </p>
+                <!-- Left Column: Basic Details -->
+                <div class="left-col">
 
-    <!-- ৩. Price -->
-    <p>
-        <label for="price">Price ($):</label><br>
-        <input type="number" id="price" name="price" step="0.01" placeholder="e.g. 50.00" required>
-    </p>
+                    <div class="input-group">
+                        <label>Product ID</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-hashtag"></i>
+                            <input type="number" th:field="*{id}" class="form-control" placeholder="Unique ID" required>
+                        </div>
+                    </div>
 
-    <!-- ৪. Stock -->
-    <p>
-        <label for="stock">Stock Quantity:</label><br>
-        <input type="number" id="stock" name="stock" placeholder="e.g. 10" required>
-    </p>
+                    <div class="input-group">
+                        <label>Product Name</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-tag"></i>
+                            <input type="text" th:field="*{name}" class="form-control" placeholder="e.g. Premium Silk Saree" required>
+                        </div>
+                    </div>
 
-    <!-- ৫. Image File Upload (URL এর বদলে Local File) -->
-    <p>
-        <label for="imageFile">Product Image:</label><br>
-        <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
-    </p>
+                    <div class="input-group">
+                        <label>Select Category</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                            <select th:field="*{category}" class="form-control" required>
+                                <option value="">-- Choose Category --</option>
+                                <option value="DRESS">Dress Collection</option>
+                                <option value="FMCG">FMCG Products</option>
+                                <option value="ELECTRONICS">Electronics</option>
+                                <option value="HOME_APPLIANCES">Home Appliances</option>
+                            </select>
+                        </div>
+                    </div>
 
-    <!-- ৬. Description -->
-    <p>
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="4" cols="40" placeholder="Enter product details..."></textarea>
-    </p>
+                    <div class="input-group">
+                        <label>Price ($)</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-dollar-sign"></i>
+                            <input type="number" th:field="*{price}" step="0.01" class="form-control" placeholder="e.g. 50.00" required>
+                        </div>
+                    </div>
 
-    <!-- Submit Button -->
-    <p>
-        <button type="submit">Save Product</button>
-        <a href="/admin">Cancel</a>
-    </p>
+                    <div class="input-group">
+                        <label>Stock Quantity</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-cubes"></i>
+                            <input type="number" th:field="*{stock}" class="form-control" placeholder="e.g. 100" required>
+                        </div>
+                    </div>
 
-</form>
-<hr>
+                </div>
 
-<footer>
-    <p>Admin Panel - Pure HTML Version</p>
-</footer>
+                <!-- Right Column: Media & Description -->
+                <div class="right-col">
+
+                    <div class="input-group">
+                        <label><i class="fa-solid fa-image" style="color: var(--ruby-red);"></i> Product Image</label>
+                        <!-- Thymeleaf File Upload Input -->
+                        <input type="file" name="imageFile" accept="image/*" class="form-control" required style="margin-top: 5px;">
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fa-solid fa-pen-clip" style="color: var(--ruby-red);"></i> Product Description</label>
+                        <textarea th:field="*{details}" class="form-control" placeholder="Enter luxurious product details and specifications here..."></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Form Action Buttons -->
+            <div class="form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Save Product
+                </button>
+                <a href="/adminF" class="btn-cancel">
+                    <i class="fa-solid fa-xmark"></i> Cancel
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+    <footer>
+        <p>KENABECHA Admin Console - Powered by Spring Boot & Thymeleaf</p>
+    </footer>
+
+</div>
 
 </body>
 </html>

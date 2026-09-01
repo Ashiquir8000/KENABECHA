@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - KENABECHA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --ruby-red: #9B111E;
+            --text-dark: #2B1810;
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --success-green: #117822;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            padding-top: 120px; /* Fixed Header এর জন্য জায়গা */
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Glassmorphic Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            box-sizing: border-box;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        header h2 {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            color: var(--ruby-red);
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Success Card Styling */
+        .success-container {
+            max-width: 650px;
+            width: 90%;
+            margin: 50px auto;
+            padding: 50px 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(17, 120, 34, 0.15);
+            text-align: center;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: var(--success-green);
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(17, 120, 34, 0.3);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--success-green);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .status-badge {
+            background-color: #FF9800;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 8px rgba(255, 152, 0, 0.3);
+        }
+
+        /* Button Styling */
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #0047AB; /* আপনার দেওয়া ব্লু কালারের প্রিমিয়াম শেড */
+            color: white;
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 71, 171, 0.3);
+        }
+
+        .home-btn:hover {
+            background-color: #003380;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 71, 171, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2><i class="fa-solid fa-crown"></i> KENABECHA E-Commerce</h2>
+</header>
+
+<section class="success-container">
+    <div class="success-icon">
+        <i class="fa-solid fa-circle-check"></i>
+    </div>
+
+    <h1>🎉 Order Placed Successfully! 🎉</h1>
+    <p>Thank you for shopping with us. Your order is currently <strong class="status-badge">PENDING</strong>.</p>
+    <p>We will deliver your products soon.</p>
+
+    <br>
+    <a href="/home" class="home-btn">
+        <i class="fa-solid fa-house"></i> Return to Home
+    </a>
+</section>
+
+</body>
+</html>
