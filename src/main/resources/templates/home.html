@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +27,7 @@
             background: #fdfbfb url('/images/background.jpg') center center / cover no-repeat fixed;
             color: var(--text-dark);
             overflow-x: hidden;
+            width: 100%;
         }
 
         /* --- Header --- */
@@ -41,7 +42,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
@@ -133,7 +134,7 @@
             pointer-events: none;
         }
 
-        /* শাড়ি মডেল সামনে */
+        /* শাড়ি মডেল সামনে (Z-INDEX 3) */
         .saree-model {
             height: 75vh;
             max-height: 650px;
@@ -143,7 +144,7 @@
             margin-right: -4%;
         }
 
-        /* ছেলে মডেল পেছনে */
+        /* ছেলে মডেল পেছনে (Z-INDEX 2) */
         .urban-model {
             height: 70vh;
             max-height: 610px;
@@ -325,34 +326,27 @@
 
     <nav id="main-nav">
         <ul>
-            <li><a th:href="@{/home}">Home</a></li>
-            <li>
-                <form th:action="@{/search/visual}" method="post" enctype="multipart/form-data" style="margin: 0; display: flex; align-items: center;">
-                    <label for="visualImageInput" class="image-search-label" title="Upload an image to find similar products">
-                        <i class="fa-solid fa-camera"></i> Image Search
-                    </label>
-                    <input type="file" id="visualImageInput" name="imageFile" accept="image/*" style="display: none;" onchange="this.form.submit();" />
-                </form>
-            </li>
-            <li><a th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
 
-            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'admin'}">
-                <a th:href="@{/adminF}">Admin Dashboard</a>
+            <!-- Session Dependent Links with null check -->
+            <li th:if="${session != null and session.loggedInUser != null and session.loggedInUser.userName == 'admin'}">
+                <a href="/adminF">Admin Dashboard</a>
             </li>
-            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'moderator'}">
-                <a th:href="@{/moderator}">Moderator Hub</a>
+            <li th:if="${session != null and session.loggedInUser != null and session.loggedInUser.userName == 'moderator'}">
+                <a href="/moderator">Moderator Hub</a>
             </li>
-            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'inventory'}">
-                <a th:href="@{/inventory}">Warehouse Panel</a>
+            <li th:if="${session != null and session.loggedInUser != null and session.loggedInUser.userName == 'inventory'}">
+                <a href="/inventory">Warehouse Panel</a>
             </li>
 
-            <li th:if="${session.loggedInUser == null}">
-                <a th:href="@{/login}">Login / Register</a>
+            <li th:if="${session == null or session.loggedInUser == null}">
+                <a href="/login">Login / Register</a>
             </li>
-            <li th:if="${session.loggedInUser != null}">
-                <form th:action="@{/logout}" method="post" style="display: inline;">
+            <li th:if="${session != null and session.loggedInUser != null}">
+                <form action="/logout" method="post" style="display: inline;">
                     <button type="submit" class="logout-btn">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout (<span th:text="${session.loggedInUser.userName}"></span>)
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </button>
                 </form>
             </li>
@@ -363,8 +357,8 @@
 <section class="hero-section">
     <div class="hero-title" id="heroText">KENABECHA</div>
     <div class="models-container">
-        <img th:src="@{/images/woman.png}" class="saree-model" alt="Saree Model">
-        <img th:src="@{/images/man.png}" class="urban-model" alt="Urban Model">
+        <img src="/images/woman.png" class="saree-model" alt="Saree Model">
+        <img src="/images/man.png" class="urban-model" alt="Urban Model">
     </div>
 </section>
 
@@ -380,19 +374,19 @@
     <ul class="category-grid">
         <li class="glass-card">
             <i class="fa-solid fa-shirt category-icon"></i>
-            <a th:href="@{/category/DRESS}"><button type="button">Dress Collection</button></a>
+            <a href="/category/DRESS"><button type="button">Dress Collection</button></a>
         </li>
         <li class="glass-card">
             <i class="fa-solid fa-basket-shopping category-icon"></i>
-            <a th:href="@{/category/FMCG}"><button type="button">FMCG Products</button></a>
+            <a href="/category/FMCG"><button type="button">FMCG Products</button></a>
         </li>
         <li class="glass-card">
             <i class="fa-solid fa-plug category-icon"></i>
-            <a th:href="@{/category/ELECTRONICS}"><button type="button">Electronics</button></a>
+            <a href="/category/ELECTRONICS"><button type="button">Electronics</button></a>
         </li>
         <li class="glass-card">
             <i class="fa-solid fa-blender category-icon"></i>
-            <a th:href="@{/category/HOME_APPLIANCES}"><button type="button">Home Appliances</button></a>
+            <a href="/category/HOME_APPLIANCES"><button type="button">Home Appliances</button></a>
         </li>
     </ul>
 </section>
