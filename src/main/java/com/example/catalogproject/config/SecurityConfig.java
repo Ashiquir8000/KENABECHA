@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/ws/**"))
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/", "/home", "/register", "/login", "/proDetail/**", "/category/**", "/search/visual", "/images/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/home", "/register", "/login", "/proDetail/**", "/category/**", "/search/visual", "/images/**", "/css/**", "/js/**", "/mobile-fix.css").permitAll()
 
 
                         .requestMatchers("/adminF", "/prodF", "/edit/**", "/delete/**", "/admin/archived", "/restore/**", "/permanent-delete/**").hasRole("ADMIN")
