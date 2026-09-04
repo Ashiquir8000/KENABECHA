@@ -1,84 +1,57 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
 /* ========================================================
-   DESKTOP SAFEGUARD (৭৬৮ পিক্সেলের ওপরে কোনো পরিবর্তন হবে না)
+   1. DESKTOP VIEW SAFEGUARD (৭৬৮ পিক্সেলের ওপরে কোনো চেঞ্জ হবে না)
    ======================================================== */
 @media screen and (min-width: 769px) {
     #mobile-menu-toggle {
         display: none !important;
     }
-    nav, #main-nav {
-        position: static !important;
-        display: block !important;
-    }
 }
 
 /* ========================================================
-   ONLY MOBILE STYLES (শুধুমাত্র মোবাইল স্ক্রিনে কাজ করবে)
+   2. MOBILE ONLY VIEW (স্ক্রিন সাইজ <= 768px হলে কাজ করবে)
    ======================================================== */
 @media screen and (max-width: 768px) {
 
-    html, body {
-        max-width: 100vw !important;
-        overflow-x: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-    }
-
-    /* --- ১. হেডার ও ৩-ডট সাইডবার মেনু --- */
+    /* হেডার ও ৩-ডট বাটন */
     header {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        padding: 10px 16px !important;
-        height: 60px !important;
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
+        height: 60px !important;
+        padding: 10px 16px !important;
         z-index: 10000 !important;
-        background: rgba(255, 255, 255, 0.85) !important;
-        backdrop-filter: blur(15px) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        background: rgba(255, 255, 255, 0.9) !important;
     }
 
-    header h2 {
-        font-size: 1.15rem !important;
-        margin: 0 !important;
-    }
-
-    /* ৩-ডট বাটন */
     #mobile-menu-toggle {
         display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 38px !important;
-        height: 38px !important;
-        background: #9B111E !important;
-        color: #ffffff !important;
-        border-radius: 50% !important;
-        font-size: 1.2rem !important;
-        cursor: pointer !important;
-        box-shadow: 0 4px 10px rgba(155, 17, 30, 0.3) !important;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        background: #9B111E;
+        color: #ffffff;
+        border-radius: 50%;
+        font-size: 1.1rem;
+        cursor: pointer;
     }
 
-    /* ৩-ডটে ক্লিক করলে যে সাইডবার বের হবে */
+    /* সাইড ড্রয়ার মেনু */
     nav, #main-nav {
         position: fixed !important;
         top: 60px !important;
         right: -100% !important;
-        width: 240px !important;
+        width: 220px !important;
         height: calc(100vh - 60px) !important;
-        background: rgba(255, 255, 255, 0.98) !important;
-        backdrop-filter: blur(25px) !important;
-        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2) !important;
-        transition: right 0.3s ease-in-out !important;
-        padding: 25px 20px !important;
+        background: #ffffff !important;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.15) !important;
+        transition: right 0.3s ease !important;
+        padding: 20px 15px !important;
         z-index: 9999 !important;
-        display: block !important;
     }
 
     nav.nav-open, #main-nav.nav-open {
@@ -87,137 +60,67 @@
 
     nav ul {
         flex-direction: column !important;
-        gap: 18px !important;
+        gap: 15px !important;
         align-items: flex-start !important;
         padding: 0 !important;
         margin: 0 !important;
-        list-style: none !important;
     }
 
-    nav a {
-        width: 100% !important;
-        font-size: 1rem !important;
-        display: block !important;
-    }
-
-    /* --- ২. হিরো সেকশন: মডেলদের পারফেক্ট অবস্থান --- */
+    /* হিরো সেকশন ও মডেলদের অবস্থান */
     .hero-section {
         margin-top: 60px !important;
+        height: 75vh !important;
+        min-height: 420px !important;
         position: relative !important;
-        height: 480px !important;
-        min-height: 480px !important;
-        width: 100% !important;
-        overflow: hidden !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
-        background-image: url('/images/back1.jpg') !important;
-        background-size: cover !important;
-        background-position: center !important;
-        padding: 0 !important;
     }
 
-    /* KENABECHA লেখাটি সেন্টারে এবং সবার পেছনে */
     .hero-title, #heroText {
         position: absolute !important;
-        top: 40% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        font-size: 3.2rem !important;
-        letter-spacing: 2px !important;
+        top: 30% !important;
+        font-size: 3.5rem !important;
+        color: #9B111E !important;
         z-index: 1 !important;
         text-align: center !important;
         margin: 0 !important;
-        white-space: nowrap !important;
-        color: #9B111E !important;
-        pointer-events: none !important;
     }
 
-    /* মডেল কন্টেইনার */
     .models-container {
         position: absolute !important;
         bottom: 0 !important;
         width: 100% !important;
-        height: 100% !important;
         display: flex !important;
         justify-content: center !important;
         align-items: flex-end !important;
-        z-index: 2 !important;
-        pointer-events: none !important;
     }
 
-    /* মেয়ে মডেল: সবার সামনে (Z-INDEX 3) */
-    .saree-model,
-    .hero-section img[src*="woman"] {
-        height: 390px !important;
-        position: relative !important;
-        margin-right: -14% !important;
+    /* মেয়ে মডেল সামনে (Z-INDEX: 3) */
+    .saree-model {
+        height: 55vh !important;
+        min-height: 320px !important;
+        margin-right: -15% !important;
         z-index: 3 !important;
-        object-fit: contain !important;
+        position: relative !important;
     }
 
-    /* ছেলে মডেল: মেয়ের পেছনে (Z-INDEX 2) */
-    .urban-model,
-    .hero-section img[src*="man"] {
-        height: 370px !important;
-        position: relative !important;
-        margin-left: -14% !important;
+    /* ছেলে মডেল পেছনে (Z-INDEX: 2) */
+    .urban-model {
+        height: 50vh !important;
+        min-height: 300px !important;
+        margin-left: -15% !important;
         z-index: 2 !important;
-        object-fit: contain !important;
-    }
-
-    .welcome-section {
         position: relative !important;
-        z-index: 5 !important;
-        margin-top: -30px !important;
     }
 
-    /* --- ৩. ক্যাটাগরি ও অ্যাডমিন কার্ডস --- */
-    .status-cards, .stats-container, .grid-3 {
-        display: flex !important;
+    /* ড্যাশবোর্ড কার্ডস */
+    .status-cards, .stats-container {
         flex-direction: column !important;
-        gap: 16px !important;
+        gap: 15px !important;
+    }
+
+    .status-card {
         width: 100% !important;
-    }
-
-    .status-card, .stat-box {
-        width: 100% !important;
-    }
-
-    /* --- ৪. প্রোডাক্ট অ্যাকর্ডিয়ন টেবিল --- */
-    table, thead, tbody, th, td, tr {
-        display: block !important;
-        width: 100% !important;
-    }
-
-    thead tr {
-        position: absolute !important;
-        top: -9999px !important;
-        left: -9999px !important;
-    }
-
-    tbody tr {
-        background: rgba(255, 255, 255, 0.9) !important;
-        margin-bottom: 15px !important;
-        border-radius: 18px !important;
-        padding: 14px 16px !important;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important;
-        border: 1px solid rgba(155, 17, 30, 0.15) !important;
-        position: relative !important;
-        cursor: pointer !important;
-    }
-
-    tbody tr td:nth-child(n+4) {
-        display: none !important;
-        padding-top: 8px !important;
-    }
-
-    tbody tr.expanded td:nth-child(n+4) {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        border-top: 1px dashed rgba(0,0,0,0.1) !important;
-        margin-top: 8px !important;
-        padding-top: 10px !important;
     }
 }
