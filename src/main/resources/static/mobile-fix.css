@@ -151,4 +151,105 @@ html, body {
         border-radius: 50% !important;
         padding: 0 !important;
     }
+
+}
+
+/* ========================================================
+   Admin Dashboard Mobile Responsive (Drawer + Full Scroll)
+   ======================================================== */
+@media screen and (max-width: 768px) {
+    /* ১. পুরো ড্যাশবোর্ড স্ক্রিন লেআউট */
+    .admin-container, .dashboard-wrapper, .admin-layout, body {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    /* ২. সাইডবার ডিফল্টভাবে স্ক্রিনের বাইরে থাকবে (Drawer মোড) */
+    aside, .sidebar, .admin-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: -280px !important; /* স্ক্রিনের বাঁয়ে লুকিয়ে থাকবে */
+        width: 260px !important;
+        height: 100vh !important;
+        background: #ffffff !important;
+        z-index: 100000 !important;
+        box-shadow: 4px 0 25px rgba(0,0,0,0.2) !important;
+        transition: left 0.3s ease-in-out !important;
+        padding-top: 60px !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* যখন ৩-ডটে ক্লিক হবে তখন সাইডবার ভেসে আসবে */
+    aside.active, .sidebar.active, .admin-sidebar.active {
+        left: 0 !important;
+    }
+
+    /* ৩. ৩-ডট ফ্লোটিং টগল বাটন */
+    #admin-nav-toggle {
+        display: flex !important;
+        position: fixed !important;
+        top: 15px !important;
+        left: 15px !important;
+        width: 42px !important;
+        height: 42px !important;
+        background: #9B111E !important;
+        color: #ffffff !important;
+        border-radius: 50% !important;
+        justify-content: center !important;
+        align-items: center !important;
+        font-size: 1.2rem !important;
+        cursor: pointer !important;
+        z-index: 100001 !important;
+        box-shadow: 0 4px 12px rgba(155, 17, 30, 0.4) !important;
+    }
+
+    /* ৪. মূল কনটেন্ট এরিয়া পুরো স্ক্রিন পাবে এবং সোজা নিচে স্ক্রল হবে */
+    main, .main-content, .dashboard-content, .content-area {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 70px 12px 30px 12px !important; /* ওপরে বাটনের জন্য জায়গা */
+        box-sizing: border-box !important;
+    }
+
+    /* ৫. ব্যানার ও বাটনগুলো ঠিক করা */
+    .banner, .dashboard-banner, [class*="Console"] {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 20px 15px !important;
+        gap: 15px !important;
+    }
+
+    .banner button, .banner a {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    /* ৬. ৩টি স্ট্যাটাস কার্ড এক কলামে সোজা নিচে বসবে */
+    .status-cards, .stats-container, .grid-3 {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        width: 100% !important;
+    }
+
+    .status-card, .stat-box {
+        width: 100% !important;
+    }
+
+    /* টেবিল থাকলে যেন ডানে স্ক্রল করা যায় */
+    table, .table-responsive {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+    }
+}
+
+/* ডেস্কটপে যেন টগল বাটন না দেখায় */
+@media screen and (min-width: 769px) {
+    #admin-nav-toggle {
+        display: none !important;
+    }
 }

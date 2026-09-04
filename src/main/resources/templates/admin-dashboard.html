@@ -683,6 +683,8 @@
 </head>
 <body>
 
+<div id="admin-nav-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+
 <aside class="sidebar">
     <div class="sidebar-header">
         <i class="fa-solid fa-chess-king"></i>
@@ -1123,6 +1125,27 @@
         chatBody.appendChild(msgDiv);
         chatBody.scrollTop = chatBody.scrollHeight;
     }
+</script>
+
+<script>
+    function toggleSidebar() {
+        // সাইডবার ট্যাগ (aside অথবা .sidebar) খুঁজে টগল করবে
+        const sidebar = document.querySelector('aside') || document.querySelector('.sidebar');
+        if (sidebar) {
+            sidebar.classList.toggle('active');
+        }
+    }
+
+    // স্ক্রিনে অন্য কোথাও ক্লিক করলে সাইডবার বন্ধ হয়ে যাবে
+    document.addEventListener('click', function(e) {
+        const sidebar = document.querySelector('aside') || document.querySelector('.sidebar');
+        const toggleBtn = document.getElementById('admin-nav-toggle');
+        if (sidebar && sidebar.classList.contains('active')) {
+            if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        }
+    });
 </script>
 
 </body>
