@@ -22,6 +22,7 @@
             --ruby-red: #9B111E;
             --text-dark: #2B1810;
             --glass-bg: rgba(255, 255, 255, 0.15);
+            --header-h: 75px;
         }
 
         *, *::before, *::after {
@@ -32,33 +33,32 @@
             margin: 0;
             padding: 0;
             width: 100%;
+            min-height: 100vh;
             overflow-x: hidden;
             font-family: 'Poppins', sans-serif;
-            background-image: url('/images/background.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center center;
+            background: #fdfbfb url('/images/background.jpg') center center / cover no-repeat;
             color: var(--text-dark);
         }
 
         /* -------------------------------------------------------------
-           1. DESKTOP STYLES (মূল ডিজাইন অক্ষত রাখা হয়েছে)
+           1. DESKTOP STYLES (Screen > 768px)
            ------------------------------------------------------------- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px 50px;
+            height: var(--header-h);
+            padding: 0 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         header h2 {
@@ -66,18 +66,20 @@
             font-family: 'Cinzel', serif;
             color: var(--ruby-red);
             font-weight: 900;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            flex-shrink: 0;
         }
 
         #mobile-menu-toggle {
-            display: none; /* ডেস্কটপে ৩-ডট বাটন লুকানো থাকবে */
+            display: none;
         }
 
         nav ul {
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 25px;
             margin: 0;
             padding: 0;
         }
@@ -87,6 +89,7 @@
             color: var(--text-dark);
             font-weight: 600;
             transition: color 0.3s;
+            font-size: 0.95rem;
         }
 
         nav a:hover {
@@ -100,8 +103,9 @@
             transition: color 0.3s;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             margin: 0;
+            font-size: 0.95rem;
         }
 
         .image-search-label:hover {
@@ -112,13 +116,13 @@
             background-color: var(--ruby-red);
             color: white;
             border: none;
-            padding: 8px 20px;
-            border-radius: 25px;
+            padding: 8px 18px;
+            border-radius: 20px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(155, 17, 30, 0.2);
+            box-shadow: 0 4px 12px rgba(155, 17, 30, 0.2);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -132,16 +136,15 @@
         /* Hero Section */
         .hero-section {
             position: relative;
-            height: 100vh;
             width: 100%;
+            height: calc(100vh - var(--header-h));
+            min-height: 550px;
+            margin-top: var(--header-h);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            background: url('/images/back1.jpg') center center / cover no-repeat;
             overflow: hidden;
-            background-image: url('/images/back1.jpg');
-            background-size: cover;
-            background-position: center center;
         }
 
         .hero-section::after {
@@ -150,29 +153,30 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 15vh;
-            background: linear-gradient(to top, rgba(0,0,0,0.15), transparent);
+            height: 120px;
+            background: linear-gradient(to top, rgba(255,255,255,0.8), transparent);
             z-index: 4;
             pointer-events: none;
         }
 
         .hero-title {
             position: absolute;
-            top: 25%;
+            top: 30%;
             font-family: 'Cinzel', serif;
-            font-size: 14vw;
+            font-size: 13vw;
             font-weight: 900;
             color: rgba(155, 17, 30, 0.9);
             z-index: 1;
             user-select: none;
             white-space: nowrap;
+            letter-spacing: 4px;
         }
 
         .models-container {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: flex-end;
@@ -180,21 +184,23 @@
             pointer-events: none;
         }
 
-        /* মেয়ে মডেলটি ছেলে মডেলের সামনে (Z-INDEX 3) */
+        /* শাড়ির মডেল সামনে (Z-INDEX 3) */
         .saree-model {
-            height: 90vh;
+            height: 82vh;
+            max-height: 700px;
             position: relative;
             z-index: 3;
             object-fit: contain;
             margin-right: -4%;
         }
 
-        /* ছেলে মডেলটি মেয়ে মডেলের পেছনে (Z-INDEX 2) */
+        /* ছেলে মডেল পেছনে (Z-INDEX 2) */
         .urban-model {
-            height: 85vh;
+            height: 78vh;
+            max-height: 660px;
             position: relative;
             z-index: 2;
-            margin-left: -8%;
+            margin-left: -6%;
             object-fit: contain;
         }
 
@@ -204,83 +210,83 @@
             justify-content: center;
             position: relative;
             z-index: 10;
-            margin-top: -12vh;
+            margin-top: -60px;
             padding: 0 20px 40px 20px;
         }
 
         .welcome-box {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            padding: 40px 60px;
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px 50px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.9);
             text-align: center;
             max-width: 800px;
             width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         .welcome-box h1 {
-            font-size: 2.5rem;
-            margin: 0 0 15px 0;
+            font-size: 2.2rem;
+            margin: 0 0 10px 0;
             font-family: 'Cinzel', serif;
             color: var(--ruby-red);
         }
 
         /* Category Section */
         .category-section {
-            padding: 40px 10% 120px 10%;
+            padding: 30px 8% 100px 8%;
             position: relative;
             z-index: 5;
         }
 
         .category-section h3 {
             font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
+            font-size: 2.4rem;
             text-align: center;
             color: var(--ruby-red);
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
         .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 20px;
-            padding: 50px 30px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 18px;
+            padding: 40px 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            transition: all 0.4s ease;
+            transition: transform 0.3s ease;
         }
 
         .glass-card:hover {
-            transform: translateY(-15px);
-            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-8px);
         }
 
         .category-icon {
-            font-size: 4rem;
+            font-size: 3.5rem;
             color: var(--ruby-red);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .glass-card button {
             background-color: var(--ruby-red);
             color: #FFFFFF;
             border: none;
-            padding: 15px 25px;
-            border-radius: 30px;
+            padding: 12px 25px;
+            border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
@@ -289,176 +295,157 @@
 
         .glass-card button:hover {
             background-color: #7A0D17;
-            transform: scale(1.05);
         }
 
         footer {
             text-align: center;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.7);
             font-weight: 600;
         }
 
-        /* Floating Chat Widget */
+        /* Chat Widget */
         .chat-widget-btn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
             background: var(--ruby-red);
             color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(155, 17, 30, 0.4);
+            box-shadow: 0 8px 20px rgba(155, 17, 30, 0.35);
             z-index: 1000;
-            transition: transform 0.3s;
-        }
-
-        .chat-widget-btn:hover {
-            transform: scale(1.1);
         }
 
         .chat-box {
             position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 350px;
-            height: 450px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            bottom: 90px;
+            right: 25px;
+            width: 340px;
+            height: 440px;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(15px);
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
             display: none;
             flex-direction: column;
             z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             overflow: hidden;
         }
 
         .chat-header {
             background: var(--ruby-red);
             color: white;
-            padding: 15px 20px;
+            padding: 14px 18px;
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .chat-header i {
-            cursor: pointer;
-        }
-
         .chat-messages {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .msg-bubble {
             max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 0.88rem;
         }
 
         .msg-customer {
             background: var(--ruby-red);
             color: white;
             align-self: flex-end;
-            border-bottom-right-radius: 3px;
+            border-bottom-right-radius: 2px;
         }
 
         .msg-moderator {
-            background: #f0f0f0;
+            background: #f1f1f1;
             color: var(--text-dark);
             align-self: flex-start;
-            border-bottom-left-radius: 3px;
+            border-bottom-left-radius: 2px;
         }
 
         .chat-input-area {
             display: flex;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 12px;
+            background: #fff;
             border-top: 1px solid #eee;
         }
 
         .chat-input-area input {
             flex: 1;
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: 1px solid #ccc;
-            border-radius: 20px;
+            border-radius: 18px;
             outline: none;
-            font-family: 'Poppins', sans-serif;
         }
 
         .chat-input-area button {
             background: var(--ruby-red);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            margin-left: 10px;
+            margin-left: 8px;
             cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .chat-input-area button:hover {
-            transform: scale(1.1);
         }
 
         /* -------------------------------------------------------------
-           2. MOBILE RESPONSIVE STYLES (Screen <= 768px)
+           2. MOBILE RESPONSIVE ENGINE (Screen <= 768px)
            ------------------------------------------------------------- */
         @media screen and (max-width: 768px) {
+            :root {
+                --header-h: 60px;
+            }
+
             header {
-                padding: 10px 16px;
-                height: 60px;
+                padding: 0 16px;
             }
 
             header h2 {
                 font-size: 1.15rem;
             }
 
-            /* ৩-ডট বাটন দৃশ্যমান */
             #mobile-menu-toggle {
-                display: flex !important;
+                display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 38px;
-                height: 38px;
+                width: 36px;
+                height: 36px;
                 background: var(--ruby-red);
                 color: #ffffff;
                 border-radius: 50%;
-                font-size: 1.15rem;
+                font-size: 1.1rem;
                 cursor: pointer;
-                box-shadow: 0 4px 10px rgba(155, 17, 30, 0.3);
             }
 
-            /* সাইডবার মেনু ড্রয়ার */
+            /* ড্রয়ার হিসেবে সাইডবার */
             nav#main-nav {
                 position: fixed;
-                top: 60px;
+                top: var(--header-h);
                 right: -100%;
-                width: 240px;
-                height: calc(100vh - 60px);
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(25px);
-                -webkit-backdrop-filter: blur(25px);
-                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+                width: 220px;
+                height: calc(100vh - var(--header-h));
+                background: #ffffff;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
                 transition: right 0.3s ease-in-out;
-                padding: 25px 20px;
+                padding: 20px 16px;
                 z-index: 9999;
                 display: block;
             }
@@ -469,94 +456,73 @@
 
             nav#main-nav ul {
                 flex-direction: column;
-                gap: 18px;
+                gap: 15px;
                 align-items: flex-start;
             }
 
             nav#main-nav a {
-                font-size: 1rem;
+                font-size: 0.95rem;
                 width: 100%;
                 display: block;
             }
 
-            /* মোবাইলে হিরো সেকশন ও মডেলদের পারফেক্ট ঘনিষ্ঠতা */
+            /* হিরো সেকশন উচ্চতা ও মডেল ঘনিষ্ঠতা */
             .hero-section {
-                margin-top: 60px;
-                height: 75vh;
-                min-height: 440px;
+                height: 60vh;
+                min-height: 400px;
             }
 
             .hero-title {
-                font-size: 2.8rem;
-                top: 36%;
-                letter-spacing: 2px;
-                z-index: 1;
-            }
-
-            .models-container {
-                height: 100%;
-                width: 100%;
+                font-size: 3rem;
+                top: 28%;
             }
 
             .saree-model {
-                height: 58vh;
-                min-height: 330px;
-                margin-right: -14%;
+                height: 48vh;
+                min-height: 300px;
+                margin-right: -12%;
                 z-index: 3;
             }
 
             .urban-model {
-                height: 53vh;
-                min-height: 300px;
-                margin-left: -14%;
+                height: 44vh;
+                min-height: 270px;
+                margin-left: -12%;
                 z-index: 2;
             }
 
             .welcome-section {
-                margin-top: -6vh;
+                margin-top: -30px;
                 padding: 0 15px 30px 15px;
             }
 
             .welcome-box {
-                padding: 25px 20px;
+                padding: 25px 15px;
             }
 
             .welcome-box h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .category-section {
-                padding: 30px 15px 80px 15px;
+                padding: 20px 15px 60px 15px;
             }
 
             .category-section h3 {
-                font-size: 2rem;
-                margin-bottom: 30px;
+                font-size: 1.8rem;
+                margin-bottom: 25px;
             }
 
             .category-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .glass-card {
-                padding: 35px 20px;
+                gap: 16px;
             }
 
             .chat-box {
                 width: 90vw;
                 right: 5vw;
-                bottom: 85px;
-                height: 65vh;
-                max-height: 480px;
-            }
-
-            .chat-widget-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.4rem;
+                bottom: 80px;
+                height: 60vh;
             }
         }
     </style>
@@ -566,12 +532,10 @@
 <header>
     <h2>KENABECHA E-Commerce</h2>
 
-    <!-- ৩-ডট টগল বাটন -->
     <div id="mobile-menu-toggle" onclick="toggleNavMenu()">
         <i class="fa-solid fa-ellipsis-vertical"></i>
     </div>
 
-    <!-- মূল নেভিগেশন (মোবাইলে ড্রয়ার) -->
     <nav id="main-nav">
         <ul>
             <li><a th:href="@{/home}">Home</a></li>
@@ -585,17 +549,14 @@
             </li>
             <li><a th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
 
-            <!-- Admin Link -->
             <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'admin'}">
                 <a th:href="@{/adminF}">Admin Dashboard</a>
             </li>
 
-            <!-- Moderator Link -->
             <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'moderator'}">
                 <a th:href="@{/moderator}">Moderator Hub</a>
             </li>
 
-            <!-- Inventory Manager Link -->
             <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'inventory'}">
                 <a th:href="@{/inventory}">Warehouse Panel</a>
             </li>
@@ -617,7 +578,6 @@
 <section class="hero-section">
     <div class="hero-title" id="heroText">KENABECHA</div>
     <div class="models-container">
-        <!-- saree-model সামনে (z-index: 3), urban-model পেছনে (z-index: 2) -->
         <img th:src="@{/images/woman.png}" class="saree-model" alt="Saree Model">
         <img th:src="@{/images/man.png}" class="urban-model" alt="Urban Model">
     </div>
@@ -758,7 +718,6 @@
     </script>
 </th:block>
 
-<!-- Parallax Effect Script (শুধুমাত্র ডেস্কটপে কাজ করবে) -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const heroText = document.getElementById('heroText');
@@ -768,8 +727,8 @@
             heroSection.addEventListener('mousemove', (e) => {
                 const { clientX, clientY } = e;
                 const { innerWidth, innerHeight } = window;
-                const offsetX = ((clientX / innerWidth) - 0.5) * 40;
-                const offsetY = ((clientY / innerHeight) - 0.5) * 20;
+                const offsetX = ((clientX / innerWidth) - 0.5) * 30;
+                const offsetY = ((clientY / innerHeight) - 0.5) * 15;
                 heroText.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
             });
 
@@ -778,10 +737,7 @@
             });
         }
     });
-</script>
 
-<!-- Mobile Navigation Drawer Toggle Script -->
-<script>
     function toggleNavMenu() {
         const nav = document.getElementById('main-nav');
         if (nav) {
