@@ -1148,5 +1148,19 @@
     });
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // মোবাইলে টেবিলের যেকোনো রো ক্লিক করলে ড্রপডাউন টগল হবে
+        const rows = document.querySelectorAll("tbody tr");
+        rows.forEach(row => {
+            row.addEventListener("click", function(e) {
+                // Edit বা Delete বাটনে ক্লিক করলে ড্রপডাউন বন্ধ হবে না
+                if (e.target.closest('a') || e.target.closest('button')) return;
+                this.classList.toggle("expanded");
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

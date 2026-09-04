@@ -12,244 +12,157 @@ html, body {
 
 @media screen and (max-width: 768px) {
 
-    /* --- 1. Header & Navigation --- */
-    header {
-        position: relative !important;
-        width: 100% !important;
-        padding: 12px 10px !important;
-        flex-direction: column !important;
-        gap: 10px !important;
-        height: auto !important;
-    }
-
-    header h2 {
-        font-size: 1.3rem !important;
-        text-align: center !important;
-    }
-
-    nav ul {
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 10px !important;
-        padding: 0 !important;
-    }
-
-    nav a {
-        padding: 6px 12px !important;
-        font-size: 0.85rem !important;
-    }
-
-    /* --- 2. Home Hero Section & Images --- */
+    /* ========================================================
+       1. HOME HERO SECTION (মডেল দুটো ওভারল্যাপ থাকবে)
+       ======================================================== */
     .hero-section {
-        min-height: auto !important;
-        height: auto !important;
-        padding: 20px 10px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
         position: relative !important;
-    }
-
-    .hero-section h1, .hero-section .hero-title {
-        font-size: 2rem !important;
-        text-align: center !important;
-        margin: 10px 0 !important;
-    }
-
-    /* মডেল ইমেজ দুটোকে পাশাপাশি ছোট বা সাজিয়ে রাখা */
-    .hero-section img,
-    .hero-section .model-left,
-    .hero-section .model-right {
-        position: static !important;
-        max-width: 45% !important;
-        height: auto !important;
-        display: inline-block !important;
-        margin: 5px !important;
-    }
-
-    /* --- 3. Categories & Grids --- */
-    .category-section, .categories-container, .category-grid {
         width: 100% !important;
-        padding: 15px 10px !important;
+        height: 380px !important;
+        min-height: 380px !important;
+        overflow: hidden !important;
         display: flex !important;
-        flex-direction: column !important;
+        justify-content: center !important;
         align-items: center !important;
-        box-sizing: border-box !important;
-    }
-
-    .category-card, .glass-card {
-        width: 90% !important;
-        max-width: 320px !important;
-        margin: 10px auto !important;
-        box-sizing: border-box !important;
-    }
-
-    /* --- 4. Products Listing (Category Page) --- */
-    .products-section, .product-grid {
-        width: 100% !important;
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
-        padding: 15px 12px !important;
-        box-sizing: border-box !important;
-    }
-
-    .product-card {
-        width: 100% !important;
-        max-width: 330px !important;
-        margin: 0 auto !important;
-    }
-
-    .product-card img {
-        width: 100% !important;
-        height: 220px !important;
-        object-fit: cover !important;
-    }
-
-    /* --- 5. Live Chat Widget Mobile Handling --- */
-    #chat-box, .chat-box, .chat-widget, [class*="chat-window"] {
-        width: 92vw !important;
-        max-width: 360px !important;
-        height: 70vh !important;
-        max-height: 480px !important;
-        right: 4vw !important;
-        bottom: 75px !important;
-        left: auto !important;
-        border-radius: 16px !important;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
-        z-index: 9999 !important;
-    }
-
-    .chat-widget-btn, #chat-toggle-btn, [class*="chat-widget-btn"] {
-        bottom: 15px !important;
-        right: 15px !important;
-        width: 50px !important;
-        height: 50px !important;
-        z-index: 10000 !important;
-    }
-
-    /* চ্যাটের ইনপুট এবং সেন্ড বাটন ঠিক করা */
-    .chat-input-area, .chat-footer, form[class*="chat"] {
-        display: flex !important;
-        padding: 8px !important;
-        gap: 6px !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-
-    .chat-input-area input, .chat-footer input {
-        flex: 1 !important;
-        width: auto !important;
-        min-width: 0 !important;
-        font-size: 14px !important;
-    }
-
-    .chat-input-area button, .chat-footer button {
-        width: 44px !important;
-        height: 40px !important;
-        flex-shrink: 0 !important;
-        border-radius: 50% !important;
         padding: 0 !important;
     }
 
-}
-
-/* ========================================================
-   Admin Dashboard Mobile Responsive (Drawer + Full Scroll)
-   ======================================================== */
-@media screen and (max-width: 768px) {
-    /* ১. পুরো ড্যাশবোর্ড স্ক্রিন লেআউট */
-    .admin-container, .dashboard-wrapper, .admin-layout, body {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-        overflow-x: hidden !important;
-    }
-
-    /* ২. সাইডবার ডিফল্টভাবে স্ক্রিনের বাইরে থাকবে (Drawer মোড) */
-    aside, .sidebar, .admin-sidebar {
-        position: fixed !important;
-        top: 0 !important;
-        left: -280px !important; /* স্ক্রিনের বাঁয়ে লুকিয়ে থাকবে */
-        width: 260px !important;
-        height: 100vh !important;
-        background: #ffffff !important;
-        z-index: 100000 !important;
-        box-shadow: 4px 0 25px rgba(0,0,0,0.2) !important;
-        transition: left 0.3s ease-in-out !important;
-        padding-top: 60px !important;
-        display: flex !important;
-        flex-direction: column !important;
-    }
-
-    /* যখন ৩-ডটে ক্লিক হবে তখন সাইডবার ভেসে আসবে */
-    aside.active, .sidebar.active, .admin-sidebar.active {
-        left: 0 !important;
-    }
-
-    /* ৩. ৩-ডট ফ্লোটিং টগল বাটন */
-    #admin-nav-toggle {
-        display: flex !important;
-        position: fixed !important;
-        top: 15px !important;
-        left: 15px !important;
-        width: 42px !important;
-        height: 42px !important;
-        background: #9B111E !important;
-        color: #ffffff !important;
-        border-radius: 50% !important;
-        justify-content: center !important;
-        align-items: center !important;
-        font-size: 1.2rem !important;
-        cursor: pointer !important;
-        z-index: 100001 !important;
-        box-shadow: 0 4px 12px rgba(155, 17, 30, 0.4) !important;
-    }
-
-    /* ৪. মূল কনটেন্ট এরিয়া পুরো স্ক্রিন পাবে এবং সোজা নিচে স্ক্রল হবে */
-    main, .main-content, .dashboard-content, .content-area {
-        width: 100% !important;
-        margin-left: 0 !important;
-        padding: 70px 12px 30px 12px !important; /* ওপরে বাটনের জন্য জায়গা */
-        box-sizing: border-box !important;
-    }
-
-    /* ৫. ব্যানার ও বাটনগুলো ঠিক করা */
-    .banner, .dashboard-banner, [class*="Console"] {
-        flex-direction: column !important;
+    /* KENABECHA লেখাটি মাঝে থাকবে */
+    .hero-section h1, .hero-section .hero-title, .hero-section [class*="title"] {
+        font-size: 2.2rem !important;
+        letter-spacing: 2px !important;
+        z-index: 2 !important;
         text-align: center !important;
-        padding: 20px 15px !important;
-        gap: 15px !important;
-    }
-
-    .banner button, .banner a {
-        width: 100% !important;
+        position: relative !important;
         margin: 0 !important;
     }
 
-    /* ৬. ৩টি স্ট্যাটাস কার্ড এক কলামে সোজা নিচে বসবে */
-    .status-cards, .stats-container, .grid-3 {
+    /* বাঁয়ের মডেল */
+    .hero-section img:first-of-type,
+    .hero-section .model-left,
+    .hero-section img[src*="woman"] {
+        position: absolute !important;
+        left: -15px !important;
+        bottom: 0 !important;
+        height: 320px !important;
+        width: auto !important;
+        max-width: none !important;
+        z-index: 3 !important;
+        pointer-events: none !important;
+    }
+
+    /* ডানের মডেল */
+    .hero-section img:last-of-type,
+    .hero-section .model-right,
+    .hero-section img[src*="man"] {
+        position: absolute !important;
+        right: -15px !important;
+        bottom: 0 !important;
+        height: 320px !important;
+        width: auto !important;
+        max-width: none !important;
+        z-index: 3 !important;
+        pointer-events: none !important;
+    }
+
+    /* ========================================================
+       2. ADMIN DASHBOARD STAT CARDS (পরপর নিচে নিচে স্ক্রল হবে)
+       ======================================================== */
+    .status-cards, .stats-container, .grid-3, [class*="stats"], [class*="status"] {
         display: flex !important;
         flex-direction: column !important;
-        gap: 15px !important;
+        gap: 16px !important;
         width: 100% !important;
+        padding: 10px 0 !important;
     }
 
-    .status-card, .stat-box {
+    .status-card, .stat-box, .glass-card, [class*="stat-card"] {
         width: 100% !important;
+        min-width: 100% !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
     }
 
-    /* টেবিল থাকলে যেন ডানে স্ক্রল করা যায় */
-    table, .table-responsive {
+    /* ========================================================
+       3. PRODUCT TABLE TO DROPDOWN ACCORDION
+       ======================================================== */
+    /* সাধারণ টেবিল লুক ভেঙে কার্ড লুক দেওয়া */
+    table, thead, tbody, th, td, tr {
         display: block !important;
         width: 100% !important;
-        overflow-x: auto !important;
     }
-}
 
-/* ডেস্কটপে যেন টগল বাটন না দেখায় */
-@media screen and (min-width: 769px) {
-    #admin-nav-toggle {
+    thead tr {
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+    }
+
+    /* প্রতিটি প্রোডাক্ট একেকটি ক্লিকেবল কার্ড */
+    tbody tr {
+        background: rgba(255, 255, 255, 0.9) !important;
+        margin-bottom: 15px !important;
+        border-radius: 18px !important;
+        padding: 14px 16px !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important;
+        border: 1px solid rgba(155, 17, 30, 0.15) !important;
+        position: relative !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+    }
+
+    /* হেড অংশ: আইডি, ছবি ও নাম সবসময় ভিজিবল থাকবে */
+    tbody tr td {
+        padding: 4px 0 !important;
+        border: none !important;
+        text-align: left !important;
+    }
+
+    /* বাকি ডিটেইলস (Stock, Actions, Edit, Delete) শুরুতে লুকানো থাকবে */
+    tbody tr td:nth-child(n+4) {
         display: none !important;
+        padding-top: 8px !important;
+    }
+
+    /* যখন রো-তে ক্লিক করে 'expanded' ক্লাস যোগ হবে তখন ড্রপডাউন ওপেন হবে */
+    tbody tr.expanded td:nth-child(n+4) {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        border-top: 1px dashed rgba(0,0,0,0.1) !important;
+        margin-top: 8px !important;
+        padding-top: 10px !important;
+    }
+
+    /* ড্রপডাউনে অ্যাকশন বাটনগুলো ফুল উইডথে পাশাপাশি বসবে */
+    tbody tr.expanded td:last-child {
+        display: flex !important;
+        gap: 12px !important;
+        justify-content: stretch !important;
+    }
+
+    tbody tr.expanded td:last-child a,
+    tbody tr.expanded td:last-child button {
+        flex: 1 !important;
+        text-align: center !important;
+        padding: 10px !important;
+        border-radius: 10px !important;
+    }
+
+    /* ডান পাশে একটি ছোট টগল ইঙ্গিত আইকন */
+    tbody tr::after {
+        content: '\f107'; /* FontAwesome Chevron Down */
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        top: 20px;
+        right: 18px;
+        color: #9B111E;
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+
+    tbody tr.expanded::after {
+        transform: rotate(180deg);
     }
 }
