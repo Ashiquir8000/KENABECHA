@@ -31,9 +31,7 @@ public class ChatController {
     private final StaffMessageRepository staffMessageRepository; // স্টাফ মেসেজ রিপোজিটরি যুক্ত করা হলো
 
 
-    // ==========================================
-    // ১. কাস্টমার ↔ মডারেটর চ্যাট ফ্লো (আগের কোড)
-    // ==========================================
+
     @MessageMapping("/chat.send")
     public void processMessage(@Payload ChatMessageDTO chatDTO) {
         User user = userRepository.findById(chatDTO.getUserId()).orElse(null);
@@ -69,9 +67,7 @@ public class ChatController {
     }
 
 
-    // ==========================================
-    // ২. মডারেটর ↔ ইনভেন্টরি স্টাফ চ্যাট ফ্লো (নতুন কোড)
-    // ==========================================
+
     @MessageMapping("/staffchat.send")
     public void processStaffMessage(@Payload StaffChatRequest request) {
         User sender = userRepository.findById(request.getSenderId()).orElse(null);
@@ -92,7 +88,6 @@ public class ChatController {
                     message.getContent()
             );
 
-            // ডাটাবেসে সেভ হওয়ার পর সেন্ডার এবং রিসিভার উভয়ের পার্সোনাল টপিকে মেসেজ পুশ করা হবে
             messagingTemplate.convertAndSend("/topic/user/" + sender.getId(), response);
             messagingTemplate.convertAndSend("/topic/user/" + receiver.getId(), response);
         }
@@ -115,9 +110,6 @@ public class ChatController {
     }
 
 
-    // ==========================================
-    // DTO এবং Response ক্লাসগুলো
-    // ==========================================
     @Data
     @AllArgsConstructor
     public static class ChatResponse {

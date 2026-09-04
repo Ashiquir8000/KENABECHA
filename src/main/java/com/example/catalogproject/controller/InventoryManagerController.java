@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class InventoryManagerController {
 
     private final InventoryManagerService inventoryManagerService;
-    private final CatalogueService catalogueService; // ডিপেন্ডেন্সি যুক্ত করা হলো
+    private final CatalogueService catalogueService;
 
     @GetMapping
     public String showInventoryDashboard(Model model) {

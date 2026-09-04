@@ -26,10 +26,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/ws/**"))
                 .authorizeHttpRequests(auth -> auth
-                        // /search/visual কে permitAll এ যুক্ত করা হয়েছে যাতে সবাই ছবি দিয়ে সার্চ করতে পারে
+
                         .requestMatchers("/", "/home", "/register", "/login", "/proDetail/**", "/category/**", "/search/visual", "/images/**", "/css/**", "/js/**").permitAll()
 
-                        // নতুন ট্র্যাশ বিন এবং ডিলিট/রিস্টোর রাউটগুলো ADMIN এর আন্ডারে যুক্ত করা হয়েছে
+
                         .requestMatchers("/adminF", "/prodF", "/edit/**", "/delete/**", "/admin/archived", "/restore/**", "/permanent-delete/**").hasRole("ADMIN")
 
                         .requestMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")

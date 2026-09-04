@@ -20,7 +20,6 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
     void deleteByUser(User user);
 
 
-    // আগের কোডের ঠিক নিচে এটি যোগ করুন
     @Transactional
     void deleteByProduct(Product product);
 }

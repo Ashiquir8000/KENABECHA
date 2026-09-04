@@ -66,7 +66,7 @@ public class ModeratorController {
         return "moderator";
     }
 
-    // ইনভেন্টরি ম্যানেজারের কাছে স্টক রিকোয়েস্ট পাঠানোর মেথড
+
     @PostMapping("/moderator/restock/request")
     public String sendRestockRequest(@RequestParam("productId") Integer productId,
                                      @RequestParam("requestedQuantity") Integer quantity,

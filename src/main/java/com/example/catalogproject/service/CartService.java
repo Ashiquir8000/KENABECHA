@@ -49,7 +49,6 @@ public class CartService {
         return cartItemRepository.countByProduct(product);
     }
 
-    // ক্লাসের শেষে এই মেথডটি যোগ করুন
     @Transactional
     public void removeProductFromAllCarts(Product product) {
         cartItemRepository.deleteByProduct(product);

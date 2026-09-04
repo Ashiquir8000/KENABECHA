@@ -17,10 +17,10 @@ public class RestockRequest {
 
     @ManyToOne
     @JoinColumn(name = "requested_by_id")
-    private User requestedBy; // Moderator
+    private User requestedBy;
 
     private Integer requestedQuantity;
-    private String status; // PENDING, FULFILLED
+    private String status;
     private LocalDateTime requestTime;
     private LocalDateTime fulfilledTime;
 }

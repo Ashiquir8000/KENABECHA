@@ -170,9 +170,6 @@ public class CatalogController {
         return "redirect:/adminF";
     }
 
-    // ==========================================
-    // CART & CHECKOUT
-    // ==========================================
 
     @GetMapping("/buy/{id}")
     public String processBuyNow(@PathVariable("id") Integer productId, Principal principal) {

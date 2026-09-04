@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class CloudVisionService {
 
-    // MultipartFile এর জন্য মেথড
     public List<Double> getEmbeddingFromCloud(MultipartFile file) {
         if (file == null || file.isEmpty()) return new ArrayList<>();
         try (InputStream is = file.getInputStream()) {
@@ -24,13 +23,13 @@ public class CloudVisionService {
         }
     }
 
-    // সরাসরি InputStream এর জন্য মেথড (DataVectorInitializer এর জন্য)
+
     public List<Double> getEmbeddingFromInputStream(InputStream inputStream) {
         if (inputStream == null) return new ArrayList<>();
         return extractFeatureVector(inputStream);
     }
 
-    // কোর ভেক্টর এক্সট্রাকশন লজিক
+
     private List<Double> extractFeatureVector(InputStream is) {
         try {
             BufferedImage original = ImageIO.read(is);
@@ -60,7 +59,7 @@ public class CloudVisionService {
                 }
             }
 
-            // L2 Normalization
+
             double magnitude = Math.sqrt(sumSq);
             if (magnitude > 0) {
                 for (int i = 0; i < vector.size(); i++) {
@@ -73,7 +72,6 @@ public class CloudVisionService {
         }
     }
 
-    // Cosine Similarity
     public double calculateCosineSimilarity(List<Double> vecA, List<Double> vecB) {
         if (vecA == null || vecB == null || vecA.size() != vecB.size() || vecA.isEmpty()) {
             return 0.0;
