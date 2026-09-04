@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet">
 
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -47,11 +47,14 @@
         .logout-btn { background-color: var(--ruby-red); color: white; border: none; padding: 8px 20px; border-radius: 25px; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(155, 17, 30, 0.2); display: flex; align-items: center; gap: 8px; }
         .logout-btn:hover { background-color: #7A0D17; transform: translateY(-2px); }
         .hero-section { position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; background-image: url('/images/back1.jpg'); background-size: cover; background-position: center center; }
-        .hero-section::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 15vh; background: linear-gradient(to top, rgba(0,0,0,0.1), transparent); z-index: 3; pointer-events: none; }
+        .hero-section::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 15vh; background: linear-gradient(to top, rgba(0,0,0,0.1), transparent); z-index: 4; pointer-events: none; }
         .hero-title { position: absolute; top: 25%; font-family: 'Cinzel', serif; font-size: 14vw; font-weight: 900; color: rgba(155, 17, 30, 0.9); z-index: 1; user-select: none; }
         .models-container { position: absolute; bottom: 0; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: flex-end; z-index: 2; pointer-events: none; }
-        .saree-model { height: 90vh; z-index: 1; object-fit: contain; margin-right: -4%; }
+
+        /* মেয়ে মডেলটি ছেলের ওপরে (সামনে) থাকবে */
+        .saree-model { height: 90vh; z-index: 3; object-fit: contain; margin-right: -4%; }
         .urban-model { height: 85vh; z-index: 2; margin-left: -8%; object-fit: contain; }
+
         .welcome-section { display: flex; justify-content: center; position: relative; z-index: 10; margin-top: -12vh; padding: 0 20px 40px 20px; }
         .welcome-box { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); padding: 40px 60px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.9); text-align: center; max-width: 800px; width: 100%; }
         .welcome-box h1 { font-size: 2.5rem; margin: 0 0 15px 0; font-family: 'Cinzel', serif; color: var(--ruby-red); }
@@ -64,6 +67,11 @@
         .glass-card button { background-color: var(--ruby-red); color: #FFFFFF; border: none; padding: 15px 25px; border-radius: 30px; font-weight: 600; cursor: pointer; width: 100%; transition: 0.3s; }
         .glass-card button:hover { background-color: #7A0D17; transform: scale(1.05); }
         footer { text-align: center; padding: 30px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); }
+
+        /* Desktop Mode: 3-dot hidden */
+        #mobile-menu-toggle {
+            display: none;
+        }
 
         /* --- NEW: Floating Chat Widget Styles --- */
         .chat-widget-btn {
@@ -96,7 +104,7 @@
             backdrop-filter: blur(20px);
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            display: none; /* Hidden by default */
+            display: none;
             flex-direction: column;
             z-index: 1000;
             border: 1px solid rgba(255, 255, 255, 0.5);
@@ -176,7 +184,13 @@
 
 <header>
     <h2>KENABECHA E-Commerce</h2>
-    <nav>
+
+    <!-- 3-Dot Toggle Button for Mobile -->
+    <div id="mobile-menu-toggle" onclick="toggleNavMenu()">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+    </div>
+
+    <nav id="main-nav">
         <ul>
             <li><a th:href="@{/home}">Home</a></li>
             <li>
@@ -221,6 +235,7 @@
 <section class="hero-section">
     <div class="hero-title" id="heroText">KENABECHA</div>
     <div class="models-container">
+        <!-- saree-model আগে রাখা হয়েছে এবং CSS-এ z-index: 3 দিয়ে নিশ্চিত সামনে রাখা হয়েছে -->
         <img th:src="@{/images/woman.png}" class="saree-model" alt="Saree Model">
         <img th:src="@{/images/man.png}" class="urban-model" alt="Urban Model">
     </div>
@@ -291,7 +306,7 @@
     <script th:inline="javascript">
         const currentUserId = /*[[${session.loggedInUser.id}]]*/ null;
         let stompClient = null;
-        let isHistoryLoaded = false; // হিস্ট্রি একবার লোড করার জন্য ফ্ল্যাগ
+        let isHistoryLoaded = false;
 
         function toggleChat() {
             const chatBox = document.getElementById('chatBox');
@@ -299,7 +314,6 @@
                 chatBox.style.display = 'flex';
                 connectWebSocket();
 
-                // চ্যাট বক্স ওপেন করলে হিস্ট্রি ফেচ করবে
                 if (!isHistoryLoaded) {
                     loadChatHistory();
                 }
@@ -308,7 +322,6 @@
             }
         }
 
-        // ডেটাবেস থেকে পূর্বের চ্যাট হিস্ট্রি আনার ফাংশন
         function loadChatHistory() {
             const chatMessages = document.getElementById('chatMessages');
             fetch('/chat/history/' + currentUserId)
@@ -393,6 +406,25 @@
         heroSection.addEventListener('mouseleave', () => {
             heroText.style.transform = 'translate(0px, 0px)';
         });
+    });
+</script>
+
+<script>
+    function toggleNavMenu() {
+        const nav = document.getElementById('main-nav') || document.querySelector('nav');
+        if (nav) {
+            nav.classList.toggle('nav-open');
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        const nav = document.getElementById('main-nav') || document.querySelector('nav');
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        if (nav && nav.classList.contains('nav-open')) {
+            if (!nav.contains(e.target) && !toggleBtn.contains(e.target)) {
+                nav.classList.remove('nav-open');
+            }
+        }
     });
 </script>
 </body>

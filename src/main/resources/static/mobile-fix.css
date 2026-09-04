@@ -13,9 +13,83 @@ html, body {
 @media screen and (max-width: 768px) {
 
     /* ========================================================
-       1. HOME HERO SECTION (মডেল দুটো ওভারল্যাপ থাকবে)
+       1. HEADER & 3-DOT NAV DRAWER (বাটন কেটে যাওয়া ফিক্স)
+       ======================================================== */
+    header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 12px 18px !important;
+        height: 60px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        z-index: 1000 !important;
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(15px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+    }
+
+    header h2 {
+        font-size: 1.15rem !important;
+        margin: 0 !important;
+    }
+
+    /* ৩-ডট বাটনটি দৃশ্যমান করা */
+    #mobile-menu-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 38px !important;
+        height: 38px !important;
+        background: #9B111E !important;
+        color: #ffffff !important;
+        border-radius: 50% !important;
+        font-size: 1.2rem !important;
+        cursor: pointer !important;
+        box-shadow: 0 4px 10px rgba(155, 17, 30, 0.3) !important;
+    }
+
+    /* সাইডবার মেনু ড্রয়ার */
+    nav, #main-nav {
+        position: fixed !important;
+        top: 60px !important;
+        right: -100% !important;
+        width: 240px !important;
+        height: calc(100vh - 60px) !important;
+        background: rgba(255, 255, 255, 0.96) !important;
+        backdrop-filter: blur(25px) !important;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15) !important;
+        transition: right 0.3s ease-in-out !important;
+        padding: 25px 20px !important;
+        z-index: 999 !important;
+    }
+
+    nav.nav-open, #main-nav.nav-open {
+        right: 0 !important;
+    }
+
+    nav ul {
+        flex-direction: column !important;
+        gap: 18px !important;
+        align-items: flex-start !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        list-style: none !important;
+    }
+
+    nav a {
+        width: 100% !important;
+        font-size: 1rem !important;
+        display: block !important;
+    }
+
+    /* ========================================================
+       2. HOME HERO SECTION (মাথা না কাটার মার্জিন + পারফেক্ট ওভারল্যাপ)
        ======================================================== */
     .hero-section {
+        margin-top: 60px !important; /* হেডারের পেছনে মাথা ঢাকা পড়া রোধ করবে */
         position: relative !important;
         width: 100% !important;
         height: 380px !important;
@@ -27,46 +101,66 @@ html, body {
         padding: 0 !important;
     }
 
-    /* KENABECHA লেখাটি মাঝে থাকবে */
-    .hero-section h1, .hero-section .hero-title, .hero-section [class*="title"] {
+    /* KENABECHA লেখাটি সেন্টারে ব্যাকগ্রাউন্ডে থাকবে */
+    .hero-title, #heroText, .hero-section h1 {
+        position: absolute !important;
+        top: 45% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
         font-size: 2.2rem !important;
         letter-spacing: 2px !important;
-        z-index: 2 !important;
+        z-index: 1 !important;
         text-align: center !important;
-        position: relative !important;
         margin: 0 !important;
+        white-space: nowrap !important;
+        color: #9B111E !important;
     }
 
-    /* বাঁয়ের মডেল */
-    .hero-section img:first-of-type,
-    .hero-section .model-left,
-    .hero-section img[src*="woman"] {
-        position: absolute !important;
-        left: -15px !important;
-        bottom: 0 !important;
-        height: 320px !important;
-        width: auto !important;
-        max-width: none !important;
-        z-index: 3 !important;
-        pointer-events: none !important;
+    .models-container {
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-end !important;
     }
 
-    /* ডানের মডেল */
-    .hero-section img:last-of-type,
-    .hero-section .model-right,
-    .hero-section img[src*="man"] {
+    /* ছেলে মডেল (পেছনে থাকবে) */
+    .hero-section img.urban-model,
+    .hero-section img[src*="man"],
+    .models-container img:last-child {
         position: absolute !important;
-        right: -15px !important;
+        height: 310px !important;
         bottom: 0 !important;
-        height: 320px !important;
-        width: auto !important;
-        max-width: none !important;
-        z-index: 3 !important;
+        right: 6% !important;
+        z-index: 2 !important;
+        object-fit: contain !important;
         pointer-events: none !important;
+        max-width: none !important;
+    }
+
+    /* মেয়ে মডেল (সবার সামনে/উপরে থাকবে) */
+    .hero-section img.saree-model,
+    .hero-section img[src*="woman"],
+    .models-container img:first-child {
+        position: absolute !important;
+        height: 325px !important;
+        bottom: 0 !important;
+        left: 8% !important;
+        z-index: 3 !important;
+        object-fit: contain !important;
+        pointer-events: none !important;
+        max-width: none !important;
+    }
+
+    .welcome-section {
+        position: relative !important;
+        z-index: 5 !important;
+        margin-top: -25px !important;
     }
 
     /* ========================================================
-       2. ADMIN DASHBOARD STAT CARDS (পরপর নিচে নিচে স্ক্রল হবে)
+       3. ADMIN DASHBOARD STAT CARDS (পরপর নিচে নিচে স্ক্রল হবে)
        ======================================================== */
     .status-cards, .stats-container, .grid-3, [class*="stats"], [class*="status"] {
         display: flex !important;
@@ -84,9 +178,8 @@ html, body {
     }
 
     /* ========================================================
-       3. PRODUCT TABLE TO DROPDOWN ACCORDION
+       4. PRODUCT TABLE TO DROPDOWN ACCORDION
        ======================================================== */
-    /* সাধারণ টেবিল লুক ভেঙে কার্ড লুক দেওয়া */
     table, thead, tbody, th, td, tr {
         display: block !important;
         width: 100% !important;
@@ -98,7 +191,6 @@ html, body {
         left: -9999px !important;
     }
 
-    /* প্রতিটি প্রোডাক্ট একেকটি ক্লিকেবল কার্ড */
     tbody tr {
         background: rgba(255, 255, 255, 0.9) !important;
         margin-bottom: 15px !important;
@@ -111,20 +203,17 @@ html, body {
         transition: all 0.2s ease !important;
     }
 
-    /* হেড অংশ: আইডি, ছবি ও নাম সবসময় ভিজিবল থাকবে */
     tbody tr td {
         padding: 4px 0 !important;
         border: none !important;
         text-align: left !important;
     }
 
-    /* বাকি ডিটেইলস (Stock, Actions, Edit, Delete) শুরুতে লুকানো থাকবে */
     tbody tr td:nth-child(n+4) {
         display: none !important;
         padding-top: 8px !important;
     }
 
-    /* যখন রো-তে ক্লিক করে 'expanded' ক্লাস যোগ হবে তখন ড্রপডাউন ওপেন হবে */
     tbody tr.expanded td:nth-child(n+4) {
         display: flex !important;
         align-items: center !important;
@@ -134,7 +223,6 @@ html, body {
         padding-top: 10px !important;
     }
 
-    /* ড্রপডাউনে অ্যাকশন বাটনগুলো ফুল উইডথে পাশাপাশি বসবে */
     tbody tr.expanded td:last-child {
         display: flex !important;
         gap: 12px !important;
@@ -149,9 +237,8 @@ html, body {
         border-radius: 10px !important;
     }
 
-    /* ডান পাশে একটি ছোট টগল ইঙ্গিত আইকন */
     tbody tr::after {
-        content: '\f107'; /* FontAwesome Chevron Down */
+        content: '\f107';
         font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         position: absolute;
@@ -164,5 +251,12 @@ html, body {
 
     tbody tr.expanded::after {
         transform: rotate(180deg);
+    }
+}
+
+/* ডেস্কটপে ৩-ডট বাটন লুকিয়ে রাখা */
+@media screen and (min-width: 769px) {
+    #mobile-menu-toggle {
+        display: none !important;
     }
 }
