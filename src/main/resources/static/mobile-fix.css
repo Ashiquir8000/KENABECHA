@@ -1,0 +1,106 @@
+*, *::before, *::after {
+    box-sizing: border-box !important;
+}
+
+html, body {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+
+@media screen and (max-width: 768px) {
+
+
+    header, nav, .navbar, .header-container {
+        width: 100% !important;
+        padding: 10px 14px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        height: auto !important;
+        gap: 8px !important;
+    }
+
+
+    .navbar h1, .brand-title, .logo-text {
+        font-size: 1.15rem !important;
+        margin: 0 !important;
+    }
+
+    .hero-title, .brand-hero, h1 {
+        font-size: clamp(1.8rem, 7vw, 2.5rem) !important;
+        letter-spacing: 1px !important;
+        text-align: center !important;
+        word-break: break-word !important;
+    }
+
+
+    .container, .login-card, .card, .glass-card,
+    .content-wrapper, .details-container {
+        width: 92% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 16px !important;
+    }
+
+
+    input[type="text"], input[type="password"],
+    input[type="email"], select, textarea {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+
+    .btn-group, .button-container, .actions-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+    }
+
+    .btn, button, .btn-cart, .btn-buy {
+        width: 100% !important;
+        min-height: 46px !important;
+        font-size: 0.95rem !important;
+        justify-content: center !important;
+    }
+
+
+    .admin-wrapper, .dashboard-grid, .command-center-layout, .moderator-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 16px !important;
+    }
+
+
+    .live-inbox, .system-watchdog, .sidebar, .chat-panel {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+
+
+    .chat-box, .chat-thread, .conversation-area {
+        display: flex !important;
+        width: 100% !important;
+        height: 60vh !important;
+    }
+
+
+    table {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+}
