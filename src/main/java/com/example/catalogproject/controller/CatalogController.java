@@ -31,7 +31,7 @@ public class CatalogController {
     private final CloudVisionService cloudVisionService;
     private final InventoryManagerService inventoryManagerService;
 
-    @GetMapping("/home")
+    @GetMapping({"/","/home"})
     public String showHomeInterface() {
         return "home";
     }
