@@ -24,31 +24,26 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            background-color: #faf7f5;
-            background-image: url('/images/background.jpg');
-            background-size: cover;
-            background-position: center top;
+            background: #faf7f5 url('/images/background.jpg') center top / cover no-repeat fixed;
             color: var(--text-dark);
             overflow-x: hidden;
             width: 100%;
         }
 
-        /* --- 1. HEADER (ডেস্কটপে ফুল মেনু, মোবাইলে ৩-ডট) --- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 70px;
-            padding: 0 40px;
+            padding: 0 35px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 99999;
+            z-index: 1000;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
 
         header h2 {
@@ -56,8 +51,7 @@
             font-family: 'Cinzel', serif;
             color: var(--ruby-red);
             font-weight: 900;
-            font-size: 1.6rem;
-            white-space: nowrap;
+            font-size: 1.5rem;
         }
 
         #mobile-menu-toggle {
@@ -68,7 +62,7 @@
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 22px;
             margin: 0;
             padding: 0;
         }
@@ -87,20 +81,6 @@
             color: var(--ruby-red);
         }
 
-        .image-search-label {
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin: 0;
-            color: var(--text-dark);
-        }
-
-        .image-search-label:hover {
-            color: var(--ruby-red);
-        }
-
         .logout-btn {
             background-color: var(--ruby-red);
             color: white;
@@ -111,27 +91,22 @@
             cursor: pointer;
         }
 
-        /* --- 2. HERO SECTION & MODELS --- */
         .hero-section {
             position: relative;
             width: 100%;
-            height: 85vh;
+            height: 88vh;
             min-height: 520px;
             margin-top: 70px;
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            background-image: url('/images/back1.jpg');
-            background-size: cover;
-            background-position: center;
+            background: url('/images/back1.jpg') center center / cover no-repeat;
             overflow: hidden;
         }
 
         .hero-title {
             position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 22%;
             font-family: 'Cinzel', serif;
             font-size: 11vw;
             font-weight: 900;
@@ -139,8 +114,7 @@
             z-index: 1;
             user-select: none;
             white-space: nowrap;
-            letter-spacing: 4px;
-            pointer-events: none;
+            letter-spacing: 3px;
         }
 
         .models-container {
@@ -154,31 +128,24 @@
             pointer-events: none;
         }
 
-        /* মেয়ে মডেল সামনে (Z-INDEX 3) */
         .saree-model {
             height: 75vh;
-            max-height: 620px;
-            width: auto;
+            max-height: 640px;
             position: relative;
             z-index: 3;
             object-fit: contain;
             margin-right: -4%;
-            display: block;
         }
 
-        /* ছেলে মডেল পেছনে (Z-INDEX 2) */
         .urban-model {
             height: 70vh;
-            max-height: 580px;
-            width: auto;
+            max-height: 600px;
             position: relative;
             z-index: 2;
             margin-left: -6%;
             object-fit: contain;
-            display: block;
         }
 
-        /* --- 3. WELCOME & CATEGORIES --- */
         .welcome-section {
             display: flex;
             justify-content: center;
@@ -196,8 +163,7 @@
             text-align: center;
             max-width: 750px;
             width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
         }
 
         .welcome-box h1 {
@@ -209,8 +175,6 @@
 
         .category-section {
             padding: 30px 8% 80px;
-            position: relative;
-            z-index: 5;
         }
 
         .category-section h3 {
@@ -231,7 +195,7 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 35px 20px;
@@ -239,8 +203,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
         .category-icon {
@@ -263,11 +226,10 @@
         footer {
             text-align: center;
             padding: 25px;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.8);
             font-weight: 600;
         }
 
-        /* --- 4. MOBILE RESPONSIVE ENGINE (Screen <= 768px) --- */
         @media screen and (max-width: 768px) {
             header {
                 padding: 0 16px;
@@ -279,7 +241,7 @@
             }
 
             #mobile-menu-toggle {
-                display: flex !important;
+                display: flex;
                 align-items: center;
                 justify-content: center;
                 width: 36px;
@@ -291,32 +253,29 @@
                 cursor: pointer;
             }
 
-            /* ৩-ডট ড্রয়ার */
             nav#main-nav {
-                position: fixed !important;
-                top: 60px !important;
-                right: -100% !important;
-                width: 230px !important;
-                height: calc(100vh - 60px) !important;
-                background: #ffffff !important;
-                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2) !important;
-                transition: right 0.3s ease-in-out !important;
-                padding: 25px 20px !important;
-                z-index: 999999 !important;
-                display: block !important;
+                position: fixed;
+                top: 60px;
+                right: -100%;
+                width: 220px;
+                height: calc(100vh - 60px);
+                background: #ffffff;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+                transition: right 0.3s ease-in-out;
+                padding: 20px 16px;
+                z-index: 9999;
             }
 
             nav#main-nav.nav-open {
-                right: 0 !important;
+                right: 0;
             }
 
             nav#main-nav ul {
-                flex-direction: column !important;
-                gap: 16px !important;
-                align-items: flex-start !important;
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
             }
 
-            /* মোবাইলে হিরো সেকশন ও মডেলদের অবস্থান */
             .hero-section {
                 margin-top: 60px;
                 height: 55vh;
@@ -324,26 +283,20 @@
             }
 
             .hero-title {
-                font-size: 3.2rem;
-                top: 22%;
+                font-size: 3rem;
+                top: 25%;
             }
 
             .saree-model {
                 height: 44vh;
                 min-height: 280px;
-                margin-right: -14%;
-                z-index: 3;
+                margin-right: -12%;
             }
 
             .urban-model {
                 height: 40vh;
                 min-height: 250px;
-                margin-left: -14%;
-                z-index: 2;
-            }
-
-            .welcome-section {
-                margin-top: -25px;
+                margin-left: -12%;
             }
 
             .category-grid {
@@ -357,42 +310,32 @@
 <header>
     <h2>KENABECHA E-Commerce</h2>
 
-    <!-- ৩-ডট বাটন -->
     <div id="mobile-menu-toggle" onclick="toggleNavMenu()">
         <i class="fa-solid fa-ellipsis-vertical"></i>
     </div>
 
-    <!-- নেভিগেশন বার -->
     <nav id="main-nav">
         <ul>
-            <li><a th:href="@{/home}">Home</a></li>
-            <li>
-                <form th:action="@{/search/visual}" method="post" enctype="multipart/form-data" style="margin: 0; display: flex; align-items: center;">
-                    <label for="visualImageInput" class="image-search-label">
-                        <i class="fa-solid fa-camera"></i> Image Search
-                    </label>
-                    <input type="file" id="visualImageInput" name="imageFile" accept="image/*" style="display: none;" onchange="this.form.submit();" />
-                </form>
-            </li>
-            <li><a th:href="@{/cart}"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
 
-            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'admin'}">
-                <a th:href="@{/adminF}">Admin Dashboard</a>
+            <li th:if="${session?.loggedInUser?.userName == 'admin'}">
+                <a href="/adminF">Admin Dashboard</a>
             </li>
-            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'moderator'}">
-                <a th:href="@{/moderator}">Moderator Hub</a>
+            <li th:if="${session?.loggedInUser?.userName == 'moderator'}">
+                <a href="/moderator">Moderator Hub</a>
             </li>
-            <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'inventory'}">
-                <a th:href="@{/inventory}">Warehouse Panel</a>
+            <li th:if="${session?.loggedInUser?.userName == 'inventory'}">
+                <a href="/inventory">Warehouse Panel</a>
             </li>
 
-            <li th:if="${session.loggedInUser == null}">
-                <a th:href="@{/login}">Login / Register</a>
+            <li th:if="${session?.loggedInUser == null}">
+                <a href="/login">Login / Register</a>
             </li>
-            <li th:if="${session.loggedInUser != null}">
-                <form th:action="@{/logout}" method="post" style="display: inline;">
+            <li th:if="${session?.loggedInUser != null}">
+                <form action="/logout" method="post" style="display: inline;">
                     <button type="submit" class="logout-btn">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout (<span th:text="${session.loggedInUser.userName}"></span>)
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </button>
                 </form>
             </li>
@@ -403,9 +346,8 @@
 <section class="hero-section">
     <div class="hero-title" id="heroText">KENABECHA</div>
     <div class="models-container">
-        <!-- saree-model আগে (Z-INDEX: 3), urban-model পরে (Z-INDEX: 2) -->
-        <img th:src="@{/images/woman.png}" class="saree-model" alt="Saree Model">
-        <img th:src="@{/images/man.png}" class="urban-model" alt="Urban Model">
+        <img src="/images/woman.png" class="saree-model" alt="Saree Model">
+        <img src="/images/man.png" class="urban-model" alt="Urban Model">
     </div>
 </section>
 
@@ -421,19 +363,19 @@
     <ul class="category-grid">
         <li class="glass-card">
             <i class="fa-solid fa-shirt category-icon"></i>
-            <a th:href="@{/category/DRESS}"><button type="button">Dress Collection</button></a>
+            <a href="/category/DRESS"><button type="button">Dress Collection</button></a>
         </li>
         <li class="glass-card">
             <i class="fa-solid fa-basket-shopping category-icon"></i>
-            <a th:href="@{/category/FMCG}"><button type="button">FMCG Products</button></a>
+            <a href="/category/FMCG"><button type="button">FMCG Products</button></a>
         </li>
         <li class="glass-card">
             <i class="fa-solid fa-plug category-icon"></i>
-            <a th:href="@{/category/ELECTRONICS}"><button type="button">Electronics</button></a>
+            <a href="/category/ELECTRONICS"><button type="button">Electronics</button></a>
         </li>
         <li class="glass-card">
             <i class="fa-solid fa-blender category-icon"></i>
-            <a th:href="@{/category/HOME_APPLIANCES}"><button type="button">Home Appliances</button></a>
+            <a href="/category/HOME_APPLIANCES"><button type="button">Home Appliances</button></a>
         </li>
     </ul>
 </section>
