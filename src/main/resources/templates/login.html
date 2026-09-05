@@ -376,12 +376,17 @@
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span th:text="${error}"></span>
             </div>
-
             <!-- Thymeleaf Login Form -->
-            <form th:action="@{/login}" method="post">
+<form action="/login" method="post">
 
-                <!-- Hidden Redirect -->
-                <input type="hidden" name="redirectTo" th:value="${redirectTo}"/>
+    <!-- Hidden Redirect -->
+    <input type="hidden" name="redirectTo" th:value="${redirectTo != null ? redirectTo : ''}"/>
+
+    <!-- CSRF Token -->
+    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <!-- Username -->
+    
 
                 <!-- Username -->
                 <div class="input-group">
