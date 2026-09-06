@@ -23,7 +23,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            background-image: url('/images/background.jpg'); /* মূল ব্যাকগ্রাউন্ড */
+            background-image: url('/images/background.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center center;
@@ -106,7 +106,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 20px 60px 20px; /* হেডারের জন্য টপ প্যাডিং */
+            padding: 120px 20px 60px 20px;
             box-sizing: border-box;
         }
 
@@ -143,7 +143,6 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            /* রুবি-রেড গ্রেডিয়েন্ট ওভারলে */
             background: linear-gradient(135deg, rgba(155, 17, 30, 0.85) 0%, rgba(43, 24, 16, 0.6) 100%);
             z-index: 1;
         }
@@ -376,16 +375,12 @@
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span th:text="${error}"></span>
             </div>
-            <!-- Thymeleaf Login Form -->
-<form action="/login" method="post">
-<!-- Thymeleaf Login Form -->
-<form action="/login" method="post">
 
-    <!-- Hidden Redirect -->
-    <input type="hidden" name="redirectTo" th:value="${redirectTo != null ? redirectTo : ''}"/>
+            <!-- Thymeleaf Login Form (Fixed) -->
+            <form action="/login" method="post">
 
-    <!-- Static CSRF Token -->
-    <input type="hidden" name="_csrf" th:value="${_csrf?.token}"/>
+                <!-- Hidden Redirect -->
+                <input type="hidden" name="redirectTo" th:value="${redirectTo != null ? redirectTo : ''}"/>
 
                 <!-- Username -->
                 <div class="input-group">
