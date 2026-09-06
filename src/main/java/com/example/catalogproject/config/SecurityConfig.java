@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,14 +25,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/ws/**"))
+                // CSRF ডিজেবল করা হলো যাতে লগইন, রেজিস্ট্রেশন বা অন্য কোনো POST রিকোয়েস্ট ব্লক না হয়
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers("/", "/home", "/register", "/login", "/proDetail/**", "/category/**", "/search/visual", "/images/**", "/css/**", "/js/**", "/mobile-fix.css").permitAll()
-
-
                         .requestMatchers("/adminF", "/prodF", "/edit/**", "/delete/**", "/admin/archived", "/restore/**", "/permanent-delete/**").hasRole("ADMIN")
-
                         .requestMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")
                         .requestMatchers("/inventory/**").hasAnyRole("ADMIN", "MODERATOR", "INVENTORY_MANAGER")
                         .requestMatchers("/cart/**", "/buy/**", "/checkout", "/addReview", "/place-order", "/ws/**").authenticated()
