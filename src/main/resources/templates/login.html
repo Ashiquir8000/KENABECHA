@@ -378,15 +378,14 @@
             </div>
             <!-- Thymeleaf Login Form -->
 <form action="/login" method="post">
+<!-- Thymeleaf Login Form -->
+<form action="/login" method="post">
 
     <!-- Hidden Redirect -->
     <input type="hidden" name="redirectTo" th:value="${redirectTo != null ? redirectTo : ''}"/>
 
-    <!-- CSRF Token -->
-    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-
-    <!-- Username -->
-    
+    <!-- Static CSRF Token -->
+    <input type="hidden" name="_csrf" th:value="${_csrf?.token}"/>
 
                 <!-- Username -->
                 <div class="input-group">
