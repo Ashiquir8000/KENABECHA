@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - KENABECHA</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -29,6 +27,9 @@
             background-position: center center;
             overflow-x: hidden;
             color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* ---------------------------------
@@ -47,7 +48,6 @@
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-            box-sizing: border-box;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
         }
 
@@ -102,11 +102,11 @@
            Split-Screen Login Container
            --------------------------------- */
         .login-wrapper {
-            min-height: 100vh;
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 20px 60px 20px;
+            padding: 100px 20px 40px 20px;
             box-sizing: border-box;
         }
 
@@ -177,8 +177,8 @@
         /* Right Side: Login Form */
         .login-form-container {
             flex: 1;
-            background: rgba(255, 255, 255, 0.75);
-            padding: 60px 50px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -189,13 +189,13 @@
             color: var(--ruby-red);
             font-size: 2.2rem;
             margin-top: 0;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .login-form-container > p {
             color: #555;
-            margin-bottom: 30px;
-            font-size: 1.05rem;
+            margin-bottom: 25px;
+            font-size: 1rem;
         }
 
         /* Error Message Styling */
@@ -214,7 +214,7 @@
 
         /* Input Fields */
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             position: relative;
         }
 
@@ -242,7 +242,7 @@
 
         .input-wrapper input {
             width: 100%;
-            padding: 15px 15px 15px 45px;
+            padding: 14px 14px 14px 45px;
             border: 2px solid rgba(155, 17, 30, 0.2);
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.9);
@@ -269,7 +269,7 @@
             background-color: var(--ruby-red);
             color: #fff;
             border: none;
-            padding: 16px;
+            padding: 15px;
             border-radius: 30px;
             font-family: 'Poppins', sans-serif;
             font-size: 1.1rem;
@@ -288,6 +288,54 @@
             background-color: #7A0D17;
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(155, 17, 30, 0.35);
+        }
+
+        /* ---------------------------------
+           1-Click Demo Credentials
+           --------------------------------- */
+        .demo-credentials {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(155, 17, 30, 0.3);
+        }
+
+        .demo-credentials p {
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .demo-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .demo-btn {
+            background: #fff;
+            border: 1px solid rgba(155, 17, 30, 0.3);
+            color: var(--ruby-red);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .demo-btn:hover {
+            background: var(--ruby-red);
+            color: #fff;
+            border-color: var(--ruby-red);
         }
 
         .register-link {
@@ -312,28 +360,53 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
             border-top: 1px solid rgba(255, 255, 255, 0.8);
             font-weight: 600;
             letter-spacing: 1px;
             color: var(--text-dark);
-            margin-top: auto;
         }
 
         hr { display: none; }
 
-        /* Responsive Design */
+        /* ---------------------------------
+           Mobile Responsive Adjustments
+           --------------------------------- */
         @media (max-width: 850px) {
+            header {
+                padding: 15px 20px;
+                justify-content: center; /* Center logo on mobile */
+            }
+            header nav {
+                display: none; /* Hide navigation on small screens for cleaner look */
+            }
+            header h2 {
+                font-size: 1.4rem;
+            }
+            .login-wrapper {
+                padding: 90px 15px 30px 15px;
+            }
             .glass-login-card {
                 flex-direction: column;
+                max-width: 450px;
+                border-radius: 20px;
             }
+            /* Hide the large banner completely on mobile */
             .login-banner {
-                padding: 40px 20px;
+                display: none; 
             }
             .login-form-container {
-                padding: 40px 30px;
+                padding: 35px 25px;
+                border-radius: 20px;
+            }
+            .login-form-container h2 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+            .login-form-container > p {
+                text-align: center;
             }
         }
     </style>
@@ -344,7 +417,7 @@
 <header>
     <div class="logo-section">
         <i class="fa-solid fa-crown"></i>
-        <h2>KENABECHA E-Commerce</h2>
+        <h2>KENABECHA</h2>
     </div>
     <nav>
         <ul>
@@ -356,7 +429,6 @@
 <div class="login-wrapper">
     <div class="glass-login-card">
 
-        <!-- Left Side: Visual Banner -->
         <div class="login-banner">
             <div class="banner-content">
                 <i class="fa-brands fa-keycdn"></i>
@@ -365,44 +437,56 @@
             </div>
         </div>
 
-        <!-- Right Side: Login Form -->
         <div class="login-form-container">
             <h2>User Login</h2>
             <p>Please enter your credentials to proceed.</p>
 
-            <!-- Thymeleaf Error Message -->
             <div th:if="${error}" class="error-message">
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span th:text="${error}"></span>
             </div>
 
-            <!-- Thymeleaf Login Form (Fixed) -->
             <form action="/login" method="post">
 
-                <!-- Hidden Redirect -->
                 <input type="hidden" name="redirectTo" th:value="${redirectTo != null ? redirectTo : ''}"/>
 
-                <!-- Username -->
                 <div class="input-group">
                     <label>Username</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" name="username" placeholder="Enter your username" required>
+                        <input type="text" name="username" id="usernameField" placeholder="Enter your username" required>
                     </div>
                 </div>
 
-                <!-- Password -->
                 <div class="input-group">
                     <label>Password</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" name="password" placeholder="Enter your password" required>
+                        <input type="password" name="password" id="passwordField" placeholder="Enter your password" required>
                     </div>
                 </div>
 
                 <button type="submit" class="btn-login">
                     Login <i class="fa-solid fa-arrow-right-to-bracket"></i>
                 </button>
+
+                <div class="demo-credentials">
+                    <p><i class="fa-solid fa-bolt"></i> Quick Login Access</p>
+                    <div class="demo-chips">
+                        <button type="button" class="demo-btn" onclick="autoFill('admin', 'YOUR_ADMIN_PASS')">
+                            <i class="fa-solid fa-user-shield"></i> Admin
+                        </button>
+                        <button type="button" class="demo-btn" onclick="autoFill('moderator', 'YOUR_MODERATOR_PASS')">
+                            <i class="fa-solid fa-headset"></i> Moderator
+                        </button>
+                        <button type="button" class="demo-btn" onclick="autoFill('inventory', 'YOUR_INVENTORY_PASS')">
+                            <i class="fa-solid fa-boxes-stacked"></i> Inventory
+                        </button>
+                        <button type="button" class="demo-btn" onclick="autoFill('YOUR_CUSTOMER_NAME', 'YOUR_CUSTOMER_PASS')">
+                            <i class="fa-solid fa-bag-shopping"></i> Customer
+                        </button>
+                    </div>
+                </div>
 
                 <div class="register-link">
                     Don't have an account? <a th:href="@{/register}">Create Here</a>
@@ -416,6 +500,27 @@
 <footer>
     <p>KENABECHA Project - 2026</p>
 </footer>
+
+<script>
+    function autoFill(username, password) {
+        const userField = document.getElementById('usernameField');
+        const passField = document.getElementById('passwordField');
+        
+        userField.value = username;
+        passField.value = password;
+        
+        // Visual effect to show data has been filled
+        [userField, passField].forEach(field => {
+            field.style.backgroundColor = '#fff0f0';
+            field.style.borderColor = '#9B111E';
+            
+            setTimeout(() => {
+                field.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                field.style.borderColor = 'rgba(155, 17, 30, 0.2)';
+            }, 400);
+        });
+    }
+</script>
 
 </body>
 </html>
