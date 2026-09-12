@@ -229,26 +229,28 @@
             pointer-events: none;
         }
 
-      /* --- নারী মডেল: Front & Center of Attraction (Left-Center) --- */
+        /* --- Saree Model: Front & Center (Left) --- */
         .saree-model {
             position: absolute;
-            height: 96%;           /* মার্জিত পূর্ণাঙ্গ হাইট */
-            left: 2%;              /* বাম পাশে মূল ফোকাসে */
-            bottom: -5%;           /* পা কাটা অংশ আর্চের নিচে লুকানো */
-            z-index: 4;            /* সামনে থাকবে এবং পুরুষ মডেলকে ওভারল্যাপ করবে */
+            height: 98% !important;
+            left: 5% !important;         /* Placed on the Left */
+            right: auto !important;
+            bottom: -6% !important;      /* Hide cut legs */
+            z-index: 5 !important;       /* Overlaps male model */
             object-fit: contain;
-            filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.22)); /* প্রিমিয়াম ডেপথ */
+            filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.25));
         }
 
-        /* --- পুরুষ মডেল: Back & Right Side (Taller Height) --- */
+        /* --- Urban Model: Back & Right Side (Taller) --- */
         .urban-model {
             position: absolute;
-            height: 104%;          /* নারীর চেয়ে উচ্চতা বেশি */
-            right: 4%;             /* ডান পাশে অবস্থান */
-            bottom: -6%;           /* পা কাটা অংশ আর্চের নিচে লুকানো */
-            z-index: 2;            /* পেছনের লেয়ারে থাকবে */
+            height: 106% !important;     /* Taller */
+            right: 2% !important;        /* Placed on the Right */
+            left: auto !important;
+            bottom: -6% !important;      /* Hide cut legs */
+            z-index: 2 !important;       /* Behind female model */
             object-fit: contain;
-            filter: drop-shadow(-6px 6px 14px rgba(0,0,0,0.14));
+            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.15));
         }
 
         /* --- Category Section --- */
@@ -417,8 +419,8 @@
                 font-size: 2.5rem;
             }
             
-            .saree-model { left: -10%; }
-            .urban-model { right: -5%; }
+            .saree-model { left: -10% !important; }
+            .urban-model { right: -5% !important; }
         }
     </style>
 </head>
