@@ -208,27 +208,31 @@
             height: 100%;
         }
 
-        /* --- Woman Model: Left & Front (Safe Headroom) --- */
+        /* --- সমান হাইট ও পারফেক্ট স্প্রেড (No Space Waste) --- */
+
+        /* নারী মডেল: বামে, সামনে, ১০০% সমান হাইটে ফ্রন্ট ফোকাস */
         .saree-model-grand {
             position: absolute;
-            height: 85%; /* Reduced to prevent decapitation, but large enough for hero */
-            left: -5%; /* Explicitly placed on the left */
-            bottom: -5%;
-            z-index: 5; /* In front */
+            height: 92% !important;        /* পুরুষ মডেলের সমান হাইট */
+            bottom: -5% !important;        /* কাটা পা নিচে লুকানো */
+            left: 50% !important;
+            transform: translateX(-68%) !important; /* শক্তভাবে বামে টেনে আর্চের স্পেস ভরাট করা */
+            z-index: 5 !important;         /* নিশ্চিতভাবে সামনে থাকবে */
             object-fit: contain;
-            filter: drop-shadow(12px 10px 22px rgba(0,0,0,0.3));
+            filter: drop-shadow(14px 10px 24px rgba(0,0,0,0.28));
             pointer-events: none;
         }
 
-        /* --- Man Model: Right & Back (Taller, Safe Headroom) --- */
+        /* পুরুষ মডেল: ডানে, পেছনের লেয়ারে, নারীর সমান হেড-লেভেল */
         .urban-model-grand {
             position: absolute;
-            height: 94%; /* Taller than woman, safe from top border */
-            right: 0%; /* Explicitly placed on the right */
-            bottom: -4%;
-            z-index: 2; /* In back */
+            height: 92% !important;        /* নারীর হুবহু সমান হাইট */
+            bottom: -5% !important;        /* কাটা পা নিচে লুকানো */
+            left: 50% !important;
+            transform: translateX(-10%) !important; /* ডানে অবস্থান, নারীর সাথে পারফেক্ট ওভারল্যাপ */
+            z-index: 2 !important;         /* পেছনের লেয়ারে */
             object-fit: contain;
-            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.18));
+            filter: drop-shadow(-8px 6px 16px rgba(0,0,0,0.18));
             pointer-events: none;
         }
 
