@@ -210,30 +210,42 @@
 
         /* --- সমান হাইট ও পারফেক্ট স্প্রেড (No Space Waste) --- */
 
-        /* নারী মডেল: বামে, সামনে, ১০০% সমান হাইটে ফ্রন্ট ফোকাস */
+        /* --- ডেস্কটপ: ছেলে মডেলকে সেন্টারের কাছে আনা ও পারফেক্ট ওভারল্যাপ --- */
         .saree-model-grand {
             position: absolute;
-            height: 92% !important;        /* পুরুষ মডেলের সমান হাইট */
-            bottom: -5% !important;        /* কাটা পা নিচে লুকানো */
+            height: 92% !important;
+            bottom: -5% !important;
             left: 50% !important;
-            transform: translateX(-68%) !important; /* শক্তভাবে বামে টেনে আর্চের স্পেস ভরাট করা */
-            z-index: 5 !important;         /* নিশ্চিতভাবে সামনে থাকবে */
+            transform: translateX(-62%) !important; /* সামান্য ডানে এনে গ্যাপ কমানো হলো */
+            z-index: 5 !important;
             object-fit: contain;
             filter: drop-shadow(14px 10px 24px rgba(0,0,0,0.28));
             pointer-events: none;
         }
 
-        /* পুরুষ মডেল: ডানে, পেছনের লেয়ারে, নারীর সমান হেড-লেভেল */
         .urban-model-grand {
             position: absolute;
-            height: 92% !important;        /* নারীর হুবহু সমান হাইট */
-            bottom: -5% !important;        /* কাটা পা নিচে লুকানো */
+            height: 92% !important;
+            bottom: -5% !important;
             left: 50% !important;
-            transform: translateX(-10%) !important; /* ডানে অবস্থান, নারীর সাথে পারফেক্ট ওভারল্যাপ */
-            z-index: 2 !important;         /* পেছনের লেয়ারে */
+            transform: translateX(-24%) !important; /* ডানে ছিটকে যাওয়া বন্ধ করে সেন্টারের কাছে আনা হলো */
+            z-index: 2 !important;
             object-fit: contain;
             filter: drop-shadow(-8px 6px 16px rgba(0,0,0,0.18));
             pointer-events: none;
+        }
+
+        /* --- মোবাইল ও ট্যাবলেট ফিক্স (যাতে ছেলে মডেল ফ্রেমের বাইরে ছিটকে না যায়) --- */
+        @media screen and (max-width: 768px) {
+            .saree-model-grand {
+                height: 88% !important;
+                transform: translateX(-58%) !important;
+            }
+
+            .urban-model-grand {
+                height: 88% !important;
+                transform: translateX(-30%) !important; /* মোবাইলে আর্চ ফ্রেমের ভেতরে সুরক্ষিত */
+            }
         }
 
         /* Arch Bottom Blend */
