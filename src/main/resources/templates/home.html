@@ -178,7 +178,7 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Arch Frame & Bulletproof Model Placement --- */
+        /* --- Arch Frame & Grand Scale Models --- */
         .hero-visuals {
             display: flex;
             justify-content: center;
@@ -192,59 +192,44 @@
         .arch-frame {
             position: relative;
             width: 100%;
-            max-width: 540px;
-            height: 88%;
+            max-width: 500px;
+            height: 86%;
             background: #FFFDF9 url('/images/background.jpg') center bottom / cover no-repeat;
-            border-radius: 270px 270px 0 0;
+            border-radius: 250px 250px 0 0;
             border: 8px solid #FFFFFF;
             border-bottom: none !important;
             box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.06);
             overflow: hidden; /* পায়ের নিচের অংশ পুরোপুরি কেটে ফেলবে */
         }
 
-        /* স্টেজ যেখানে দুই মডেলের সুনির্দিষ্ট পজিশন নিশ্চিত হবে */
         .model-stage {
             position: relative;
             width: 100%;
             height: 100%;
         }
 
-        /* নারী মডেল: বামে ও সামনে (Front) */
-        .model-woman-box {
+        /* পুরুষ মডেল: ডানপাশে, পেছনের লেয়ারে এবং লম্বা স্বাভাবিক হাইটে */
+        .urban-model-grand {
             position: absolute;
+            height: 122%; /* বিশাল স্বাভাবিক হাইট */
+            right: -8%;
+            bottom: -8%;
+            z-index: 2;
+            object-fit: contain;
+            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.18));
+            pointer-events: none;
+        }
+
+        /* নারী মডেল: বামে ও সামনে (Center Attraction), পুরুষ মডেলকে ওভারল্যাপ করবে */
+        .saree-model-grand {
+            position: absolute;
+            height: 114%; /* আর্চ ফ্রেম ভর্তি গ্র্যান্ড হাইট */
+            left: -12%;
             bottom: -6%;
-            left: -8%;
-            width: 72%;
-            height: 100%;
             z-index: 5; /* নিশ্চিতভাবে সামনে থাকবে */
-            pointer-events: none;
-        }
-
-        .model-woman-box img {
-            width: 100%;
-            height: 100%;
             object-fit: contain;
-            object-position: bottom left;
-            filter: drop-shadow(12px 10px 22px rgba(0,0,0,0.28));
-        }
-
-        /* পুরুষ মডেল: ডানে ও পেছনে (Back), নারীর চেয়ে লম্বা */
-        .model-man-box {
-            position: absolute;
-            bottom: -6%;
-            right: -4%;
-            width: 65%;
-            height: 106%; /* নারীর চেয়ে লম্বা */
-            z-index: 2; /* নিশ্চিতভাবে পেছনের লেয়ারে থাকবে */
+            filter: drop-shadow(12px 10px 22px rgba(0,0,0,0.3));
             pointer-events: none;
-        }
-
-        .model-man-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: bottom right;
-            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.15));
         }
 
         /* আর্চের নিচের ফ্লোর ব্লেন্ডিং */
@@ -254,7 +239,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 80px;
+            height: 70px;
             background: linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 100%);
             z-index: 6;
             pointer-events: none;
@@ -477,15 +462,11 @@
     <div class="hero-visuals">
         <div class="arch-frame">
             <div class="model-stage">
-                <!-- পুরুষ মডেল: ডানে এবং পেছনে (Back) -->
-                <div class="model-man-box">
-                    <img src="/images/man.png" alt="Urban Men Collection">
-                </div>
+                <!-- পুরুষ মডেল: ডানে এবং পেছনের লেয়ারে লম্বা ভঙ্গিমায় -->
+                <img src="/images/man.png" class="urban-model-grand" alt="Urban Men Collection">
 
-                <!-- নারী মডেল: বামে এবং নিশ্চিতভাবে সামনে (Front & Center Attraction) -->
-                <div class="model-woman-box">
-                    <img src="/images/woman.png" alt="Premium Saree Collection">
-                </div>
+                <!-- নারী মডেল: বামে, পূর্ণ স্কেলে এবং নিশ্চিতভাবে প্রধান আকর্ষণে সামনে -->
+                <img src="/images/woman.png" class="saree-model-grand" alt="Premium Saree Collection">
             </div>
         </div>
     </div>
