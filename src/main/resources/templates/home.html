@@ -16,7 +16,7 @@
             --ruby-red-hover: #7a0d17;
             --text-dark: #1A1A1A;
             --text-muted: #555555;
-            --bg-light: #FAF8F5; /* Elegant warm off-white */
+            --bg-light: #FAF8F5;
             --card-bg: #FFFFFF;
         }
 
@@ -106,19 +106,18 @@
         /* --- Fixed 1-Screen Hero Layout --- */
         .hero-section {
             width: 100%;
-            height: calc(100vh - 75px); /* Fits perfectly in one screen */
+            height: calc(100vh - 75px);
             min-height: 650px;
             margin-top: 75px;
             padding: 0 6%;
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr; /* Adjusted ratio for balance */
-            align-items: flex-end; /* Locked to the bottom floor */
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: flex-end;
             position: relative;
             overflow: hidden;
             background-color: var(--bg-light);
         }
 
-        /* back1.jpg used as a soft, multiply blend ambience in the background */
         .hero-section::before {
             content: '';
             position: absolute;
@@ -132,7 +131,7 @@
 
         .hero-content {
             max-width: 560px;
-            align-self: center; /* Vertically centered */
+            align-self: center;
             padding-bottom: 20px;
             position: relative;
             z-index: 10;
@@ -179,7 +178,7 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Arch Frame: The perfect fit for feet & perspective --- */
+        /* --- Arch Frame & Bulletproof Model Placement --- */
         .hero-visuals {
             display: flex;
             justify-content: center;
@@ -193,64 +192,72 @@
         .arch-frame {
             position: relative;
             width: 100%;
-            max-width: 520px; /* Widened to fit both models side-by-side */
+            max-width: 540px;
             height: 88%;
             background: #FFFDF9 url('/images/background.jpg') center bottom / cover no-repeat;
-            border-radius: 260px 260px 0 0;
+            border-radius: 270px 270px 0 0;
             border: 8px solid #FFFFFF;
-            border-bottom: none !important; /* Bottom border fully removed */
+            border-bottom: none !important;
             box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.06);
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            overflow: hidden; /* Clips cut-off legs perfectly */
+            overflow: hidden; /* পায়ের নিচের অংশ পুরোপুরি কেটে ফেলবে */
         }
 
-        /* Soft overlay inside arch */
-        .arch-frame::before {
-            content: '';
+        /* স্টেজ যেখানে দুই মডেলের সুনির্দিষ্ট পজিশন নিশ্চিত হবে */
+        .model-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* নারী মডেল: বামে ও সামনে (Front) */
+        .model-woman-box {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(250, 248, 245, 0.1) 0%, rgba(255, 255, 255, 0.4) 100%);
-            z-index: 1;
+            bottom: -6%;
+            left: -8%;
+            width: 72%;
+            height: 100%;
+            z-index: 5; /* নিশ্চিতভাবে সামনে থাকবে */
             pointer-events: none;
         }
 
-        /* Dark beige gradient to smoothly blend the bottom floor */
+        .model-woman-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: bottom left;
+            filter: drop-shadow(12px 10px 22px rgba(0,0,0,0.28));
+        }
+
+        /* পুরুষ মডেল: ডানে ও পেছনে (Back), নারীর চেয়ে লম্বা */
+        .model-man-box {
+            position: absolute;
+            bottom: -6%;
+            right: -4%;
+            width: 65%;
+            height: 106%; /* নারীর চেয়ে লম্বা */
+            z-index: 2; /* নিশ্চিতভাবে পেছনের লেয়ারে থাকবে */
+            pointer-events: none;
+        }
+
+        .model-man-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: bottom right;
+            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.15));
+        }
+
+        /* আর্চের নিচের ফ্লোর ব্লেন্ডিং */
         .arch-frame::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 90px;
-            background: linear-gradient(to top, rgba(0,0,0,0.22) 0%, transparent 100%);
-            z-index: 4;
+            height: 80px;
+            background: linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 100%);
+            z-index: 6;
             pointer-events: none;
-        }
-
-        /* --- Saree Model: Front & Center (Left) --- */
-        .saree-model {
-            position: absolute;
-            height: 98% !important;
-            left: 5% !important;         /* Placed on the Left */
-            right: auto !important;
-            bottom: -6% !important;      /* Hide cut legs */
-            z-index: 5 !important;       /* Overlaps male model */
-            object-fit: contain;
-            filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.25));
-        }
-
-        /* --- Urban Model: Back & Right Side (Taller) --- */
-        .urban-model {
-            position: absolute;
-            height: 106% !important;     /* Taller */
-            right: 2% !important;        /* Placed on the Right */
-            left: auto !important;
-            bottom: -6% !important;      /* Hide cut legs */
-            z-index: 2 !important;       /* Behind female model */
-            object-fit: contain;
-            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.15));
         }
 
         /* --- Category Section --- */
@@ -366,7 +373,7 @@
             .arch-frame {
                 height: 100%;
                 width: 90%;
-                max-width: 400px;
+                max-width: 420px;
             }
         }
 
@@ -418,9 +425,6 @@
             .hero-content h1 {
                 font-size: 2.5rem;
             }
-            
-            .saree-model { left: -10% !important; }
-            .urban-model { right: -5% !important; }
         }
     </style>
 </head>
@@ -471,10 +475,18 @@
     </div>
     
     <div class="hero-visuals">
-        <!-- The Editorial Arch: Fixed dimensions, perspective, and bottom bleed -->
         <div class="arch-frame">
-            <img src="/images/woman.png" class="saree-model" alt="Premium Saree Collection">
-            <img src="/images/man.png" class="urban-model" alt="Urban Men Collection">
+            <div class="model-stage">
+                <!-- পুরুষ মডেল: ডানে এবং পেছনে (Back) -->
+                <div class="model-man-box">
+                    <img src="/images/man.png" alt="Urban Men Collection">
+                </div>
+
+                <!-- নারী মডেল: বামে এবং নিশ্চিতভাবে সামনে (Front & Center Attraction) -->
+                <div class="model-woman-box">
+                    <img src="/images/woman.png" alt="Premium Saree Collection">
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -512,7 +524,6 @@
         
         if (nav) {
             nav.classList.toggle('nav-open');
-            // Toggle hamburger and close icon
             if(nav.classList.contains('nav-open')) {
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-xmark');
