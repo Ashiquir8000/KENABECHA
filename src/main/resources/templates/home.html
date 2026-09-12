@@ -16,7 +16,7 @@
             --ruby-red-hover: #7a0d17;
             --text-dark: #1A1A1A;
             --text-muted: #555555;
-            --bg-light: #F9F9FB;
+            --bg-light: #F4F3F0; /* Elegant warm off-white */
             --card-bg: #FFFFFF;
         }
 
@@ -103,114 +103,124 @@
             background-color: var(--ruby-red);
         }
 
-        /* --- Modern Split Hero Section --- */
+        /* --- Luxury Editorial Hero Section --- */
         .hero-section {
             width: 100%;
-            min-height: 100vh;
-            padding: 120px 5% 50px;
+            height: 100vh; /* Locked to viewport height */
+            min-height: 700px;
+            padding: 75px 5% 0; /* Offset for header */
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background: linear-gradient(135deg, #F9F8F6 0%, #EAE8E3 100%);
             position: relative;
+            overflow: hidden; /* Prevents overflow issues */
         }
 
         .hero-content {
             max-width: 600px;
             padding-right: 40px;
+            z-index: 10;
         }
 
         .hero-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
             color: var(--text-dark);
-            line-height: 1.2;
+            line-height: 1.1;
             margin-bottom: 20px;
         }
 
         .hero-content h1 span {
             color: var(--ruby-red);
+            font-style: italic;
         }
 
         .hero-content p {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
             margin-bottom: 35px;
             line-height: 1.6;
+            max-width: 90%;
         }
 
         .hero-cta {
             display: inline-block;
             background-color: var(--ruby-red);
             color: #fff;
-            padding: 14px 35px;
-            font-size: 1rem;
+            padding: 16px 40px;
+            font-size: 1.05rem;
             font-weight: 600;
             text-decoration: none;
             border-radius: 40px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 10px 20px rgba(155, 17, 30, 0.2);
         }
 
         .hero-cta:hover {
-            background-color: var(--ruby-red-hover);
             transform: translateY(-3px);
-            color: #fff;
+            box-shadow: 0 15px 25px rgba(155, 17, 30, 0.3);
+            background-color: var(--ruby-red-hover);
         }
 
-        /* Model Placement & Grounding */
-        .models-container {
-            position: relative;
-            width: 100%;
-            height: 70vh;
+        /* --- The Editorial Arch Frame (The Fix) --- */
+        .hero-visuals {
             display: flex;
             justify-content: center;
             align-items: flex-end;
+            height: 100%;
+            padding-bottom: 5vh;
         }
 
-        /* Grounding shadow to fix floating effect */
-        .models-container::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            width: 70%;
-            height: 20px;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 70%);
-            border-radius: 50%;
-            z-index: 1;
+        .arch-frame {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 75vh;
+            max-height: 650px;
+            background: linear-gradient(180deg, #E2DDD5 0%, #D4CFC7 100%);
+            border-radius: 250px 250px 0 0; /* Creates the Arch */
+            border: 8px solid #FFFFFF;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            display: flex;
+            justify-content: center;
+            overflow: hidden; /* CRITICAL: Hides the cut-off legs! */
+            align-items: flex-end;
         }
 
         .saree-model {
-            height: 65vh;
-            max-height: 600px;
-            position: relative;
+            position: absolute;
+            height: 85%;
+            left: -15%;
+            bottom: -2%;
             z-index: 3;
             object-fit: contain;
-            transform: translateX(10%);
+            filter: drop-shadow(10px 10px 15px rgba(0,0,0,0.2));
         }
 
         .urban-model {
-            height: 60vh;
-            max-height: 550px;
-            position: relative;
+            position: absolute;
+            height: 78%;
+            right: -8%;
+            bottom: 0;
             z-index: 2;
             object-fit: contain;
-            transform: translateX(-10%);
+            filter: drop-shadow(-10px 10px 15px rgba(0,0,0,0.15));
         }
 
         /* --- Category Section --- */
         .category-section {
-            padding: 80px 5%;
+            padding: 100px 5%;
             background-color: #FFFFFF;
         }
 
         .category-section h3 {
             font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             text-align: center;
             color: var(--text-dark);
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
 
         .category-grid {
@@ -223,32 +233,29 @@
         }
 
         .glass-card {
-            background: var(--card-bg);
+            /* Richer background instead of flat white */
+            background: linear-gradient(145deg, #ffffff 0%, #fcf7f7 100%);
             border-radius: 12px;
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(155, 17, 30, 0.1);
+            border-bottom: 4px solid var(--ruby-red);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .glass-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 15px 40px rgba(155, 17, 30, 0.12);
         }
 
         .category-icon {
-            font-size: 2.5rem;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .glass-card:hover .category-icon {
+            font-size: 2.8rem;
             color: var(--ruby-red);
+            margin-bottom: 25px;
         }
 
         .glass-card a {
@@ -257,12 +264,12 @@
         }
 
         .glass-card button {
-            background-color: transparent;
+            background-color: #FFFFFF;
             color: var(--text-dark);
             border: 1px solid #E0E0E0;
             padding: 12px 0;
             border-radius: 30px;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
             width: 100%;
@@ -289,21 +296,30 @@
         @media screen and (max-width: 992px) {
             .hero-section {
                 grid-template-columns: 1fr;
+                height: auto;
+                min-height: 100vh;
+                padding-top: 120px;
                 text-align: center;
-                padding-top: 100px;
             }
 
             .hero-content {
                 padding-right: 0;
-                margin: 0 auto 40px;
+                margin: 0 auto 50px;
             }
 
-            .models-container {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-visuals {
                 height: 50vh;
+                min-height: 400px;
             }
-
-            .saree-model { height: 45vh; }
-            .urban-model { height: 40vh; }
+            
+            .arch-frame {
+                height: 100%;
+                width: 90%;
+            }
         }
 
         @media screen and (max-width: 768px) {
@@ -354,6 +370,9 @@
             .hero-content h1 {
                 font-size: 2.5rem;
             }
+            
+            .saree-model { left: -10%; }
+            .urban-model { right: -5%; }
         }
     </style>
 </head>
@@ -403,10 +422,12 @@
         <a href="#categories" class="hero-cta">Explore Collections &rarr;</a>
     </div>
     
-    <div class="models-container">
-        <!-- Models are now grounded with a base shadow in CSS -->
-        <img src="/images/woman.png" class="saree-model" alt="Premium Saree Collection">
-        <img src="/images/man.png" class="urban-model" alt="Urban Men Collection">
+    <div class="hero-visuals">
+        <!-- The Editorial Arch: Hides the cut-off bottom of the images -->
+        <div class="arch-frame">
+            <img src="/images/woman.png" class="saree-model" alt="Premium Saree Collection">
+            <img src="/images/man.png" class="urban-model" alt="Urban Men Collection">
+        </div>
     </div>
 </section>
 
