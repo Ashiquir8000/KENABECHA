@@ -103,15 +103,16 @@
             background-color: var(--ruby-red);
         }
 
-        /* --- Luxury Hero Section with back1.jpg Ambience --- */
+        /* --- Fixed 1-Screen Hero Layout --- */
         .hero-section {
             width: 100%;
-            min-height: calc(100vh - 75px); /* Full screen minus header */
+            height: calc(100vh - 75px); /* Fits perfectly in one screen */
+            min-height: 650px;
             margin-top: 75px;
-            padding: 40px 6% 0;
+            padding: 0 6%;
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            align-items: flex-end; /* Locks elements to the bottom floor */
+            grid-template-columns: 1.15fr 0.85fr; /* Adjusted ratio for balance */
+            align-items: flex-end; /* Locked to the bottom floor */
             position: relative;
             overflow: hidden;
             background-color: var(--bg-light);
@@ -123,7 +124,7 @@
             position: absolute;
             inset: 0;
             background: url('/images/back1.jpg') center center / cover no-repeat;
-            opacity: 0.15; /* Subtle enough not to distract */
+            opacity: 0.15;
             mix-blend-mode: multiply;
             pointer-events: none;
             z-index: 1;
@@ -131,7 +132,8 @@
 
         .hero-content {
             max-width: 560px;
-            padding-bottom: 90px;
+            align-self: center; /* Vertically centered */
+            padding-bottom: 20px;
             position: relative;
             z-index: 10;
         }
@@ -177,7 +179,7 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Visuals & Arch Frame with background.jpg --- */
+        /* --- Arch Frame: The perfect fit for feet & perspective --- */
         .hero-visuals {
             display: flex;
             justify-content: center;
@@ -191,22 +193,20 @@
         .arch-frame {
             position: relative;
             width: 100%;
-            max-width: 470px;
-            height: 82vh;
-            max-height: 680px;
-            /* background.jpg set directly inside the arch frame as canvas */
-            background: #FFFDF9 url('/images/background.jpg') right bottom / cover no-repeat;
-            border-radius: 240px 240px 0 0;
+            max-width: 520px; /* Widened to fit both models side-by-side */
+            height: 88%;
+            background: #FFFDF9 url('/images/background.jpg') center bottom / cover no-repeat;
+            border-radius: 260px 260px 0 0;
             border: 8px solid #FFFFFF;
-            border-bottom: none; /* Removed bottom border to blend with floor */
-            box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.08);
+            border-bottom: none !important; /* Bottom border fully removed */
+            box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.06);
             display: flex;
             justify-content: center;
-            align-items: flex-end; /* Forces models to the bottom */
-            overflow: hidden; /* Hides cut-off legs completely */
+            align-items: flex-end;
+            overflow: hidden; /* Clips cut-off legs perfectly */
         }
 
-        /* Soft overlay inside arch to balance colors */
+        /* Soft overlay inside arch */
         .arch-frame::before {
             content: '';
             position: absolute;
@@ -216,37 +216,39 @@
             pointer-events: none;
         }
 
-        /* Gradient shade at the bottom of the arch to hide sharp cuts */
+        /* Dark beige gradient to smoothly blend the bottom floor */
         .arch-frame::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 70px;
-            background: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 100%);
+            height: 90px;
+            background: linear-gradient(to top, rgba(0,0,0,0.22) 0%, transparent 100%);
             z-index: 4;
             pointer-events: none;
         }
 
+        /* Saree Model - Placed slightly left */
         .saree-model {
             position: absolute;
-            height: 92%;
-            left: -10%;
-            bottom: -3%; /* Lowered so cut-off hides under the arch frame */
-            z-index: 3;
-            object-fit: contain;
-            filter: drop-shadow(8px 8px 18px rgba(0,0,0,0.18));
-        }
-
-        .urban-model {
-            position: absolute;
-            height: 84%;
-            right: -6%;
-            bottom: -2%; /* Lowered to hide cut-off */
+            height: 102%;
+            left: -4%;
+            bottom: -8%; /* Pushed down to hide cut legs */
             z-index: 2;
             object-fit: contain;
-            filter: drop-shadow(-8px 8px 18px rgba(0,0,0,0.15));
+            filter: drop-shadow(6px 6px 14px rgba(0,0,0,0.18));
+        }
+
+        /* Urban Model - Height balanced and side-by-side positioning */
+        .urban-model {
+            position: absolute;
+            height: 104%; /* Taller/equal to saree model */
+            right: 0%;
+            bottom: -7%; /* Hidden cut legs */
+            z-index: 3; /* Prominent forward placement */
+            object-fit: contain;
+            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.16));
         }
 
         /* --- Category Section --- */
@@ -467,7 +469,7 @@
     </div>
     
     <div class="hero-visuals">
-        <!-- The Editorial Arch: Uses background.jpg as canvas and hides cut-off feet -->
+        <!-- The Editorial Arch: Fixed dimensions, perspective, and bottom bleed -->
         <div class="arch-frame">
             <img src="/images/woman.png" class="saree-model" alt="Premium Saree Collection">
             <img src="/images/man.png" class="urban-model" alt="Urban Men Collection">
