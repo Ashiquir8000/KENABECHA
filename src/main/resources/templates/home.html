@@ -16,7 +16,7 @@
             --ruby-red-hover: #7a0d17;
             --text-dark: #1A1A1A;
             --text-muted: #555555;
-            --bg-light: #F4F3F0; /* Elegant warm off-white */
+            --bg-light: #FAF8F5; /* Elegant warm off-white */
             --card-bg: #FFFFFF;
         }
 
@@ -103,32 +103,45 @@
             background-color: var(--ruby-red);
         }
 
-        /* --- Luxury Editorial Hero Section --- */
+        /* --- Luxury Hero Section with back1.jpg Ambience --- */
         .hero-section {
             width: 100%;
-            height: 100vh; /* Locked to viewport height */
-            min-height: 700px;
-            padding: 75px 5% 0; /* Offset for header */
+            min-height: calc(100vh - 75px); /* Full screen minus header */
+            margin-top: 75px;
+            padding: 40px 6% 0;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            background: linear-gradient(135deg, #F9F8F6 0%, #EAE8E3 100%);
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: flex-end; /* Locks elements to the bottom floor */
             position: relative;
-            overflow: hidden; /* Prevents overflow issues */
+            overflow: hidden;
+            background-color: var(--bg-light);
+        }
+
+        /* back1.jpg used as a soft, multiply blend ambience in the background */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('/images/back1.jpg') center center / cover no-repeat;
+            opacity: 0.15; /* Subtle enough not to distract */
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .hero-content {
-            max-width: 600px;
-            padding-right: 40px;
+            max-width: 560px;
+            padding-bottom: 90px;
+            position: relative;
             z-index: 10;
         }
 
         .hero-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: 4rem;
+            font-size: 3.8rem;
             font-weight: 800;
             color: var(--text-dark);
-            line-height: 1.1;
+            line-height: 1.15;
             margin-bottom: 20px;
         }
 
@@ -138,81 +151,110 @@
         }
 
         .hero-content p {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: var(--text-muted);
             margin-bottom: 35px;
             line-height: 1.6;
-            max-width: 90%;
+            max-width: 95%;
         }
 
         .hero-cta {
             display: inline-block;
             background-color: var(--ruby-red);
             color: #fff;
-            padding: 16px 40px;
-            font-size: 1.05rem;
+            padding: 15px 38px;
+            font-size: 1rem;
             font-weight: 600;
             text-decoration: none;
-            border-radius: 40px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 20px rgba(155, 17, 30, 0.2);
+            border-radius: 35px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(155, 17, 30, 0.28);
         }
 
         .hero-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(155, 17, 30, 0.3);
             background-color: var(--ruby-red-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- The Editorial Arch Frame (The Fix) --- */
+        /* --- Visuals & Arch Frame with background.jpg --- */
         .hero-visuals {
             display: flex;
             justify-content: center;
             align-items: flex-end;
             height: 100%;
-            padding-bottom: 5vh;
+            width: 100%;
+            position: relative;
+            z-index: 10;
         }
 
         .arch-frame {
             position: relative;
             width: 100%;
-            max-width: 480px;
-            height: 75vh;
-            max-height: 650px;
-            background: linear-gradient(180deg, #E2DDD5 0%, #D4CFC7 100%);
-            border-radius: 250px 250px 0 0; /* Creates the Arch */
+            max-width: 470px;
+            height: 82vh;
+            max-height: 680px;
+            /* background.jpg set directly inside the arch frame as canvas */
+            background: #FFFDF9 url('/images/background.jpg') right bottom / cover no-repeat;
+            border-radius: 240px 240px 0 0;
             border: 8px solid #FFFFFF;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            border-bottom: none; /* Removed bottom border to blend with floor */
+            box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.08);
             display: flex;
             justify-content: center;
-            overflow: hidden; /* CRITICAL: Hides the cut-off legs! */
-            align-items: flex-end;
+            align-items: flex-end; /* Forces models to the bottom */
+            overflow: hidden; /* Hides cut-off legs completely */
+        }
+
+        /* Soft overlay inside arch to balance colors */
+        .arch-frame::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(250, 248, 245, 0.1) 0%, rgba(255, 255, 255, 0.4) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Gradient shade at the bottom of the arch to hide sharp cuts */
+        .arch-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 100%);
+            z-index: 4;
+            pointer-events: none;
         }
 
         .saree-model {
             position: absolute;
-            height: 85%;
-            left: -15%;
-            bottom: -2%;
+            height: 92%;
+            left: -10%;
+            bottom: -3%; /* Lowered so cut-off hides under the arch frame */
             z-index: 3;
             object-fit: contain;
-            filter: drop-shadow(10px 10px 15px rgba(0,0,0,0.2));
+            filter: drop-shadow(8px 8px 18px rgba(0,0,0,0.18));
         }
 
         .urban-model {
             position: absolute;
-            height: 78%;
-            right: -8%;
-            bottom: 0;
+            height: 84%;
+            right: -6%;
+            bottom: -2%; /* Lowered to hide cut-off */
             z-index: 2;
             object-fit: contain;
-            filter: drop-shadow(-10px 10px 15px rgba(0,0,0,0.15));
+            filter: drop-shadow(-8px 8px 18px rgba(0,0,0,0.15));
         }
 
         /* --- Category Section --- */
         .category-section {
             padding: 100px 5%;
             background-color: #FFFFFF;
+            position: relative;
+            z-index: 20;
         }
 
         .category-section h3 {
@@ -233,7 +275,6 @@
         }
 
         .glass-card {
-            /* Richer background instead of flat white */
             background: linear-gradient(145deg, #ffffff 0%, #fcf7f7 100%);
             border-radius: 12px;
             padding: 40px 20px;
@@ -298,13 +339,15 @@
                 grid-template-columns: 1fr;
                 height: auto;
                 min-height: 100vh;
-                padding-top: 120px;
+                padding-top: 40px;
                 text-align: center;
             }
 
             .hero-content {
+                max-width: 100%;
                 padding-right: 0;
-                margin: 0 auto 50px;
+                padding-bottom: 40px;
+                margin: 0 auto;
             }
 
             .hero-content h1 {
@@ -312,13 +355,14 @@
             }
 
             .hero-visuals {
-                height: 50vh;
-                min-height: 400px;
+                height: 60vh;
+                min-height: 450px;
             }
             
             .arch-frame {
                 height: 100%;
                 width: 90%;
+                max-width: 400px;
             }
         }
 
@@ -423,7 +467,7 @@
     </div>
     
     <div class="hero-visuals">
-        <!-- The Editorial Arch: Hides the cut-off bottom of the images -->
+        <!-- The Editorial Arch: Uses background.jpg as canvas and hides cut-off feet -->
         <div class="arch-frame">
             <img src="/images/woman.png" class="saree-model" alt="Premium Saree Collection">
             <img src="/images/man.png" class="urban-model" alt="Urban Men Collection">
