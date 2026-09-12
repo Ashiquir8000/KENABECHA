@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KENABECHA - Home</title>
+    <title>KENABECHA - Premium E-Commerce</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             --ruby-red: #9B111E;
-            --text-dark: #2B1810;
+            --ruby-red-hover: #7a0d17;
+            --text-dark: #1A1A1A;
+            --text-muted: #555555;
+            --bg-light: #F9F9FB;
+            --card-bg: #FFFFFF;
         }
 
         *, *::before, *::after {
@@ -24,34 +28,36 @@
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: #faf7f5 url('/images/background.jpg') center top / cover no-repeat fixed;
+            background-color: var(--bg-light);
             color: var(--text-dark);
             overflow-x: hidden;
             width: 100%;
         }
 
+        /* --- Header Styles --- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
-            padding: 0 35px;
+            height: 75px;
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
 
         header h2 {
             margin: 0;
             font-family: 'Cinzel', serif;
             color: var(--ruby-red);
-            font-weight: 900;
-            font-size: 1.5rem;
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
         }
 
         #mobile-menu-toggle {
@@ -62,7 +68,7 @@
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 22px;
+            gap: 30px;
             margin: 0;
             padding: 0;
         }
@@ -70,11 +76,12 @@
         nav#main-nav a {
             text-decoration: none;
             color: var(--text-dark);
-            font-weight: 600;
+            font-weight: 500;
             font-size: 0.95rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            transition: color 0.3s ease;
         }
 
         nav#main-nav a:hover {
@@ -82,187 +89,255 @@
         }
 
         .logout-btn {
-            background-color: var(--ruby-red);
+            background-color: var(--text-dark);
             color: white;
             border: none;
-            padding: 7px 18px;
-            border-radius: 20px;
-            font-weight: 600;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 500;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
+        .logout-btn:hover {
+            background-color: var(--ruby-red);
+        }
+
+        /* --- Modern Split Hero Section --- */
         .hero-section {
-            position: relative;
             width: 100%;
-            height: 88vh;
-            min-height: 520px;
-            margin-top: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            background: url('/images/back1.jpg') center center / cover no-repeat;
-            overflow: hidden;
+            min-height: 100vh;
+            padding: 120px 5% 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            position: relative;
         }
 
-        .hero-title {
-            position: absolute;
-            top: 22%;
+        .hero-content {
+            max-width: 600px;
+            padding-right: 40px;
+        }
+
+        .hero-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: 11vw;
-            font-weight: 900;
-            color: rgba(155, 17, 30, 0.9);
-            z-index: 1;
-            user-select: none;
-            white-space: nowrap;
-            letter-spacing: 3px;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 20px;
         }
 
-        .models-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .saree-model {
-            height: 75vh;
-            max-height: 640px;
-            position: relative;
-            z-index: 3;
-            object-fit: contain;
-            margin-right: -4%;
-        }
-
-        .urban-model {
-            height: 70vh;
-            max-height: 600px;
-            position: relative;
-            z-index: 2;
-            margin-left: -6%;
-            object-fit: contain;
-        }
-
-        .welcome-section {
-            display: flex;
-            justify-content: center;
-            position: relative;
-            z-index: 10;
-            margin-top: -40px;
-            padding: 0 20px 40px;
-        }
-
-        .welcome-box {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            padding: 35px 50px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 750px;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-        }
-
-        .welcome-box h1 {
-            font-size: 2.2rem;
-            margin: 0 0 10px;
-            font-family: 'Cinzel', serif;
+        .hero-content h1 span {
             color: var(--ruby-red);
         }
 
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background-color: var(--ruby-red);
+            color: #fff;
+            padding: 14px 35px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 40px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 10px 20px rgba(155, 17, 30, 0.2);
+        }
+
+        .hero-cta:hover {
+            background-color: var(--ruby-red-hover);
+            transform: translateY(-3px);
+            color: #fff;
+        }
+
+        /* Model Placement & Grounding */
+        .models-container {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* Grounding shadow to fix floating effect */
+        .models-container::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 70%;
+            height: 20px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .saree-model {
+            height: 65vh;
+            max-height: 600px;
+            position: relative;
+            z-index: 3;
+            object-fit: contain;
+            transform: translateX(10%);
+        }
+
+        .urban-model {
+            height: 60vh;
+            max-height: 550px;
+            position: relative;
+            z-index: 2;
+            object-fit: contain;
+            transform: translateX(-10%);
+        }
+
+        /* --- Category Section --- */
         .category-section {
-            padding: 30px 8% 80px;
+            padding: 80px 5%;
+            background-color: #FFFFFF;
         }
 
         .category-section h3 {
             font-family: 'Cinzel', serif;
-            font-size: 2.3rem;
+            font-size: 2.2rem;
             text-align: center;
-            color: var(--ruby-red);
-            margin-bottom: 40px;
+            color: var(--text-dark);
+            margin-bottom: 50px;
         }
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 35px 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
         }
 
         .category-icon {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .glass-card:hover .category-icon {
             color: var(--ruby-red);
-            margin-bottom: 12px;
+        }
+
+        .glass-card a {
+            width: 100%;
+            text-decoration: none;
         }
 
         .glass-card button {
-            background-color: var(--ruby-red);
-            color: #FFFFFF;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: 600;
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 1px solid #E0E0E0;
+            padding: 12px 0;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
             cursor: pointer;
             width: 100%;
+            transition: all 0.3s ease;
         }
 
+        .glass-card:hover button {
+            background-color: var(--ruby-red);
+            color: #FFFFFF;
+            border-color: var(--ruby-red);
+        }
+
+        /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.8);
-            font-weight: 600;
+            padding: 30px;
+            background: #1A1A1A;
+            color: #FFFFFF;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+
+        /* --- Responsive Design --- */
+        @media screen and (max-width: 992px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 100px;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin: 0 auto 40px;
+            }
+
+            .models-container {
+                height: 50vh;
+            }
+
+            .saree-model { height: 45vh; }
+            .urban-model { height: 40vh; }
         }
 
         @media screen and (max-width: 768px) {
             header {
-                padding: 0 16px;
-                height: 60px;
+                padding: 0 20px;
+                height: 65px;
             }
 
             header h2 {
-                font-size: 1.15rem;
+                font-size: 1.3rem;
             }
 
             #mobile-menu-toggle {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 36px;
-                height: 36px;
-                background: var(--ruby-red);
-                color: #ffffff;
-                border-radius: 50%;
-                font-size: 1.1rem;
+                width: 40px;
+                height: 40px;
+                background: transparent;
+                color: var(--text-dark);
+                font-size: 1.5rem;
                 cursor: pointer;
             }
 
             nav#main-nav {
                 position: fixed;
-                top: 60px;
+                top: 65px;
                 right: -100%;
-                width: 220px;
-                height: calc(100vh - 60px);
+                width: 250px;
+                height: calc(100vh - 65px);
                 background: #ffffff;
-                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
                 transition: right 0.3s ease-in-out;
-                padding: 20px 16px;
+                padding: 30px 20px;
                 z-index: 9999;
             }
 
@@ -272,35 +347,12 @@
 
             nav#main-nav ul {
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
                 align-items: flex-start;
             }
 
-            .hero-section {
-                margin-top: 60px;
-                height: 55vh;
-                min-height: 380px;
-            }
-
-            .hero-title {
-                font-size: 3rem;
-                top: 25%;
-            }
-
-            .saree-model {
-                height: 44vh;
-                min-height: 280px;
-                margin-right: -12%;
-            }
-
-            .urban-model {
-                height: 40vh;
-                min-height: 250px;
-                margin-left: -12%;
-            }
-
-            .category-grid {
-                grid-template-columns: 1fr;
+            .hero-content h1 {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -308,10 +360,10 @@
 <body>
 
 <header>
-    <h2>KENABECHA E-Commerce</h2>
+    <h2>KENABECHA</h2>
 
     <div id="mobile-menu-toggle" onclick="toggleNavMenu()">
-        <i class="fa-solid fa-ellipsis-vertical"></i>
+        <i class="fa-solid fa-bars"></i>
     </div>
 
     <nav id="main-nav">
@@ -319,6 +371,7 @@
             <li><a href="/home">Home</a></li>
             <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
 
+            <!-- Backend roles intact -->
             <li th:if="${session?.loggedInUser?.userName == 'admin'}">
                 <a href="/adminF">Admin Dashboard</a>
             </li>
@@ -344,21 +397,20 @@
 </header>
 
 <section class="hero-section">
-    <div class="hero-title" id="heroText">KENABECHA</div>
+    <div class="hero-content">
+        <h1>Modern Elegance, <br><span>Curated for You.</span></h1>
+        <p>Find the best premium products across multiple categories. Discover trends that match your unique style and everyday needs.</p>
+        <a href="#categories" class="hero-cta">Explore Collections &rarr;</a>
+    </div>
+    
     <div class="models-container">
-        <img src="/images/woman.png" class="saree-model" alt="Saree Model">
-        <img src="/images/man.png" class="urban-model" alt="Urban Model">
+        <!-- Models are now grounded with a base shadow in CSS -->
+        <img src="/images/woman.png" class="saree-model" alt="Premium Saree Collection">
+        <img src="/images/man.png" class="urban-model" alt="Urban Men Collection">
     </div>
 </section>
 
-<div class="welcome-section">
-    <div class="welcome-box">
-        <h1>Welcome to Our Store</h1>
-        <p>Find the best products across multiple categories.</p>
-    </div>
-</div>
-
-<section class="category-section">
+<section class="category-section" id="categories">
     <h3>Browse by Category</h3>
     <ul class="category-grid">
         <li class="glass-card">
@@ -381,23 +433,37 @@
 </section>
 
 <footer>
-    <p>KENABECHA Project - 2026</p>
+    <p>&copy; 2026 KENABECHA Premium E-Commerce. All Rights Reserved.</p>
 </footer>
 
 <script>
     function toggleNavMenu() {
         const nav = document.getElementById('main-nav');
+        const icon = document.querySelector('#mobile-menu-toggle i');
+        
         if (nav) {
             nav.classList.toggle('nav-open');
+            // Toggle hamburger and close icon
+            if(nav.classList.contains('nav-open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
         }
     }
 
     document.addEventListener('click', function(e) {
         const nav = document.getElementById('main-nav');
         const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const icon = document.querySelector('#mobile-menu-toggle i');
+        
         if (nav && nav.classList.contains('nav-open')) {
             if (!nav.contains(e.target) && !toggleBtn.contains(e.target)) {
                 nav.classList.remove('nav-open');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
             }
         }
     });
