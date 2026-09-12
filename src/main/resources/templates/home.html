@@ -229,26 +229,26 @@
             pointer-events: none;
         }
 
-        /* Saree Model - Placed slightly left */
+      /* --- নারী মডেল: Front & Center of Attraction (Left-Center) --- */
         .saree-model {
             position: absolute;
-            height: 102%;
-            left: -4%;
-            bottom: -8%; /* Pushed down to hide cut legs */
-            z-index: 2;
+            height: 96%;           /* মার্জিত পূর্ণাঙ্গ হাইট */
+            left: 2%;              /* বাম পাশে মূল ফোকাসে */
+            bottom: -5%;           /* পা কাটা অংশ আর্চের নিচে লুকানো */
+            z-index: 4;            /* সামনে থাকবে এবং পুরুষ মডেলকে ওভারল্যাপ করবে */
             object-fit: contain;
-            filter: drop-shadow(6px 6px 14px rgba(0,0,0,0.18));
+            filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.22)); /* প্রিমিয়াম ডেপথ */
         }
 
-        /* Urban Model - Height balanced and side-by-side positioning */
+        /* --- পুরুষ মডেল: Back & Right Side (Taller Height) --- */
         .urban-model {
             position: absolute;
-            height: 104%; /* Taller/equal to saree model */
-            right: 0%;
-            bottom: -7%; /* Hidden cut legs */
-            z-index: 3; /* Prominent forward placement */
+            height: 104%;          /* নারীর চেয়ে উচ্চতা বেশি */
+            right: 4%;             /* ডান পাশে অবস্থান */
+            bottom: -6%;           /* পা কাটা অংশ আর্চের নিচে লুকানো */
+            z-index: 2;            /* পেছনের লেয়ারে থাকবে */
             object-fit: contain;
-            filter: drop-shadow(-8px 6px 14px rgba(0,0,0,0.16));
+            filter: drop-shadow(-6px 6px 14px rgba(0,0,0,0.14));
         }
 
         /* --- Category Section --- */
