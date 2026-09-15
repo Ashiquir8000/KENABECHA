@@ -175,7 +175,7 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Arch Stage & Perfect Geometric Proportions --- */
+        /* --- Arch Stage & Geometric Proportions --- */
         .hero-visuals {
             display: flex;
             justify-content: center;
@@ -186,16 +186,14 @@
             z-index: 10;
         }
 
-        /* কন্টেইনারটির উচ্চতা ও চওড়া নির্দিষ্ট লক করা হলো */
         .arches-container {
             position: relative;
-            width: 520px;
-            height: 520px; /* ডেস্কটপে পারফেক্ট স্কয়ার বাউন্ডারি */
+            width: 480px; /* কন্টেইনার উইডথ অ্যাডজাস্ট করা হলো */
+            height: 520px; 
             display: flex;
             align-items: flex-end;
         }
 
-        /* আর্চের বেস ফ্রেম */
         .arch-frame {
             position: absolute;
             bottom: 0;
@@ -205,27 +203,27 @@
             overflow: hidden;
         }
 
-        /* পেছনের আর্চ (Man): 295px width, 490px height, 3-4% taller */
+        /* পেছনের আর্চ (Man): উইডথ বাড়ানো হলো যাতে খোলা স্পেস পাওয়া যায় */
         .arch-back {
             right: 0;
-            width: 295px;
+            width: 275px; 
             height: 490px;
             border-radius: 150px 150px 0 0;
             z-index: 2;
             box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.08);
         }
 
-        /* সামনের আর্চ (Woman): 350px width, 465px height, নিখুঁত ২৫% ওভারল্যাপ */
+        /* সামনের আর্চ (Woman): স্লিম করা হলো (350px থেকে 250px) */
         .arch-front {
-            left: 0;
-            width: 350px;
+            left: 5%; 
+            width: 250px; 
             height: 465px;
-            border-radius: 180px 180px 0 0;
+            border-radius: 125px 125px 0 0;
             z-index: 5;
-            box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25); /* পেছনের আর্চের ওপর ডিপ শ্যাডো */
+            box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25);
         }
 
-        /* --- মডেলদের নিখুঁত গ্রাউন্ডিং ও সাইজিং --- */
+        /* --- মডেলদের গ্রাউন্ডিং ও সাইজিং --- */
         .arch-frame img {
             position: absolute;
             bottom: 0 !important;
@@ -234,7 +232,7 @@
             object-position: bottom center;
         }
 
-        /* নারী মডেল: সামনের আর্চের নিখুঁত সেন্টারে */
+        /* নারী মডেল: স্লিম আর্চের ভেতরে নিখুঁতভাবে ফিট হবে */
         .model-woman {
             left: 50% !important;
             right: auto !important;
@@ -245,18 +243,18 @@
         }
 
         /* পুরুষ মডেল: 
-           বাম থেকে ডানে ঠেলে দেওয়া হলো (left: 62%) যাতে তিনি সামনের আর্চের আড়াল থেকে 
-           পুরোপুরি ডানপাশের দৃশ্যমান ফাঁকা জায়গায় বেরিয়ে আসেন এবং শেরওয়ানি ও পুরো পোজ দেখা যায় */
+           ডানদিকে (উন্মুক্ত অংশে) শিফট করা হলো যাতে সামনের সাদা বর্ডারের ঠিক ধার ঘেঁষে থাকে */
         .model-man {
-            left: 62% !important;
-            right: auto !important;
-            transform: translateX(-50%) !important;
+            left: auto !important;
+            right: -2% !important; /* বর্ডার ঘেঁষে অ্যালাইনমেন্ট */
+            transform: translateX(0) !important;
             height: 96% !important;
             width: auto;
+            max-width: 120%;
             filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
-        /* নিচ দিয়ে ব্যাকগ্রাউন্ড উঁকি দেওয়া বন্ধ করতে মৃদু ব্লেন্ড */
+        /* ব্লেন্ডিং */
         .arch-frame::after {
             content: '';
             position: absolute;
@@ -425,33 +423,35 @@
                 font-size: 2.2rem;
             }
 
-            /* মোবাইলে কোনো চিমনি শেপ হবে না - সুষম স্কেলিং */
+            /* মোবাইল স্কেলিং */
             .hero-visuals {
                 height: 380px;
                 margin-top: 20px;
             }
 
             .arches-container {
-                width: 340px;
+                width: 320px;
                 height: 360px;
             }
 
+            /* পেছনের আর্চ */
             .arch-back {
-                width: 195px;
+                width: 200px;
                 height: 340px;
                 border-radius: 100px 100px 0 0;
                 right: 0;
             }
 
+            /* সামনের আর্চ (স্লিম) */
             .arch-front {
-                width: 230px;
+                width: 170px;
                 height: 325px;
-                border-radius: 120px 120px 0 0;
-                left: 0;
+                border-radius: 85px 85px 0 0;
+                left: 5%;
                 border-width: 6px;
             }
 
-            /* --- মোবাইলের জন্য মিডিয়া কোয়েরি ফিক্স --- */
+            /* মোবাইল মডেল পজিশন */
             .model-woman {
                 left: 50% !important;
                 right: auto !important;
@@ -460,9 +460,9 @@
             }
 
             .model-man {
-                left: 60% !important;
-                right: auto !important;
-                transform: translateX(-50%) !important;
+                left: auto !important;
+                right: -5% !important;
+                transform: translateX(0) !important;
                 height: 94% !important;
             }
         }
@@ -482,7 +482,6 @@
             <li><a href="/home">Home</a></li>
             <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
 
-            <!-- Backend roles intact -->
             <li th:if="${session?.loggedInUser?.userName == 'admin'}">
                 <a href="/adminF">Admin Dashboard</a>
             </li>
@@ -516,12 +515,12 @@
     
     <div class="hero-visuals">
         <div class="arches-container">
-            <!-- পেছনের আর্চ (Man): 295px x 490px -->
+            <!-- পেছনের আর্চ (Man): চওড়া (275px) -->
             <div class="arch-frame arch-back">
                 <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
             </div>
 
-            <!-- সামনের আর্চ (Woman): 350px x 465px -->
+            <!-- সামনের আর্চ (Woman): স্লিম (250px) -->
             <div class="arch-frame arch-front">
                 <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
             </div>
