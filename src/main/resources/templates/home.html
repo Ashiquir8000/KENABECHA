@@ -181,7 +181,7 @@
         /* --- Arch Frames & Visual Mechanics --- */
         .hero-visuals {
             display: flex;
-            justify-content: flex-end; /* ডানদিকে এলাইনমেন্ট */
+            justify-content: center; /* সেন্ট্রাল অ্যালাইনমেন্ট */
             align-items: flex-end;
             height: 100%;
             width: 100%;
@@ -189,20 +189,19 @@
             z-index: 10;
         }
 
-        /* কন্টেইনারের উইডথ এমনভাবে সেট করা হয়েছে যেন ২৫-৩০% ওভারল্যাপ নিশ্চিত হয় */
         .arches-container {
             position: relative;
             width: 100%;
-            max-width: 580px; 
-            height: 100%;
+            max-width: 540px; /* কন্টেইনার উইডথ ফিক্সড যাতে রেশিও ঠিক থাকে */
+            height: 88%;
+            margin: 0 auto;
         }
 
-        /* বেস আর্চ স্টাইল - ব্যাকগ্রাউন্ড কনসিস্টেন্সি */
         .arch-frame {
             position: absolute;
             bottom: 0;
             background: url('/images/back1.jpg') center bottom / cover no-repeat;
-            border-radius: 300px 300px 0 0;
+            border-radius: 500px 500px 0 0; /* Huge value ensures perfect semi-circle cap */
             border: 8px solid #FFFFFF;
             border-bottom: none !important;
             overflow: hidden;
@@ -210,41 +209,44 @@
 
         /* পেছনের আর্চ (Man) */
         .arch-back {
-            right: 4%;
-            width: 295px;
-            height: 91%; /* Subtle Staggering */
+            right: 0;
+            width: 55%; /* পার্সেন্টেজে উইডথ, যাতে ওভারফ্লো না হয় */
+            height: 92%; 
             z-index: 2;
             box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
         }
 
-        /* সামনের আর্চ (Woman) - Visual Anchoring */
+        /* সামনের আর্চ (Woman) */
         .arch-front {
-            left: 2%; /* ইনসেট প্লেসমেন্ট */
-            width: 350px;
-            height: 88%; 
+            left: 2%; 
+            width: 62%; /* পার্সেন্টেজে উইডথ */
+            height: 100%; 
             z-index: 5;
-            box-shadow: 15px 5px 40px rgba(0, 0, 0, 0.25); /* ডিপ ড্রপ-শ্যাডো */
+            box-shadow: 20px 5px 40px rgba(0, 0, 0, 0.25); 
         }
 
-        /* আর্চের ভেতরের মডেলদের সাধারণ প্রপার্টি */
+        /* --- THE GROUNDING FIX: No More Floating --- */
         .arch-frame img {
             position: absolute;
-            bottom: 0;
+            bottom: 0 !important; /* মডেলদের পা ফ্লোরে লক করে দেওয়া হলো */
             left: 50%;
             transform: translateX(-50%);
             object-fit: contain;
+            object-position: bottom center; /* ইমেজ নিচ থেকে রেন্ডার হবে */
             pointer-events: none;
             z-index: 10;
         }
 
-        /* Internal Model Proportion */
+        /* হেডরুম এবং মডেল সাইজিং */
         .model-woman {
-            height: 88%; /* নারী মডেলের হাইট রেশিও */
+            width: 140%; /* চওড়ায় জায়গা দেওয়া হলো যাতে ক্রপ না হয় */
+            height: 93%; /* মাথার উপরে ৭% হেডরুম */
             filter: drop-shadow(8px 8px 20px rgba(0,0,0,0.15));
         }
 
         .model-man {
-            height: 90%; /* পুরুষ মডেলের হাইট রেশিও */
+            width: 140%;
+            height: 95%; /* মাথার উপরে ৫% হেডরুম */
             filter: drop-shadow(-6px 6px 16px rgba(0,0,0,0.12));
         }
 
@@ -255,8 +257,8 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 60px;
-            background: linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 100%);
+            height: 50px;
+            background: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 100%);
             z-index: 15;
             pointer-events: none;
         }
@@ -367,16 +369,18 @@
             }
 
             .hero-visuals {
-                height: 60vh;
-                min-height: 450px;
+                height: 55vh;
+                min-height: 480px;
                 justify-content: center;
             }
             
             .arches-container {
                 max-width: 500px;
+                height: 100%;
             }
         }
 
+        /* --- MOBILE FIXES --- */
         @media screen and (max-width: 768px) {
             header {
                 padding: 0 20px;
@@ -422,21 +426,38 @@
                 align-items: flex-start;
             }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .hero-section {
+                padding-top: 20px;
             }
 
-            /* মোবাইলে আর্চের স্কেলিং রেশিও ঠিক রাখা */
+            .hero-content h1 {
+                font-size: 2.3rem;
+                margin-top: 20px;
+            }
+
+            .hero-visuals {
+                height: 420px; /* মোবাইলে একটি নিরাপদ উচ্চতা ফিক্স করা হলো */
+                width: 100%;
+                margin-top: 20px;
+            }
+
             .arches-container {
-                max-width: 400px;
+                width: 95%; /* কন্টেইনার যেন ভিউপোর্ট ওভারফ্লো না করে */
+                max-width: 380px; 
+                height: 100%;
+            }
+
+            /* ওভার-ক্লিপিং এবং ব্লিডিং সমস্যার সমাধান */
+            .arch-back {
+                width: 50%; /* উইডথ পার্সেন্টেজে আনায় আর কাটবে না */
+                right: 0;
+                height: 90%;
             }
 
             .arch-front {
-                width: 240px;
-            }
-
-            .arch-back {
-                width: 200px;
+                width: 58%; /* উইডথ কমিয়ে পুরুষ মডেলকে ভিজিবল করা হলো */
+                left: 5%;
+                height: 100%;
             }
         }
     </style>
@@ -489,12 +510,12 @@
     
     <div class="hero-visuals">
         <div class="arches-container">
-            <!-- পেছনের আর্চ (Man): 91% height, 295px width, right-aligned, z-index 2 -->
+            <!-- পেছনের আর্চ (Man) -->
             <div class="arch-frame arch-back">
                 <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
             </div>
 
-            <!-- সামনের আর্চ (Woman): 88% height, 350px width, left-aligned, z-index 5 -->
+            <!-- সামনের আর্চ (Woman) -->
             <div class="arch-frame arch-front">
                 <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
             </div>
