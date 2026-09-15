@@ -111,7 +111,7 @@
             margin-top: 75px;
             padding: 0 6%;
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: 1fr 1fr;
             align-items: flex-end;
             position: relative;
             overflow: hidden;
@@ -178,10 +178,10 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Arch Frame & Bulletproof Model Placement --- */
+        /* --- Arch Frames & Visual Mechanics --- */
         .hero-visuals {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end; /* ডানদিকে এলাইনমেন্ট */
             align-items: flex-end;
             height: 100%;
             width: 100%;
@@ -189,63 +189,63 @@
             z-index: 10;
         }
 
-        .arch-frame {
+        /* কন্টেইনারের উইডথ এমনভাবে সেট করা হয়েছে যেন ২৫-৩০% ওভারল্যাপ নিশ্চিত হয় */
+        .arches-container {
             position: relative;
             width: 100%;
-            max-width: 560px; /* Width increased for breathing room */
-            height: 86%;
-            background: #FFFDF9 url('/images/background.jpg') center bottom / cover no-repeat;
-            border-radius: 280px 280px 0 0;
-            border: 8px solid #FFFFFF;
-            border-bottom: none !important;
-            box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.06);
-            overflow: hidden; 
-        }
-
-        .model-stage {
-            position: relative;
-            width: 100%;
+            max-width: 580px; 
             height: 100%;
         }
 
-        /* --- সমান হাইট ও পারফেক্ট স্প্রেড (No Space Waste) --- */
-
-        /* --- ডেস্কটপ: ছেলে মডেলকে সেন্টারের কাছে আনা ও পারফেক্ট ওভারল্যাপ --- */
-        .saree-model-grand {
+        /* বেস আর্চ স্টাইল - ব্যাকগ্রাউন্ড কনসিস্টেন্সি */
+        .arch-frame {
             position: absolute;
-            height: 92% !important;
-            bottom: -5% !important;
-            left: 50% !important;
-            transform: translateX(-62%) !important; /* সামান্য ডানে এনে গ্যাপ কমানো হলো */
-            z-index: 5 !important;
-            object-fit: contain;
-            filter: drop-shadow(14px 10px 24px rgba(0,0,0,0.28));
-            pointer-events: none;
+            bottom: 0;
+            background: url('/images/back1.jpg') center bottom / cover no-repeat;
+            border-radius: 300px 300px 0 0;
+            border: 8px solid #FFFFFF;
+            border-bottom: none !important;
+            overflow: hidden;
         }
 
-        .urban-model-grand {
-            position: absolute;
-            height: 92% !important;
-            bottom: -5% !important;
-            left: 50% !important;
-            transform: translateX(-24%) !important; /* ডানে ছিটকে যাওয়া বন্ধ করে সেন্টারের কাছে আনা হলো */
-            z-index: 2 !important;
-            object-fit: contain;
-            filter: drop-shadow(-8px 6px 16px rgba(0,0,0,0.18));
-            pointer-events: none;
+        /* পেছনের আর্চ (Man) */
+        .arch-back {
+            right: 4%;
+            width: 295px;
+            height: 91%; /* Subtle Staggering */
+            z-index: 2;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
         }
 
-        /* --- মোবাইল ও ট্যাবলেট ফিক্স (যাতে ছেলে মডেল ফ্রেমের বাইরে ছিটকে না যায়) --- */
-        @media screen and (max-width: 768px) {
-            .saree-model-grand {
-                height: 88% !important;
-                transform: translateX(-58%) !important;
-            }
+        /* সামনের আর্চ (Woman) - Visual Anchoring */
+        .arch-front {
+            left: 2%; /* ইনসেট প্লেসমেন্ট */
+            width: 350px;
+            height: 88%; 
+            z-index: 5;
+            box-shadow: 15px 5px 40px rgba(0, 0, 0, 0.25); /* ডিপ ড্রপ-শ্যাডো */
+        }
 
-            .urban-model-grand {
-                height: 88% !important;
-                transform: translateX(-30%) !important; /* মোবাইলে আর্চ ফ্রেমের ভেতরে সুরক্ষিত */
-            }
+        /* আর্চের ভেতরের মডেলদের সাধারণ প্রপার্টি */
+        .arch-frame img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            object-fit: contain;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Internal Model Proportion */
+        .model-woman {
+            height: 88%; /* নারী মডেলের হাইট রেশিও */
+            filter: drop-shadow(8px 8px 20px rgba(0,0,0,0.15));
+        }
+
+        .model-man {
+            height: 90%; /* পুরুষ মডেলের হাইট রেশিও */
+            filter: drop-shadow(-6px 6px 16px rgba(0,0,0,0.12));
         }
 
         /* Arch Bottom Blend */
@@ -255,9 +255,9 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 70px;
+            height: 60px;
             background: linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 100%);
-            z-index: 6;
+            z-index: 15;
             pointer-events: none;
         }
 
@@ -369,12 +369,11 @@
             .hero-visuals {
                 height: 60vh;
                 min-height: 450px;
+                justify-content: center;
             }
             
-            .arch-frame {
-                height: 100%;
-                width: 90%;
-                max-width: 420px;
+            .arches-container {
+                max-width: 500px;
             }
         }
 
@@ -426,6 +425,19 @@
             .hero-content h1 {
                 font-size: 2.5rem;
             }
+
+            /* মোবাইলে আর্চের স্কেলিং রেশিও ঠিক রাখা */
+            .arches-container {
+                max-width: 400px;
+            }
+
+            .arch-front {
+                width: 240px;
+            }
+
+            .arch-back {
+                width: 200px;
+            }
         }
     </style>
 </head>
@@ -476,13 +488,15 @@
     </div>
     
     <div class="hero-visuals">
-        <div class="arch-frame">
-            <div class="model-stage">
-                <!-- পুরুষ মডেল: ডানে এবং পেছনের লেয়ারে -->
-                <img src="/images/man.png" class="urban-model-grand" alt="Urban Men Collection">
+        <div class="arches-container">
+            <!-- পেছনের আর্চ (Man): 91% height, 295px width, right-aligned, z-index 2 -->
+            <div class="arch-frame arch-back">
+                <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
+            </div>
 
-                <!-- নারী মডেল: বামে, এবং নিশ্চিতভাবে প্রধান আকর্ষণে সামনে -->
-                <img src="/images/woman.png" class="saree-model-grand" alt="Premium Saree Collection">
+            <!-- সামনের আর্চ (Woman): 88% height, 350px width, left-aligned, z-index 5 -->
+            <div class="arch-frame arch-front">
+                <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
             </div>
         </div>
     </div>
