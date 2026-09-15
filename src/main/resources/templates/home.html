@@ -175,7 +175,7 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Arch Stage & Composition --- */
+        /* --- Arch Stage & Perfect 3D Overlap --- */
         .hero-visuals {
             display: flex;
             justify-content: flex-end;
@@ -186,11 +186,11 @@
             z-index: 10;
         }
 
-        /* কন্টেইনার উইডথ বাড়ানো হলো যাতে দুটো আর্চ পাশাপাশি সুন্দরভাবে স্পেস পায় */
+        /* কন্টেইনার উইডথ লক করে ২৫-৩০% বাস্তব ওভারল্যাপ নিশ্চিত করা হলো */
         .arches-container {
             position: relative;
-            width: 580px;
-            height: 520px;
+            width: 500px;
+            height: 500px;
             display: flex;
             align-items: flex-end;
         }
@@ -204,30 +204,27 @@
             overflow: hidden;
         }
 
-        /* পেছনের আর্চ (Man): 
-           উইডথ 300px এবং right: 0 তে থাকবে। ফলে এর বামপাশের মাত্র ২৫% অংশ সামনের আর্চের নিচে পড়বে।
-           বাকি ৭৫% সম্পূর্ণ দৃশ্যমান থাকবে। */
+        /* পেছনের আর্চ (Man): 280px উইডথ, ডানে অ্যাঙ্কর করা */
         .arch-back {
             right: 0;
-            width: 300px;
-            height: 490px;
-            border-radius: 150px 150px 0 0;
+            width: 280px;
+            height: 485px;
+            border-radius: 140px 140px 0 0;
             z-index: 2;
             box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.08);
         }
 
-        /* সামনের আর্চ (Woman): 
-           উইডথ 290px। এটি পেছনের আর্চকে সামান্য (প্রায় ৭৫px) ওভারল্যাপ করবে। */
+        /* সামনের আর্চ (Woman): 290px উইডথ, বামে রাখা হলো যাতে পেছনের আর্চের ২৫% ওভারল্যাপ হয় */
         .arch-front {
-            left: 20px; 
+            left: 0;
             width: 290px;
-            height: 465px;
+            height: 455px;
             border-radius: 145px 145px 0 0;
             z-index: 5;
-            box-shadow: 15px 0 35px rgba(0, 0, 0, 0.25);
+            box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25);
         }
 
-        /* মডেল ইমেজগুলোর নিখুঁত ফিক্স */
+        /* আর্চের ইমেজ রেন্ডারিং */
         .arch-frame img {
             position: absolute;
             bottom: 0 !important;
@@ -236,26 +233,28 @@
             object-position: bottom center;
         }
 
-        /* নারী মডেল */
+        /* নারী মডেল ফিক্স (No More Lilliput):
+           উইডথ আনলক করে স্কেল বাড়িয়ে আর্চের ভেতরে বড় ও প্রধান আকর্ষণে আনা হলো */
         .model-woman {
             left: 50% !important;
-            transform: translateX(-50%) !important;
-            height: 94% !important;
+            transform: translateX(-50%) scale(1.22) !important;
+            transform-origin: bottom center !important;
+            height: 88% !important;
             width: auto;
-            max-width: 125%;
+            max-width: none !important;
             filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
-        /* পুরুষ মডেল: 
-           পেছনের আর্চের দৃশ্যমান অংশে আনার জন্য সামান্য ডানে (left: 56%) রাখা হলো।
-           এতে সামনের সাদা বর্ডার ঘেঁষে দাঁড়াবে এবং পুরো শরীর, শেরওয়ানি ও মাথা সম্পূর্ণ দেখা যাবে! */
+        /* পুরুষ মডেল ফিক্স (Border Leaning):
+           সামনের সাদা আর্চ ফ্রেমের ডান কিনারা ঘেঁষে দাঁড় করানো হলো */
         .model-man {
-            left: 56% !important;
-            transform: translateX(-50%) !important;
-            height: 96% !important;
+            left: 36% !important; /* সামনের সাদা ফ্রেমের কাট-অফ লাইনের ঠিক ধার ঘেঁষে আনা হলো */
+            transform: translateX(-50%) scale(1.08) !important;
+            transform-origin: bottom center !important;
+            height: 94% !important;
             width: auto;
-            max-width: 120%;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.18));
+            max-width: none !important;
+            filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
         /* বেস ব্লেন্ড */
@@ -434,7 +433,7 @@
             }
 
             .arches-container {
-                width: 350px;
+                width: 330px;
                 height: 360px;
             }
 
@@ -455,14 +454,14 @@
 
             .model-woman {
                 left: 50% !important;
-                transform: translateX(-50%) !important;
-                height: 92% !important;
+                transform: translateX(-50%) scale(1.18) !important;
+                height: 88% !important;
             }
 
             .model-man {
-                left: 55% !important;
-                transform: translateX(-50%) !important;
-                height: 94% !important;
+                left: 38% !important;
+                transform: translateX(-50%) scale(1.05) !important;
+                height: 92% !important;
             }
         }
     </style>
@@ -514,12 +513,12 @@
     
     <div class="hero-visuals">
         <div class="arches-container">
-            <!-- পেছনের আর্চ (Man): 300px x 490px -->
+            <!-- পেছনের আর্চ (Man): 280px x 485px -->
             <div class="arch-frame arch-back">
                 <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
             </div>
 
-            <!-- সামনের আর্চ (Woman): 290px x 465px -->
+            <!-- সামনের আর্চ (Woman): 290px x 455px -->
             <div class="arch-frame arch-front">
                 <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
             </div>
