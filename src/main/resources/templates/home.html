@@ -188,7 +188,7 @@
 
         .arches-container {
             position: relative;
-            width: 480px; /* কন্টেইনার উইডথ অ্যাডজাস্ট করা হলো */
+            width: 480px;
             height: 520px; 
             display: flex;
             align-items: flex-end;
@@ -203,7 +203,7 @@
             overflow: hidden;
         }
 
-        /* পেছনের আর্চ (Man): উইডথ বাড়ানো হলো যাতে খোলা স্পেস পাওয়া যায় */
+        /* পেছনের আর্চ (Man) */
         .arch-back {
             right: 0;
             width: 275px; 
@@ -213,7 +213,7 @@
             box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.08);
         }
 
-        /* সামনের আর্চ (Woman): স্লিম করা হলো (350px থেকে 250px) */
+        /* সামনের আর্চ (Woman) */
         .arch-front {
             left: 5%; 
             width: 250px; 
@@ -232,7 +232,7 @@
             object-position: bottom center;
         }
 
-        /* নারী মডেল: স্লিম আর্চের ভেতরে নিখুঁতভাবে ফিট হবে */
+        /* নারী মডেল: সেন্টারে নিখুঁত ফিট */
         .model-woman {
             left: 50% !important;
             right: auto !important;
@@ -243,14 +243,14 @@
         }
 
         /* পুরুষ মডেল: 
-           ডানদিকে (উন্মুক্ত অংশে) শিফট করা হলো যাতে সামনের সাদা বর্ডারের ঠিক ধার ঘেঁষে থাকে */
+           ডানপাশ থেকে বামের দিকে এনে (right: 14%) সামনের আর্চের সাদা বর্ডারের ঠিক ধার ঘেঁষে বসানো হলো */
         .model-man {
             left: auto !important;
-            right: -2% !important; /* বর্ডার ঘেঁষে অ্যালাইনমেন্ট */
+            right: 14% !important;
             transform: translateX(0) !important;
             height: 96% !important;
             width: auto;
-            max-width: 120%;
+            max-width: 125%;
             filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
@@ -434,7 +434,6 @@
                 height: 360px;
             }
 
-            /* পেছনের আর্চ */
             .arch-back {
                 width: 200px;
                 height: 340px;
@@ -442,7 +441,6 @@
                 right: 0;
             }
 
-            /* সামনের আর্চ (স্লিম) */
             .arch-front {
                 width: 170px;
                 height: 325px;
@@ -461,7 +459,7 @@
 
             .model-man {
                 left: auto !important;
-                right: -5% !important;
+                right: 10% !important;
                 transform: translateX(0) !important;
                 height: 94% !important;
             }
@@ -515,12 +513,12 @@
     
     <div class="hero-visuals">
         <div class="arches-container">
-            <!-- পেছনের আর্চ (Man): চওড়া (275px) -->
+            <!-- পেছনের আর্চ (Man) -->
             <div class="arch-frame arch-back">
                 <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
             </div>
 
-            <!-- সামনের আর্চ (Woman): স্লিম (250px) -->
+            <!-- সামনের আর্চ (Woman) -->
             <div class="arch-frame arch-front">
                 <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
             </div>
