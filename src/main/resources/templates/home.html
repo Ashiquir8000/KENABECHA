@@ -117,11 +117,12 @@
             background-color: var(--bg-light);
         }
 
+        /* হিরো সেকশনের মূল ব্যাকগ্রাউন্ড আগের মতো back1.jpg রাখা হলো */
         .hero-section::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: url('/images/background.jpg') center center / cover no-repeat;
+            background: url('/images/back1.jpg') center center / cover no-repeat;
             opacity: 0.15;
             mix-blend-mode: multiply;
             pointer-events: none;
@@ -194,6 +195,7 @@
             align-items: flex-end;
         }
 
+        /* আর্চ ফ্রেমের ব্যাকগ্রাউন্ডে background.jpg ব্যবহার করা হলো */
         .arch-frame {
             position: absolute;
             bottom: 0;
@@ -236,7 +238,7 @@
             filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
-        /* পুরুষ মডেল: শুধুমাত্র left এর মান 12% থেকে কমিয়ে -4% করে দেওয়া হলো যাতে সামনের আর্চ ঘেঁষে যায় */
+        /* পুরুষ মডেল */
         .model-man {
             left: -4% !important; 
             transform: translateX(0) !important;
@@ -447,7 +449,7 @@
             }
 
             .model-man {
-                left: -6% !important; /* মোবাইলের জন্য গ্যাপ কমানো হলো */
+                left: -6% !important;
                 transform: translateX(0) !important;
                 height: 95% !important;
                 width: auto !important;
