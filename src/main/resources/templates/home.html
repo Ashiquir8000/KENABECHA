@@ -186,7 +186,7 @@
             z-index: 10;
         }
 
-        /* কন্টেইনারটির উচ্চতা ও চওড়া নির্দিষ্ট লক করা হলো */
+        /* কন্টেইনারটির উচ্চতা ও চওড়া নির্দিষ্ট লক করা হলো */
         .arches-container {
             position: relative;
             width: 520px;
@@ -225,34 +225,39 @@
             box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25); /* পেছনের আর্চের ওপর ডিপ শ্যাডো */
         }
 
-        /* মডেলদের নিখুঁত গ্রাউন্ডিং ও সাইজিং */
+        /* --- মডেলদের নিখুঁত গ্রাউন্ডিং ও সাইজিং --- */
         .arch-frame img {
             position: absolute;
             bottom: 0 !important;
-            left: 50%;
-            transform: translateX(-50%);
             pointer-events: none;
             object-fit: contain;
             object-position: bottom center;
         }
 
-        /* নারী মডেল: আর্চের ভেতর সুন্দর ফোকাস, কোন বিশ্রী ফাঁকা জায়গা থাকবে না */
+        /* নারী মডেল: সামনের আর্চের সেন্টারে থাকবে */
         .model-woman {
+            left: 50% !important;
+            transform: translateX(-50%) !important;
             height: 94%;
             width: auto;
             max-width: 130%;
             filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
-        /* পুরুষ মডেল: পেছনের আর্চে পারফেক্ট হেডরুম */
+        /* পুরুষ মডেল (Visual Leaning Fix):
+           সেন্টার থেকে সরিয়ে পেছনের আর্চের উন্মুক্ত অংশে ডানদিকে আনা হলো, 
+           যাতে সামনের সাদা আর্চের ফ্রেম ঘেঁষে দাঁড়ায় এবং পোজ সম্পূর্ণ দৃশ্যমান হয় */
         .model-man {
-            height: 95%;
+            left: auto !important;
+            right: 8% !important;
+            transform: translateX(0) !important;
+            height: 96% !important;
             width: auto;
-            max-width: 125%;
-            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.15));
+            max-width: 120%;
+            filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
-        /* নিচ দিয়ে ব্যাকগ্রাউন্ড উঁকি দেওয়া বন্ধ করতে মৃদু ব্লেন্ড */
+        /* নিচ দিয়ে ব্যাকগ্রাউন্ড উঁকি দেওয়া বন্ধ করতে মৃদু ব্লেন্ড */
         .arch-frame::after {
             content: '';
             position: absolute;
@@ -445,6 +450,20 @@
                 border-radius: 120px 120px 0 0;
                 left: 0;
                 border-width: 6px;
+            }
+
+            /* মোবাইলের জন্য মডেলদের পজিশনিং ফিক্স */
+            .model-woman {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                height: 92%;
+            }
+
+            .model-man {
+                left: auto !important;
+                right: 5% !important;
+                transform: translateX(0) !important;
+                height: 94% !important;
             }
         }
     </style>
