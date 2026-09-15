@@ -175,7 +175,7 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Arch Stage & 3D Overlap --- */
+        /* --- Arch Stage & Perfect 3D Overlap --- */
         .hero-visuals {
             display: flex;
             justify-content: flex-end;
@@ -223,7 +223,7 @@
 
         .arch-frame img {
             position: absolute;
-            bottom: 0;
+            bottom: -2%;
             pointer-events: none;
         }
 
@@ -236,13 +236,13 @@
             filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
-        /* পুরুষ মডেল: সামনের আর্চের সাদা বর্ডার ঘেঁষে দাঁড়ানো এবং সুন্দরভাবে ফিট */
+        /* পুরুষ মডেল: শুধুমাত্র left এর মান 12% থেকে কমিয়ে -4% করে দেওয়া হলো যাতে সামনের আর্চ ঘেঁষে যায় */
         .model-man {
-            left: 28% !important;
-            transform: translateX(-50%) !important;
-            height: 92% !important;
+            left: -4% !important; 
+            transform: translateX(0) !important;
+            height: 95% !important;
             width: auto !important;
-            filter: drop-shadow(4px 8px 18px rgba(0,0,0,0.18));
+            filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
         .arch-frame::after {
@@ -447,9 +447,9 @@
             }
 
             .model-man {
-                left: 28% !important;
-                transform: translateX(-50%) !important;
-                height: 92% !important;
+                left: -6% !important; /* মোবাইলের জন্য গ্যাপ কমানো হলো */
+                transform: translateX(0) !important;
+                height: 95% !important;
                 width: auto !important;
             }
         }
