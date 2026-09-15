@@ -186,7 +186,6 @@
             z-index: 10;
         }
 
-        /* কন্টেইনার উইডথ লক করে ২৫-৩০% বাস্তব ওভারল্যাপ নিশ্চিত করা হলো */
         .arches-container {
             position: relative;
             width: 500px;
@@ -224,36 +223,32 @@
             box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25);
         }
 
-        /* আর্চের ইমেজ রেন্ডারিং */
+        /* আর্চের ইমেজ রেন্ডারিং - No Scaling */
         .arch-frame img {
             position: absolute;
             bottom: 0 !important;
             pointer-events: none;
-            object-fit: contain;
-            object-position: bottom center;
+            /* object-fit: contain বাদ দিয়ে মডেলকে ন্যাচারাল প্রোপোরশনে বসতে দেওয়া হলো */
         }
 
-        /* নারী মডেল ফিক্স (No More Lilliput):
-           উইডথ আনলক করে স্কেল বাড়িয়ে আর্চের ভেতরে বড় ও প্রধান আকর্ষণে আনা হলো */
+        /* নারী মডেল ফিক্স:
+           আর্চের উইডথ অনুযায়ী ন্যাচারালি বড় হবে, কোনো হাইট বাধ্যবাধকতা নেই */
         .model-woman {
             left: 50% !important;
-            transform: translateX(-50%) scale(1.22) !important;
-            transform-origin: bottom center !important;
-            height: 88% !important;
-            width: auto;
-            max-width: none !important;
+            transform: translateX(-50%) !important;
+            width: 90%; /* শাড়ির ঘের অনুযায়ী আর্চের ভেতরে পারফেক্ট স্পেস */
+            height: auto;
             filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
         /* পুরুষ মডেল ফিক্স (Border Leaning):
-           সামনের সাদা আর্চ ফ্রেমের ডান কিনারা ঘেঁষে দাঁড় করানো হলো */
+           object-position: left bottom দিয়ে ইমেজটাকে আর্চের বাম পাশে আটকে দেওয়া হলো */
         .model-man {
-            left: 36% !important; /* সামনের সাদা ফ্রেমের কাট-অফ লাইনের ঠিক ধার ঘেঁষে আনা হলো */
-            transform: translateX(-50%) scale(1.08) !important;
-            transform-origin: bottom center !important;
-            height: 94% !important;
-            width: auto;
-            max-width: none !important;
+            left: 0; /* বাম পাশ থেকে শুরু হবে */
+            width: 100%;
+            height: 95%; /* হেডরুম ঠিক রাখতে */
+            object-fit: contain;
+            object-position: left bottom; /* জাদুকরী প্রপার্টি: মডেলকে বাম বর্ডার ঘেঁষে রাখবে */
             filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
@@ -454,14 +449,16 @@
 
             .model-woman {
                 left: 50% !important;
-                transform: translateX(-50%) scale(1.18) !important;
-                height: 88% !important;
+                transform: translateX(-50%) !important;
+                width: 90%;
             }
 
             .model-man {
-                left: 38% !important;
-                transform: translateX(-50%) scale(1.05) !important;
-                height: 92% !important;
+                left: 0;
+                width: 100%;
+                height: 95%;
+                object-fit: contain;
+                object-position: left bottom;
             }
         }
     </style>
