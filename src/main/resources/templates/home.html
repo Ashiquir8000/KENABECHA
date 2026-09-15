@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ... (আগের সব CSS অপরিবর্তিত থাকবে, শুধু মডেলের ক্লাসগুলো আপডেট হবে) ... */
         :root {
             --ruby-red: #9B111E;
             --ruby-red-hover: #7a0d17;
@@ -227,33 +226,33 @@
         /* আর্চের ইমেজ রেন্ডারিং */
         .arch-frame img {
             position: absolute;
-            /* bottom: 0; এর পরিবর্তে একটু নেগেটিভ ভ্যালু দিতে হতে পারে যদি মডেলের পা কেটে যায় */
-            bottom: -2%; 
+            bottom: -2%;
             pointer-events: none;
-            /* object-fit: contain; ডিফল্টভাবেই থাকে, তাই আলাদা করে দেওয়ার দরকার নেই */
+            /* object-fit: contain বাদ দিয়ে ন্যাচারাল রেশিও মেইনটেইন করা হলো */
         }
 
         /* --- মডেল ফিক্সিং --- */
         
         /* নারী মডেল: 
-           আর্চের সেন্টারে থাকবে এবং উচ্চতা আর্চের প্রায় সমান হবে (95%) */
+           আর্চের ভেতরে উইডথ অনুযায়ী বড় করা হলো, যাতে শাড়ির ঘের ঠিক থাকে এবং মাথা উপরে ওঠে */
         .model-woman {
             left: 50% !important;
-            transform: translateX(-50%) !important;
-            height: 95% !important; /* মডেলকে বড় করে দেখানো হলো */
-            width: auto !important; /* অনুপাত ঠিক রাখার জন্য */
+            transform: translateX(-50%) scale(1.15) !important; /* স্কেল দিয়ে নিখুঁত বড় করা হলো */
+            transform-origin: bottom center !important;
+            width: 95% !important; 
+            height: auto !important; 
             filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
         /* পুরুষ মডেল: 
-           ডানদিকে ঘেঁষে দাঁড়ানোর জন্য transform: translateX ব্যবহার করা হলো */
+           ডানদিকে ঘেঁষে দাঁড়ানোর জন্য transform: translateX পজিটিভ ভ্যালু ব্যবহার করা হলো */
         .model-man {
-            left: 0 !important; /* আর্চের একদম বাঁ থেকে শুরু হবে */
-            /* মডেলের ট্রান্সপারেন্ট স্পেস অনুযায়ী X-অক্ষের মান অ্যাডজাস্ট করতে হবে। 
-               এখানে আনুমানিক -15% দেওয়া হলো যাতে বাঁ দিকে সরে গিয়ে বর্ডার ঘেঁষে দাঁড়ায়। */
-            transform: translateX(-15%) !important; 
-            height: 95% !important; /* মডেলকে আর্চের প্রায় সমান লম্বা করা হলো */
-            width: auto !important; /* অনুপাত ঠিক রাখার জন্য */
+            left: 50% !important;
+            /* মডেলকে ডানদিকে ঠেলে সামনের সাদা আর্চের বর্ডার ঘেঁষে বসানো হলো */
+            transform: translateX(-20%) scale(1.05) !important; 
+            transform-origin: bottom center !important;
+            width: auto !important;
+            height: 96% !important; 
             filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
@@ -455,21 +454,20 @@
             /* মোবাইলের জন্য মডেল ফিক্স */
             .model-woman {
                 left: 50% !important;
-                transform: translateX(-50%) !important;
-                height: 95% !important; /* আর্চের প্রায় সমান উচ্চতা */
-                width: auto !important;
+                transform: translateX(-50%) scale(1.15) !important;
+                width: 95% !important;
+                height: auto !important;
             }
 
             .model-man {
-                left: 0 !important;
-                transform: translateX(-15%) !important; /* বাঁ দিকে ঠেলে বর্ডার ঘেঁষে বসানো */
-                height: 95% !important;
+                left: 50% !important;
+                transform: translateX(-15%) scale(1.05) !important; 
+                height: 96% !important;
                 width: auto !important;
             }
         }
     </style>
 </head>
-<!-- ... (বাকি HTML অপরিবর্তিত থাকবে) ... -->
 <body>
 
 <header>
