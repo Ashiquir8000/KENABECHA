@@ -106,13 +106,12 @@
         /* --- Fixed 1-Screen Hero Layout --- */
         .hero-section {
             width: 100%;
-            height: calc(100vh - 75px);
-            min-height: 650px;
+            min-height: calc(100vh - 75px);
             margin-top: 75px;
-            padding: 0 6%;
+            padding: 40px 6% 0 6%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            align-items: flex-end;
+            align-items: center;
             position: relative;
             overflow: hidden;
             background-color: var(--bg-light);
@@ -131,15 +130,13 @@
 
         .hero-content {
             max-width: 560px;
-            align-self: center;
-            padding-bottom: 20px;
             position: relative;
             z-index: 10;
         }
 
         .hero-content h1 {
             font-family: 'Cinzel', serif;
-            font-size: 3.8rem;
+            font-size: 3.6rem;
             font-weight: 800;
             color: var(--text-dark);
             line-height: 1.15;
@@ -178,94 +175,99 @@
             box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
         }
 
-        /* --- Arch Frames & Visual Mechanics --- */
+        /* --- Arch Stage & Perfect Geometric Proportions --- */
         .hero-visuals {
             display: flex;
-            justify-content: center; /* সেন্ট্রাল অ্যালাইনমেন্ট */
+            justify-content: center;
             align-items: flex-end;
-            height: 100%;
             width: 100%;
+            height: 100%;
             position: relative;
             z-index: 10;
         }
 
+        /* কন্টেইনারটির উচ্চতা ও চওড়া নির্দিষ্ট লক করা হলো */
         .arches-container {
             position: relative;
-            width: 100%;
-            max-width: 540px; /* কন্টেইনার উইডথ ফিক্সড যাতে রেশিও ঠিক থাকে */
-            height: 88%;
-            margin: 0 auto;
+            width: 520px;
+            height: 520px; /* ডেস্কটপে পারফেক্ট স্কয়ার বাউন্ডারি */
+            display: flex;
+            align-items: flex-end;
         }
 
+        /* আর্চের বেস ফ্রেম */
         .arch-frame {
             position: absolute;
             bottom: 0;
             background: url('/images/back1.jpg') center bottom / cover no-repeat;
-            border-radius: 500px 500px 0 0; /* Huge value ensures perfect semi-circle cap */
             border: 8px solid #FFFFFF;
             border-bottom: none !important;
             overflow: hidden;
         }
 
-        /* পেছনের আর্চ (Man) */
+        /* পেছনের আর্চ (Man): 295px width, 490px height, 3-4% taller */
         .arch-back {
             right: 0;
-            width: 55%; /* পার্সেন্টেজে উইডথ, যাতে ওভারফ্লো না হয় */
-            height: 92%; 
+            width: 295px;
+            height: 490px;
+            border-radius: 150px 150px 0 0;
             z-index: 2;
-            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.08);
         }
 
-        /* সামনের আর্চ (Woman) */
+        /* সামনের আর্চ (Woman): 350px width, 465px height, নিখুঁত ২৫% ওভারল্যাপ */
         .arch-front {
-            left: 2%; 
-            width: 62%; /* পার্সেন্টেজে উইডথ */
-            height: 100%; 
+            left: 0;
+            width: 350px;
+            height: 465px;
+            border-radius: 180px 180px 0 0;
             z-index: 5;
-            box-shadow: 20px 5px 40px rgba(0, 0, 0, 0.25); 
+            box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25); /* পেছনের আর্চের ওপর ডিপ শ্যাডো */
         }
 
-        /* --- THE GROUNDING FIX: No More Floating --- */
+        /* মডেলদের নিখুঁত গ্রাউন্ডিং ও সাইজিং */
         .arch-frame img {
             position: absolute;
-            bottom: 0 !important; /* মডেলদের পা ফ্লোরে লক করে দেওয়া হলো */
+            bottom: 0 !important;
             left: 50%;
             transform: translateX(-50%);
-            object-fit: contain;
-            object-position: bottom center; /* ইমেজ নিচ থেকে রেন্ডার হবে */
             pointer-events: none;
-            z-index: 10;
+            object-fit: contain;
+            object-position: bottom center;
         }
 
-        /* হেডরুম এবং মডেল সাইজিং */
+        /* নারী মডেল: আর্চের ভেতর সুন্দর ফোকাস, কোন বিশ্রী ফাঁকা জায়গা থাকবে না */
         .model-woman {
-            width: 140%; /* চওড়ায় জায়গা দেওয়া হলো যাতে ক্রপ না হয় */
-            height: 93%; /* মাথার উপরে ৭% হেডরুম */
-            filter: drop-shadow(8px 8px 20px rgba(0,0,0,0.15));
+            height: 94%;
+            width: auto;
+            max-width: 130%;
+            filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
+        /* পুরুষ মডেল: পেছনের আর্চে পারফেক্ট হেডরুম */
         .model-man {
-            width: 140%;
-            height: 95%; /* মাথার উপরে ৫% হেডরুম */
-            filter: drop-shadow(-6px 6px 16px rgba(0,0,0,0.12));
+            height: 95%;
+            width: auto;
+            max-width: 125%;
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.15));
         }
 
-        /* Arch Bottom Blend */
+        /* নিচ দিয়ে ব্যাকগ্রাউন্ড উঁকি দেওয়া বন্ধ করতে মৃদু ব্লেন্ড */
         .arch-frame::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 50px;
-            background: linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 100%);
-            z-index: 15;
+            height: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.15), transparent);
+            z-index: 12;
             pointer-events: none;
         }
 
         /* --- Category Section --- */
         .category-section {
-            padding: 100px 5%;
+            padding: 90px 5%;
             background-color: #FFFFFF;
             position: relative;
             z-index: 20;
@@ -347,21 +349,18 @@
             font-size: 0.9rem;
         }
 
-        /* --- Responsive Design --- */
+        /* --- Tablet & Mobile Responsive Fixes --- */
         @media screen and (max-width: 992px) {
             .hero-section {
                 grid-template-columns: 1fr;
-                height: auto;
-                min-height: 100vh;
-                padding-top: 40px;
+                min-height: auto;
+                padding-top: 30px;
                 text-align: center;
             }
 
             .hero-content {
                 max-width: 100%;
-                padding-right: 0;
-                padding-bottom: 40px;
-                margin: 0 auto;
+                margin: 0 auto 40px auto;
             }
 
             .hero-content h1 {
@@ -369,18 +368,10 @@
             }
 
             .hero-visuals {
-                height: 55vh;
-                min-height: 480px;
-                justify-content: center;
-            }
-            
-            .arches-container {
-                max-width: 500px;
-                height: 100%;
+                height: 480px;
             }
         }
 
-        /* --- MOBILE FIXES --- */
         @media screen and (max-width: 768px) {
             header {
                 padding: 0 20px;
@@ -426,38 +417,34 @@
                 align-items: flex-start;
             }
 
-            .hero-section {
-                padding-top: 20px;
-            }
-
             .hero-content h1 {
-                font-size: 2.3rem;
-                margin-top: 20px;
+                font-size: 2.2rem;
             }
 
+            /* মোবাইলে কোনো চিমনি শেপ হবে না - সুষম স্কেলিং */
             .hero-visuals {
-                height: 420px; /* মোবাইলে একটি নিরাপদ উচ্চতা ফিক্স করা হলো */
-                width: 100%;
+                height: 380px;
                 margin-top: 20px;
             }
 
             .arches-container {
-                width: 95%; /* কন্টেইনার যেন ভিউপোর্ট ওভারফ্লো না করে */
-                max-width: 380px; 
-                height: 100%;
+                width: 340px;
+                height: 360px;
             }
 
-            /* ওভার-ক্লিপিং এবং ব্লিডিং সমস্যার সমাধান */
             .arch-back {
-                width: 50%; /* উইডথ পার্সেন্টেজে আনায় আর কাটবে না */
+                width: 195px;
+                height: 340px;
+                border-radius: 100px 100px 0 0;
                 right: 0;
-                height: 90%;
             }
 
             .arch-front {
-                width: 58%; /* উইডথ কমিয়ে পুরুষ মডেলকে ভিজিবল করা হলো */
-                left: 5%;
-                height: 100%;
+                width: 230px;
+                height: 325px;
+                border-radius: 120px 120px 0 0;
+                left: 0;
+                border-width: 6px;
             }
         }
     </style>
@@ -510,12 +497,12 @@
     
     <div class="hero-visuals">
         <div class="arches-container">
-            <!-- পেছনের আর্চ (Man) -->
+            <!-- পেছনের আর্চ (Man): 295px x 490px -->
             <div class="arch-frame arch-back">
                 <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
             </div>
 
-            <!-- সামনের আর্চ (Woman) -->
+            <!-- সামনের আর্চ (Woman): 350px x 465px -->
             <div class="arch-frame arch-front">
                 <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
             </div>
