@@ -1,591 +1,576 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KENABECHA - Premium E-Commerce</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KENABECHA - Premium E-Commerce</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        /* ... (আগের সব CSS অপরিবর্তিত থাকবে, শুধু মডেলের ক্লাসগুলো আপডেট হবে) ... */
-        :root {
-            --ruby-red: #9B111E;
-            --ruby-red-hover: #7a0d17;
-            --text-dark: #1A1A1A;
-            --text-muted: #555555;
-            --bg-light: #FAF8F5;
-            --card-bg: #FFFFFF;
-        }
+    <style>
+        :root {
+            --ruby-red: #9B111E;
+            --ruby-red-hover: #7a0d17;
+            --text-dark: #1A1A1A;
+            --text-muted: #555555;
+            --bg-light: #FAF8F5;
+            --card-bg: #FFFFFF;
+        }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            overflow-x: hidden;
-            width: 100%;
-        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            width: 100%;
+        }
 
-        /* --- Header Styles --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 75px;
-            padding: 0 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-        }
+        /* --- Header Styles --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 75px;
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
 
-        header h2 {
-            margin: 0;
-            font-family: 'Cinzel', serif;
-            color: var(--ruby-red);
-            font-weight: 800;
-            font-size: 1.6rem;
-            letter-spacing: 1px;
-        }
+        header h2 {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            color: var(--ruby-red);
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
 
-        #mobile-menu-toggle {
-            display: none;
-        }
+        #mobile-menu-toggle {
+            display: none;
+        }
 
-        nav#main-nav ul {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin: 0;
-            padding: 0;
-        }
+        nav#main-nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
 
-        nav#main-nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-        }
+        nav#main-nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
 
-        nav#main-nav a:hover {
-            color: var(--ruby-red);
-        }
+        nav#main-nav a:hover {
+            color: var(--ruby-red);
+        }
 
-        .logout-btn {
-            background-color: var(--text-dark);
-            color: white;
-            border: none;
-            padding: 8px 22px;
-            border-radius: 30px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+        .logout-btn {
+            background-color: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-        .logout-btn:hover {
-            background-color: var(--ruby-red);
-        }
+        .logout-btn:hover {
+            background-color: var(--ruby-red);
+        }
 
-        /* --- Fixed 1-Screen Hero Layout --- */
-        .hero-section {
-            width: 100%;
-            min-height: calc(100vh - 75px);
-            margin-top: 75px;
-            padding: 20px 5% 0 5%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            background-color: var(--bg-light);
-        }
+        /* --- Fixed 1-Screen Hero Layout --- */
+        .hero-section {
+            width: 100%;
+            min-height: calc(100vh - 75px);
+            margin-top: 75px;
+            padding: 20px 5% 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-light);
+        }
 
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('/images/back1.jpg') center center / cover no-repeat;
-            opacity: 0.15;
-            mix-blend-mode: multiply;
-            pointer-events: none;
-            z-index: 1;
-        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('/images/back1.jpg') center center / cover no-repeat;
+            opacity: 0.15;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            z-index: 1;
+        }
 
-        .hero-content {
-            max-width: 540px;
-            position: relative;
-            z-index: 10;
-        }
+        .hero-content {
+            max-width: 540px;
+            position: relative;
+            z-index: 10;
+        }
 
-        .hero-content h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            line-height: 1.15;
-            margin-bottom: 20px;
-        }
+        .hero-content h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
 
-        .hero-content h1 span {
-            color: var(--ruby-red);
-            font-style: italic;
-        }
+        .hero-content h1 span {
+            color: var(--ruby-red);
+            font-style: italic;
+        }
 
-        .hero-content p {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            margin-bottom: 35px;
-            line-height: 1.6;
-            max-width: 95%;
-        }
+        .hero-content p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            line-height: 1.6;
+            max-width: 95%;
+        }
 
-        .hero-cta {
-            display: inline-block;
-            background-color: var(--ruby-red);
-            color: #fff;
-            padding: 15px 38px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 35px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(155, 17, 30, 0.28);
-        }
+        .hero-cta {
+            display: inline-block;
+            background-color: var(--ruby-red);
+            color: #fff;
+            padding: 15px 38px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 35px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(155, 17, 30, 0.28);
+        }
 
-        .hero-cta:hover {
-            background-color: var(--ruby-red-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
-        }
+        .hero-cta:hover {
+            background-color: var(--ruby-red-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px rgba(155, 17, 30, 0.38);
+        }
 
-        /* --- Arch Stage & Perfect 3D Overlap --- */
-        .hero-visuals {
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 10;
-        }
+        /* --- Arch Stage & Perfect 3D Overlap --- */
+        .hero-visuals {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+        }
 
-        .arches-container {
-            position: relative;
-            width: 500px;
-            height: 500px;
-            display: flex;
-            align-items: flex-end;
-        }
+        .arches-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            align-items: flex-end;
+        }
 
-        .arch-frame {
-            position: absolute;
-            bottom: 0;
-            background: url('/images/back1.jpg') center bottom / cover no-repeat;
-            border: 8px solid #FFFFFF;
-            border-bottom: none !important;
-            overflow: hidden;
-        }
+        .arch-frame {
+            position: absolute;
+            bottom: 0;
+            background: url('/images/back1.jpg') center bottom / cover no-repeat;
+            border: 8px solid #FFFFFF;
+            border-bottom: none !important;
+            overflow: hidden;
+        }
 
-        /* পেছনের আর্চ (Man): 280px উইডথ, ডানে অ্যাঙ্কর করা */
-        .arch-back {
-            right: 0;
-            width: 280px;
-            height: 485px;
-            border-radius: 140px 140px 0 0;
-            z-index: 2;
-            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.08);
-        }
+        .arch-back {
+            right: 0;
+            width: 280px;
+            height: 485px;
+            border-radius: 140px 140px 0 0;
+            z-index: 2;
+            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.08);
+        }
 
-        /* সামনের আর্চ (Woman): 290px উইডথ, বামে রাখা হলো যাতে পেছনের আর্চের ২৫% ওভারল্যাপ হয় */
-        .arch-front {
-            left: 0;
-            width: 290px;
-            height: 455px;
-            border-radius: 145px 145px 0 0;
-            z-index: 5;
-            box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25);
-        }
+        .arch-front {
+            left: 0;
+            width: 290px;
+            height: 455px;
+            border-radius: 145px 145px 0 0;
+            z-index: 5;
+            box-shadow: 18px 0 35px rgba(0, 0, 0, 0.25);
+        }
 
-        /* আর্চের ইমেজ রেন্ডারিং */
-        .arch-frame img {
-            position: absolute;
-            /* bottom: 0; এর পরিবর্তে একটু নেগেটিভ ভ্যালু দিতে হতে পারে যদি মডেলের পা কেটে যায় */
-            bottom: -2%; 
-            pointer-events: none;
-            /* object-fit: contain; ডিফল্টভাবেই থাকে, তাই আলাদা করে দেওয়ার দরকার নেই */
-        }
+        .arch-frame img {
+            position: absolute;
+            bottom: -2%;
+            pointer-events: none;
+        }
 
-        /* --- মডেল ফিক্সিং --- */
-        
-        /* নারী মডেল: 
-           আর্চের সেন্টারে থাকবে এবং উচ্চতা আর্চের প্রায় সমান হবে (95%) */
-        .model-woman {
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            height: 95% !important; /* মডেলকে বড় করে দেখানো হলো */
-            width: auto !important; /* অনুপাত ঠিক রাখার জন্য */
-            filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
-        }
+        /* নারী মডেল */
+        .model-woman {
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            height: 95% !important;
+            width: auto !important;
+            filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
+        }
 
-        /* পুরুষ মডেল: 
-           ডানদিকে ঘেঁষে দাঁড়ানোর জন্য transform: translateX ব্যবহার করা হলো */
-        .model-man {
-            left: 0 !important; /* আর্চের একদম বাঁ থেকে শুরু হবে */
-            /* মডেলের ট্রান্সপারেন্ট স্পেস অনুযায়ী X-অক্ষের মান অ্যাডজাস্ট করতে হবে। 
-               এখানে আনুমানিক -15% দেওয়া হলো যাতে বাঁ দিকে সরে গিয়ে বর্ডার ঘেঁষে দাঁড়ায়। */
-            transform: translateX(-15%) !important; 
-            height: 95% !important; /* মডেলকে আর্চের প্রায় সমান লম্বা করা হলো */
-            width: auto !important; /* অনুপাত ঠিক রাখার জন্য */
-            filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
-        }
+        /* পুরুষ মডেল: সামনের আর্চের সাদা বর্ডার ঘেঁষে দাঁড়ানোর পজিশন */
+        .model-man {
+            left: 12% !important;
+            transform: translateX(0) !important;
+            height: 95% !important;
+            width: auto !important;
+            filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
+        }
 
-        /* বেস ব্লেন্ড */
-        .arch-frame::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 35px;
-            background: linear-gradient(to top, rgba(0,0,0,0.12), transparent);
-            z-index: 12;
-            pointer-events: none;
-        }
+        .arch-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35px;
+            background: linear-gradient(to top, rgba(0,0,0,0.12), transparent);
+            z-index: 12;
+            pointer-events: none;
+        }
 
-        /* --- Category Section --- */
-        .category-section {
-            padding: 90px 5%;
-            background-color: #FFFFFF;
-            position: relative;
-            z-index: 20;
-        }
+        /* --- Category Section --- */
+        .category-section {
+            padding: 90px 5%;
+            background-color: #FFFFFF;
+            position: relative;
+            z-index: 20;
+        }
 
-        .category-section h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            color: var(--text-dark);
-            margin-bottom: 60px;
-        }
+        .category-section h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--text-dark);
+            margin-bottom: 60px;
+        }
 
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-        .glass-card {
-            background: linear-gradient(145deg, #ffffff 0%, #fcf7f7 100%);
-            border-radius: 12px;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border: 1px solid rgba(155, 17, 30, 0.1);
-            border-bottom: 4px solid var(--ruby-red);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+        .glass-card {
+            background: linear-gradient(145deg, #ffffff 0%, #fcf7f7 100%);
+            border-radius: 12px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid rgba(155, 17, 30, 0.1);
+            border-bottom: 4px solid var(--ruby-red);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-        .glass-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(155, 17, 30, 0.12);
-        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(155, 17, 30, 0.12);
+        }
 
-        .category-icon {
-            font-size: 2.8rem;
-            color: var(--ruby-red);
-            margin-bottom: 25px;
-        }
+        .category-icon {
+            font-size: 2.8rem;
+            color: var(--ruby-red);
+            margin-bottom: 25px;
+        }
 
-        .glass-card a {
-            width: 100%;
-            text-decoration: none;
-        }
+        .glass-card a {
+            width: 100%;
+            text-decoration: none;
+        }
 
-        .glass-card button {
-            background-color: #FFFFFF;
-            color: var(--text-dark);
-            border: 1px solid #E0E0E0;
-            padding: 12px 0;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
+        .glass-card button {
+            background-color: #FFFFFF;
+            color: var(--text-dark);
+            border: 1px solid #E0E0E0;
+            padding: 12px 0;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
 
-        .glass-card:hover button {
-            background-color: var(--ruby-red);
-            color: #FFFFFF;
-            border-color: var(--ruby-red);
-        }
+        .glass-card:hover button {
+            background-color: var(--ruby-red);
+            color: #FFFFFF;
+            border-color: var(--ruby-red);
+        }
 
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: #1A1A1A;
-            color: #FFFFFF;
-            font-weight: 400;
-            font-size: 0.9rem;
-        }
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #1A1A1A;
+            color: #FFFFFF;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
 
-        /* --- Tablet & Mobile Responsive Fixes --- */
-        @media screen and (max-width: 992px) {
-            .hero-section {
-                grid-template-columns: 1fr;
-                min-height: auto;
-                padding-top: 30px;
-                text-align: center;
-            }
+        /* --- Responsive Queries --- */
+        @media screen and (max-width: 992px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding-top: 30px;
+                text-align: center;
+            }
 
-            .hero-content {
-                max-width: 100%;
-                margin: 0 auto 40px auto;
-            }
+            .hero-content {
+                max-width: 100%;
+                margin: 0 auto 40px auto;
+            }
 
-            .hero-content h1 {
-                font-size: 3rem;
-            }
+            .hero-content h1 {
+                font-size: 3rem;
+            }
 
-            .hero-visuals {
-                height: 480px;
-                justify-content: center;
-            }
-        }
+            .hero-visuals {
+                height: 480px;
+                justify-content: center;
+            }
+        }
 
-        @media screen and (max-width: 768px) {
-            header {
-                padding: 0 20px;
-                height: 65px;
-            }
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 0 20px;
+                height: 65px;
+            }
 
-            header h2 {
-                font-size: 1.3rem;
-            }
+            header h2 {
+                font-size: 1.3rem;
+            }
 
-            #mobile-menu-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
-                background: transparent;
-                color: var(--text-dark);
-                font-size: 1.5rem;
-                cursor: pointer;
-            }
+            #mobile-menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                background: transparent;
+                color: var(--text-dark);
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
 
-            nav#main-nav {
-                position: fixed;
-                top: 65px;
-                right: -100%;
-                width: 250px;
-                height: calc(100vh - 65px);
-                background: #ffffff;
-                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
-                transition: right 0.3s ease-in-out;
-                padding: 30px 20px;
-                z-index: 9999;
-            }
+            nav#main-nav {
+                position: fixed;
+                top: 65px;
+                right: -100%;
+                width: 250px;
+                height: calc(100vh - 65px);
+                background: #ffffff;
+                box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+                transition: right 0.3s ease-in-out;
+                padding: 30px 20px;
+                z-index: 9999;
+            }
 
-            nav#main-nav.nav-open {
-                right: 0;
-            }
+            nav#main-nav.nav-open {
+                right: 0;
+            }
 
-            nav#main-nav ul {
-                flex-direction: column;
-                gap: 20px;
-                align-items: flex-start;
-            }
+            nav#main-nav ul {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
 
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
 
-            .hero-visuals {
-                height: 380px;
-                margin-top: 20px;
-            }
+            .hero-visuals {
+                height: 380px;
+                margin-top: 20px;
+            }
 
-            .arches-container {
-                width: 330px;
-                height: 360px;
-            }
+            .arches-container {
+                width: 330px;
+                height: 360px;
+            }
 
-            .arch-back {
-                width: 190px;
-                height: 340px;
-                border-radius: 95px 95px 0 0;
-                right: 0;
-            }
+            .arch-back {
+                width: 190px;
+                height: 340px;
+                border-radius: 95px 95px 0 0;
+                right: 0;
+            }
 
-            .arch-front {
-                width: 190px;
-                height: 325px;
-                border-radius: 95px 95px 0 0;
-                left: 0;
-                border-width: 6px;
-            }
+            .arch-front {
+                width: 190px;
+                height: 325px;
+                border-radius: 95px 95px 0 0;
+                left: 0;
+                border-width: 6px;
+            }
 
-            /* মোবাইলের জন্য মডেল ফিক্স */
-            .model-woman {
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-                height: 95% !important; /* আর্চের প্রায় সমান উচ্চতা */
-                width: auto !important;
-            }
+            .model-woman {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                height: 95% !important;
+                width: auto !important;
+            }
 
-            .model-man {
-                left: 0 !important;
-                transform: translateX(-15%) !important; /* বাঁ দিকে ঠেলে বর্ডার ঘেঁষে বসানো */
-                height: 95% !important;
-                width: auto !important;
-            }
-        }
-    </style>
+            .model-man {
+                left: 10% !important;
+                transform: translateX(0) !important;
+                height: 95% !important;
+                width: auto !important;
+            }
+        }
+    </style>
 </head>
-<!-- ... (বাকি HTML অপরিবর্তিত থাকবে) ... -->
 <body>
 
 <header>
-    <h2>KENABECHA</h2>
+    <h2>KENABECHA</h2>
 
-    <div id="mobile-menu-toggle" onclick="toggleNavMenu()">
-        <i class="fa-solid fa-bars"></i>
-    </div>
+    <div id="mobile-menu-toggle" onclick="toggleNavMenu()">
+        <i class="fa-solid fa-bars"></i>
+    </div>
 
-    <nav id="main-nav">
-        <ul>
-            <li><a href="/home">Home</a></li>
-            <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
+    <nav id="main-nav">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i> Cart</a></li>
 
-            <li th:if="${session?.loggedInUser?.userName == 'admin'}">
-                <a href="/adminF">Admin Dashboard</a>
-            </li>
-            <li th:if="${session?.loggedInUser?.userName == 'moderator'}">
-                <a href="/moderator">Moderator Hub</a>
-            </li>
-            <li th:if="${session?.loggedInUser?.userName == 'inventory'}">
-                <a href="/inventory">Warehouse Panel</a>
-            </li>
+            <li th:if="${session?.loggedInUser?.userName == 'admin'}">
+                <a href="/adminF">Admin Dashboard</a>
+            </li>
+            <li th:if="${session?.loggedInUser?.userName == 'moderator'}">
+                <a href="/moderator">Moderator Hub</a>
+            </li>
+            <li th:if="${session?.loggedInUser?.userName == 'inventory'}">
+                <a href="/inventory">Warehouse Panel</a>
+            </li>
 
-            <li th:if="${session?.loggedInUser == null}">
-                <a href="/login">Login / Register</a>
-            </li>
-            <li th:if="${session?.loggedInUser != null}">
-                <form action="/logout" method="post" style="display: inline;">
-                    <button type="submit" class="logout-btn">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </nav>
+            <li th:if="${session?.loggedInUser == null}">
+                <a href="/login">Login / Register</a>
+            </li>
+            <li th:if="${session?.loggedInUser != null}">
+                <form action="/logout" method="post" style="display: inline;">
+                    <button type="submit" class="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </nav>
 </header>
 
 <section class="hero-section">
-    <div class="hero-content">
-        <h1>Modern Elegance, <br><span>Curated for You.</span></h1>
-        <p>Find the best premium products across multiple categories. Discover trends that match your unique style and everyday needs.</p>
-        <a href="#categories" class="hero-cta">Explore Collections &rarr;</a>
-    </div>
-    
-    <div class="hero-visuals">
-        <div class="arches-container">
-            <!-- পেছনের আর্চ (Man): 280px x 485px -->
-            <div class="arch-frame arch-back">
-                <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
-            </div>
+    <div class="hero-content">
+        <h1>Modern Elegance, <br><span>Curated for You.</span></h1>
+        <p>Find the best premium products across multiple categories. Discover trends that match your unique style and everyday needs.</p>
+        <a href="#categories" class="hero-cta">Explore Collections &rarr;</a>
+    </div>
+    
+    <div class="hero-visuals">
+        <div class="arches-container">
+            <!-- পেছনের আর্চ (Man): 280px x 485px -->
+            <div class="arch-frame arch-back">
+                <img src="/images/man.png" class="model-man" alt="Urban Men Collection">
+            </div>
 
-            <!-- সামনের আর্চ (Woman): 290px x 455px -->
-            <div class="arch-frame arch-front">
-                <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
-            </div>
-        </div>
-    </div>
+            <!-- সামনের আর্চ (Woman): 290px x 455px -->
+            <div class="arch-frame arch-front">
+                <img src="/images/woman.png" class="model-woman" alt="Premium Saree Collection">
+            </div>
+        </div>
+    </div>
 </section>
 
 <section class="category-section" id="categories">
-    <h3>Browse by Category</h3>
-    <ul class="category-grid">
-        <li class="glass-card">
-            <i class="fa-solid fa-shirt category-icon"></i>
-            <a href="/category/DRESS"><button type="button">Dress Collection</button></a>
-        </li>
-        <li class="glass-card">
-            <i class="fa-solid fa-basket-shopping category-icon"></i>
-            <a href="/category/FMCG"><button type="button">FMCG Products</button></a>
-        </li>
-        <li class="glass-card">
-            <i class="fa-solid fa-plug category-icon"></i>
-            <a href="/category/ELECTRONICS"><button type="button">Electronics</button></a>
-        </li>
-        <li class="glass-card">
-            <i class="fa-solid fa-blender category-icon"></i>
-            <a href="/category/HOME_APPLIANCES"><button type="button">Home Appliances</button></a>
-        </li>
-    </ul>
+    <h3>Browse by Category</h3>
+    <ul class="category-grid">
+        <li class="glass-card">
+            <i class="fa-solid fa-shirt category-icon"></i>
+            <a href="/category/DRESS"><button type="button">Dress Collection</button></a>
+        </li>
+        <li class="glass-card">
+            <i class="fa-solid fa-basket-shopping category-icon"></i>
+            <a href="/category/FMCG"><button type="button">FMCG Products</button></a>
+        </li>
+        <li class="glass-card">
+            <i class="fa-solid fa-plug category-icon"></i>
+            <a href="/category/ELECTRONICS"><button type="button">Electronics</button></a>
+        </li>
+        <li class="glass-card">
+            <i class="fa-solid fa-blender category-icon"></i>
+            <a href="/category/HOME_APPLIANCES"><button type="button">Home Appliances</button></a>
+        </li>
+    </ul>
 </section>
 
 <footer>
-    <p>&copy; 2026 KENABECHA Premium E-Commerce. All Rights Reserved.</p>
+    <p>&copy; 2026 KENABECHA Premium E-Commerce. All Rights Reserved.</p>
 </footer>
 
 <script>
-    function toggleNavMenu() {
-        const nav = document.getElementById('main-nav');
-        const icon = document.querySelector('#mobile-menu-toggle i');
-        
-        if (nav) {
-            nav.classList.toggle('nav-open');
-            if(nav.classList.contains('nav-open')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-            } else {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-            }
-        }
-    }
+    function toggleNavMenu() {
+        const nav = document.getElementById('main-nav');
+        const icon = document.querySelector('#mobile-menu-toggle i');
+        
+        if (nav) {
+            nav.classList.toggle('nav-open');
+            if(nav.classList.contains('nav-open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        }
+    }
 
-    document.addEventListener('click', function(e) {
-        const nav = document.getElementById('main-nav');
-        const toggleBtn = document.getElementById('mobile-menu-toggle');
-        const icon = document.querySelector('#mobile-menu-toggle i');
-        
-        if (nav && nav.classList.contains('nav-open')) {
-            if (!nav.contains(e.target) && !toggleBtn.contains(e.target)) {
-                nav.classList.remove('nav-open');
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-            }
-        }
-    });
+    document.addEventListener('click', function(e) {
+        const nav = document.getElementById('main-nav');
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const icon = document.querySelector('#mobile-menu-toggle i');
+        
+        if (nav && nav.classList.contains('nav-open')) {
+            if (!nav.contains(e.target) && !toggleBtn.contains(e.target)) {
+                nav.classList.remove('nav-open');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        }
+    });
 </script>
 
 </body>
