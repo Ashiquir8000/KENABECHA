@@ -234,26 +234,25 @@
             object-position: bottom center;
         }
 
-        /* নারী মডেল: সামনের আর্চের সেন্টারে থাকবে */
+        /* নারী মডেল: সামনের আর্চের নিখুঁত সেন্টারে */
         .model-woman {
             left: 50% !important;
+            right: auto !important;
             transform: translateX(-50%) !important;
-            height: 94%;
+            height: 94% !important;
             width: auto;
-            max-width: 130%;
             filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));
         }
 
-        /* পুরুষ মডেল (Visual Leaning Fix):
-           সেন্টার থেকে সরিয়ে পেছনের আর্চের উন্মুক্ত অংশে ডানদিকে আনা হলো, 
-           যাতে সামনের সাদা আর্চের ফ্রেম ঘেঁষে দাঁড়ায় এবং পোজ সম্পূর্ণ দৃশ্যমান হয় */
+        /* পুরুষ মডেল: 
+           বাম থেকে ডানে ঠেলে দেওয়া হলো (left: 62%) যাতে তিনি সামনের আর্চের আড়াল থেকে 
+           পুরোপুরি ডানপাশের দৃশ্যমান ফাঁকা জায়গায় বেরিয়ে আসেন এবং শেরওয়ানি ও পুরো পোজ দেখা যায় */
         .model-man {
-            left: auto !important;
-            right: 8% !important;
-            transform: translateX(0) !important;
+            left: 62% !important;
+            right: auto !important;
+            transform: translateX(-50%) !important;
             height: 96% !important;
             width: auto;
-            max-width: 120%;
             filter: drop-shadow(-4px 8px 18px rgba(0,0,0,0.18));
         }
 
@@ -452,17 +451,18 @@
                 border-width: 6px;
             }
 
-            /* মোবাইলের জন্য মডেলদের পজিশনিং ফিক্স */
+            /* --- মোবাইলের জন্য মিডিয়া কোয়েরি ফিক্স --- */
             .model-woman {
                 left: 50% !important;
+                right: auto !important;
                 transform: translateX(-50%) !important;
-                height: 92%;
+                height: 92% !important;
             }
 
             .model-man {
-                left: auto !important;
-                right: 5% !important;
-                transform: translateX(0) !important;
+                left: 60% !important;
+                right: auto !important;
+                transform: translateX(-50%) !important;
                 height: 94% !important;
             }
         }
