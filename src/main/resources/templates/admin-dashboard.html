@@ -709,7 +709,7 @@
     </style>
     <link rel="stylesheet" th:href="@{/mobile-fix.css}">
 </head>
-<body>
+<body class="admin-page">
 
 <div id="admin-nav-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-ellipsis-vertical"></i></div>
 
@@ -745,7 +745,7 @@
 <div class="main-content">
 
     <!-- 1. Top Banner -->
-    <div class="dashboard-banner">
+    <div class="dashboard-banner admin-hero">
         <div class="banner-text">
             <h1>Product Management Console</h1>
             <p>Monitor, manage, and update your premium inventory from one place.</p>
@@ -793,7 +793,7 @@
     </div>
 
     <!-- 3. Dedicated Central Staff Intercom Section -->
-    <div class="intercom-section">
+    <div class="intercom-section" id="intercom-section">
         <div class="section-header">
             <i class="fa-solid fa-comments"></i> Central Staff Intercom
         </div>
@@ -881,7 +881,8 @@
 
         </div>
 
-        <table id="productTable">
+        <div class="table-responsive" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box;">
+        <table id="productTable" class="catalog-table">
             <thead>
             <tr>
                 <th>ID</th>
@@ -949,6 +950,7 @@
             </tr>
             </tbody>
         </table>
+        </div>
 
         <!-- Message when no products match filters -->
         <div id="noMatchMessage" class="no-records-row">
