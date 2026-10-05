@@ -573,3 +573,176 @@
         overflow-y: auto !important;
     }
 }
+
+@media screen and (max-width: 768px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: hidden !important;
+    }
+
+    header h2,
+    .brand-logo {
+        font-size: clamp(0.8rem, 3.5vw, 1.1rem) !important;
+    }
+
+    .products-grid,
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .products-grid > *,
+    .product-grid > *,
+    .product-card {
+        min-width: 0 !important;
+    }
+
+    .product-image-container {
+        height: clamp(140px, 38vw, 220px) !important;
+    }
+
+    .product-info {
+        padding: 12px !important;
+    }
+
+    .product-info h4 {
+        font-size: 0.95rem !important;
+        overflow-wrap: anywhere;
+    }
+
+    .product-price {
+        font-size: 1rem !important;
+        padding: 4px 8px !important;
+    }
+
+    body:has(.sidebar) {
+        display: flex !important;
+        flex-direction: column !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    .sidebar {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 12px 16px !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        overflow: visible !important;
+    }
+
+    .sidebar-header {
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        text-align: left !important;
+    }
+
+    .sidebar-header i {
+        display: none !important;
+    }
+
+    .sidebar-header h2 {
+        font-size: 0.95rem !important;
+        white-space: nowrap;
+    }
+
+    .sidebar-menu {
+        display: flex !important;
+        flex: 1 1 auto !important;
+        justify-content: flex-end !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+
+    .sidebar-menu li {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .sidebar-menu a,
+    .sidebar-menu a.active {
+        padding: 8px 10px !important;
+        gap: 7px !important;
+        font-size: 0.8rem !important;
+        line-height: 1.25 !important;
+        transform: none !important;
+        white-space: nowrap;
+    }
+
+    .sidebar ~ .main-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 20px 14px 32px !important;
+        min-width: 0 !important;
+        overflow-x: hidden !important;
+    }
+
+    #admin-nav-toggle {
+        display: none !important;
+    }
+
+    .main-content,
+    .dashboard-content,
+    .form-container,
+    .form-grid,
+    .left-col,
+    .right-col {
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+
+    .form-container {
+        padding: 22px 16px !important;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+        gap: 20px !important;
+    }
+
+    .form-control {
+        min-width: 0 !important;
+    }
+
+    .analytics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+    }
+
+    .dashboard-banner {
+        flex-wrap: wrap !important;
+        gap: 16px !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .sidebar {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+
+    .sidebar-menu {
+        width: 100% !important;
+        justify-content: flex-start !important;
+    }
+
+    .sidebar-menu a,
+    .sidebar-menu a.active {
+        padding: 8px !important;
+    }
+}

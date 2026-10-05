@@ -153,7 +153,7 @@
         </div>
 
         <div class="info-side">
-            <span class="category-badge"><i class="fa-solid fa-tags"></i> <span th:text="${product.category}">Category</span></span>
+            <span class="category-badge"><i class="fa-solid fa-tags"></i> <span th:text="${product.category == 'ROYAL_ACCECORIES' ? 'Royal Accessories' : #strings.capitalizeWords(#strings.replace(product.category, '_', ' '))}">Category</span></span>
             <h2 class="product-title" th:text="${product.name}">Product Name</h2>
             <div class="price-tag">$<span th:text="${product.price}">0.00</span></div>
             <div class="stock-tag">

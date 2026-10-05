@@ -28,6 +28,8 @@
             background-color: #FAF8F5;
             color: var(--text-dark);
             display: flex;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         /* ---------------------------------
@@ -95,13 +97,14 @@
             border-radius: 12px;
             transition: all 0.3s;
             background: rgba(255, 255, 255, 0.4);
+            line-height: 1.4;
         }
 
         .sidebar-menu a:hover, .sidebar-menu a.active {
             background: var(--ruby-red);
             color: white;
             box-shadow: 0 5px 15px rgba(117, 15, 34, 0.2);
-            transform: translateX(5px);
+            transform: none;
         }
 
         /* ---------------------------------
@@ -110,9 +113,12 @@
         .main-content {
             margin-left: 280px;
             width: calc(100% - 280px);
+            max-width: calc(100% - 280px);
             padding: 40px;
             box-sizing: border-box;
             min-height: 100vh;
+            min-width: 0;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             gap: 35px;
@@ -787,7 +793,7 @@
 
         <select id="categoryFilter" class="filter-select" onchange="applyFilters()">
             <option value="">All Categories</option>
-            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+            <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat == 'ROYAL_ACCECORIES' ? 'Royal Accessories' : #strings.capitalizeWords(#strings.replace(cat, '_', ' '))}"></option>
         </select>
 
         <select id="stockFilter" class="filter-select" onchange="applyFilters()">
@@ -846,7 +852,7 @@
                 <td th:text="${cattt.id}"></td>
                 <td><img th:src="${cattt.imageUrl}" alt="Product Image" class="product-img"></td>
                 <td class="product-name" th:text="${cattt.name}"></td>
-                <td><span class="badge badge-category" th:text="${cattt.category}"></span></td>
+                <td><span class="badge badge-category" th:text="${cattt.category == 'ROYAL_ACCECORIES' ? 'Royal Accessories' : #strings.capitalizeWords(#strings.replace(cattt.category, '_', ' '))}"></span></td>
                 <td style="font-weight: 700; color: var(--text-dark);" th:text="${cattt.price}"></td>
 
                 <!-- Dynamic Stock Badge -->

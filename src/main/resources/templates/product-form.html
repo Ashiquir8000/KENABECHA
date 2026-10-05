@@ -28,6 +28,8 @@
             background-color: #FAF8F5;
             color: var(--text-dark);
             display: flex;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         /* ---------------------------------
@@ -95,13 +97,14 @@
             border-radius: 12px;
             transition: all 0.3s;
             background: rgba(255, 255, 255, 0.4);
+            line-height: 1.4;
         }
 
         .sidebar-menu a:hover, .sidebar-menu a.active {
             background: var(--ruby-red);
             color: white;
             box-shadow: 0 5px 15px rgba(117, 15, 34, 0.2);
-            transform: translateX(5px);
+            transform: none;
         }
 
         /* ---------------------------------
@@ -110,9 +113,12 @@
         .main-content {
             margin-left: 280px;
             width: calc(100% - 280px);
+            max-width: calc(100% - 280px);
             padding: 40px;
             box-sizing: border-box;
             min-height: 100vh;
+            min-width: 0;
+            overflow-x: hidden;
         }
 
         /* Dashboard Banner */
@@ -188,8 +194,14 @@
         /* CSS Grid for 2 Columns */
         .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
+            min-width: 0;
+        }
+
+        .left-col,
+        .right-col {
+            min-width: 0;
         }
 
         .input-group {
@@ -334,7 +346,7 @@
         /* Responsive */
         @media (max-width: 1000px) {
             .form-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
         }
     </style>
@@ -407,9 +419,9 @@
                             <select th:field="*{category}" class="form-control" required>
                                 <option value="">-- Choose Category --</option>
                                 <option value="DRESS">Dress Collection</option>
-                                <option value="FESTIVE_&_PARTY_WEAR">FESTIVE_&_PARTY_WEAR Products</option>
-                                <option value="ROYAL_ACCECORIES">ROYAL_ACCECORIES</option>
-                                <option value="WEDDING_COLLECTION">Home Appliances</option>
+                                <option value="FESTIVE_&_PARTY_WEAR">Festive &amp; Party Wear</option>
+                                <option value="ROYAL_ACCECORIES">Royal Accessories</option>
+                                <option value="WEDDING_COLLECTION">Wedding Collection</option>
                             </select>
                         </div>
                     </div>

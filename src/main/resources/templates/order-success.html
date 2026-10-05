@@ -18,7 +18,7 @@
             --ruby-red: #750F22;
             --text-dark: #1A1A1A;
             --glass-bg: rgba(255, 255, 255, 0.45);
-            --success-green: #117822;
+            --antique-gold: #C5A059;
         }
 
         body {
@@ -70,26 +70,31 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(17, 120, 34, 0.15);
+            box-shadow: 0 15px 35px rgba(26, 26, 26, 0.06);
             text-align: center;
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: fadeIn 0.4s ease-out forwards;
         }
 
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .success-icon {
-            font-size: 5rem;
-            color: var(--success-green);
+            width: 84px;
+            height: 84px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--antique-gold);
+            color: #FFFFFF;
+            font-size: 2.4rem;
             margin-bottom: 20px;
-            text-shadow: 0 5px 15px rgba(17, 120, 34, 0.3);
         }
 
         h1 {
             font-family: 'Cinzel', serif;
-            color: var(--success-green);
+            color: var(--ruby-red);
             font-size: 2.2rem;
             margin-bottom: 15px;
             margin-top: 0;
@@ -102,13 +107,13 @@
         }
 
         .status-badge {
-            background-color: #FF9800;
-            color: white;
+            background-color: #F3EBDD;
+            color: #735C32;
             padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            box-shadow: 0 3px 8px rgba(255, 152, 0, 0.3);
+            border: 1px solid #E5D8BD;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
         }
 
         /* Button Styling */
@@ -116,7 +121,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: #0047AB; /* আপনার দেওয়া ব্লু কালারের প্রিমিয়াম শেড */
+            background-color: #750F22;
             color: white;
             padding: 14px 30px;
             text-decoration: none;
@@ -126,13 +131,13 @@
             font-weight: 600;
             margin-top: 30px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0, 71, 171, 0.3);
+            box-shadow: 0 8px 20px rgba(117, 15, 34, 0.18);
         }
 
         .home-btn:hover {
-            background-color: #003380;
+            background-color: #540816;
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(0, 71, 171, 0.4);
+            box-shadow: 0 12px 25px rgba(117, 15, 34, 0.24);
         }
     </style>
     <link rel="stylesheet" th:href="@{/mobile-fix.css}">
@@ -145,10 +150,10 @@
 
 <section class="success-container">
     <div class="success-icon">
-        <i class="fa-solid fa-circle-check"></i>
+        <i class="fa-solid fa-check"></i>
     </div>
 
-    <h1>🎉 Order Placed Successfully! 🎉</h1>
+    <h1>Order Placed Successfully</h1>
     <p>Thank you for shopping with us. Your order is currently <strong class="status-badge">PENDING</strong>.</p>
     <p>We will deliver your products soon.</p>
 
