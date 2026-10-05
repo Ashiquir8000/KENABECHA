@@ -18,30 +18,32 @@
             --glass-border: rgba(255, 255, 255, 0.5);
         }
 
-        body {
-            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
-            background-color: #FAF8F5;
-            color: var(--text-dark); display: flex;
-        }
+        body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; background-color: #FAF8F5; color: var(--text-dark); display: flex; max-width: 100%; overflow-x: hidden; }
 
         /* Sidebar (Same as Dashboard) */
-        .sidebar { width: 280px; height: 100vh; position: fixed; top: 0; left: 0; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(25px); border-right: 1px solid var(--glass-border); display: flex; flex-direction: column; padding: 30px 0; z-index: 100; }
-        .sidebar-header { text-align: center; padding: 0 20px 30px 20px; border-bottom: 1px solid rgba(117, 15, 34, 0.15); margin-bottom: 20px; }
-        .sidebar-header i { font-size: 3rem; color: var(--ruby-red); margin-bottom: 15px; filter: drop-shadow(0 3px 5px rgba(117, 15, 34, 0.3)); }
-        .sidebar-header h2 { font-family: 'Cinzel', serif; color: var(--text-dark); font-size: 1.4rem; margin: 0; font-weight: 900; }
+        .sidebar { width: 280px; height: 100vh; position: fixed; top: 0; left: 0; background: #180407; border-right: 1px solid rgba(197, 160, 89, 0.15); display: flex; flex-direction: column; padding: 26px 0 18px; z-index: 100; }
+        .sidebar-header { text-align: center; padding: 0 20px 30px; border-bottom: 1px solid rgba(197, 160, 89, 0.15); margin-bottom: 20px; }
+        .sidebar-header i { font-size: 2.5rem; color: #C5A059; margin-bottom: 15px; }
+        .sidebar-header h2 { font-family: 'Playfair Display', serif; color: #EADFD5; font-size: 1.15rem; letter-spacing: 0.04em; margin: 0; font-weight: 700; }
         .sidebar-menu { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
         .sidebar-menu li { margin-bottom: 10px; padding: 0 20px; }
-        .sidebar-menu a { text-decoration: none; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; gap: 15px; padding: 12px 20px; border-radius: 12px; transition: all 0.3s; background: rgba(255, 255, 255, 0.4); }
-        .sidebar-menu a:hover, .sidebar-menu a.active { background: var(--ruby-red); color: white; box-shadow: 0 5px 15px rgba(117, 15, 34, 0.2); transform: translateX(5px); }
+        .sidebar-menu a { text-decoration: none; color: #EADFD5; font-weight: 500; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 10px; transition: all 0.2s; line-height: 1.4; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: #750F22; color: white; border-left: 3px solid #C5A059; transform: none; }
 
-        .main-content { margin-left: 280px; width: calc(100% - 280px); padding: 40px; box-sizing: border-box; min-height: 100vh; }
+        .main-content { margin-left: 280px; width: calc(100% - 280px); max-width: calc(100% - 280px); padding: 40px; box-sizing: border-box; min-height: 100vh; min-width: 0; overflow-x: hidden; }
+        .sidebar-profile { margin: auto 14px 0; padding: 14px 10px 0; border-top: 1px solid rgba(197,160,89,0.18); display: flex; align-items: center; gap: 10px; color: #EADFD5; }
+        .profile-avatar { width: 38px; height: 38px; flex: 0 0 38px; display: grid; place-items: center; border-radius: 50%; background: rgba(197,160,89,0.14); color: #C5A059; border: 1px solid rgba(197,160,89,0.25); }
+        .profile-details { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+        .profile-details strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.84rem; }
+        .profile-details span { color: #C5A059; font-size: 0.72rem; }
+        .sidebar-logout { color: #EADFD5; padding: 9px; border: 1px solid rgba(234,223,213,0.2); border-radius: 9px; background: transparent; cursor: pointer; }
 
         /* Trash Header */
         .trash-header {
-            background: rgba(117, 15, 34, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(117, 15, 34, 0.2);
+            background: linear-gradient(135deg, #380810 0%, #1D0408 100%); border: 1px solid rgba(197, 160, 89, 0.3);
             padding: 30px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;
         }
-        .trash-header h2 { margin: 0; font-family: 'Cinzel', serif; color: var(--ruby-red); font-size: 2rem; display: flex; align-items: center; gap: 15px;}
+        .trash-header h2 { margin: 0; font-family: 'Playfair Display', serif; color: #F8F6F3; font-size: 2rem; display: flex; align-items: center; gap: 15px;}
 
         .btn-back {
             background: white; color: var(--text-dark); padding: 10px 20px; border-radius: 12px;
@@ -49,21 +51,22 @@
         }
 
         /* Glassmorphic Table */
-        .table-container { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(25px); border-radius: 25px; border: 1px solid var(--glass-border); padding: 30px; }
+        .table-container { background: #FFFFFF; border-radius: 20px; border: 1px solid #EFEAE4; padding: 30px; overflow-x: auto; }
         table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
-        th { text-align: left; padding: 15px; color: #555; font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
-        td { padding: 15px; background: rgba(255, 255, 255, 0.6); border-top: 1px solid rgba(255,255,255,0.8); border-bottom: 1px solid rgba(255,255,255,0.8); vertical-align: middle; }
-        td:first-child { border-left: 1px solid rgba(255,255,255,0.8); border-radius: 15px 0 0 15px; }
-        td:last-child { border-right: 1px solid rgba(255,255,255,0.8); border-radius: 0 15px 15px 0; }
+        th { text-align: left; padding: 15px; color: #615B57; background: #FAF8F5; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
+        td { padding: 15px; background: #FFFFFF; border-bottom: 1px solid #EFEAE4; vertical-align: middle; }
 
-        .product-img { width: 60px; height: 60px; object-fit: cover; border-radius: 12px; }
-        .badge-cart { background: rgba(255, 152, 0, 0.1); color: #e65100; border: 1px solid rgba(255, 152, 0, 0.2); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;}
+        .product-thumb { width: 60px; height: 60px; }
+        .product-img { width: 60px; height: 60px; object-fit: cover; border-radius: 12px; border: 1px solid #EFEAE4; }
+        .thumb-fallback { width: 60px; height: 60px; display: grid; place-items: center; border: 1px solid #EFEAE4; border-radius: 12px; background: #F8F6F3; color: #C5A059; }
+        .thumb-fallback[hidden] { display: none; }
+        .badge-cart { background: #F4EBD9; color: #7A5B20; border: 1px solid rgba(197, 160, 89, 0.25); padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;}
 
-        .btn-restore { background: rgba(46, 125, 50, 0.15); color: #2e7d32; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: 600; }
-        .btn-restore:hover { background: #2e7d32; color: white; }
+        .btn-restore { background: transparent; color: #7A5B20; border: 1px solid #C5A059; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .btn-restore:hover { background: #C5A059; color: white; }
 
-        .btn-hard-del { background: rgba(211, 47, 47, 0.15); color: #d32f2f; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: 600; border: none; cursor: pointer;}
-        .btn-hard-del:hover { background: #d32f2f; color: white; }
+        .btn-hard-del { background: transparent; color: #750F22; border: 1px solid #DCA8B1; padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: 600; cursor: pointer;}
+        .btn-hard-del:hover { background: #750F22; color: white; }
 
         .empty-state { text-align: center; padding: 50px; color: #777; font-size: 1.2rem; }
     </style>
@@ -73,14 +76,24 @@
 
 <aside class="sidebar">
     <div class="sidebar-header">
-        <i class="fa-solid fa-chess-king"></i>
-        <h2>Admin Panel</h2>
+        <i class="fa-solid fa-crown" style="color: #C5A059;"></i>
+        <h2>KARUKAJ ADMIN</h2>
     </div>
     <ul class="sidebar-menu">
         <li><a href="/adminF"><i class="fa-solid fa-gauge-high"></i> Dashboard Home</a></li>
         <li><a th:href="@{/admin/archived}" class="active"><i class="fa-solid fa-trash-can"></i> Trash Bin</a></li>
-        <li><a href="/home"><i class="fa-solid fa-globe"></i> View Live Site</a></li>
+        <li><a href="/home"><i class="fa-solid fa-globe"></i> Open Web Store</a></li>
     </ul>
+    <div class="sidebar-profile">
+        <div class="profile-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="profile-details">
+            <strong th:text="${session.loggedInUser != null ? session.loggedInUser.userName : 'Administrator'}">Administrator</strong>
+            <span>Super Admin</span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button class="sidebar-logout" type="submit" aria-label="Log out"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </form>
+    </div>
 </aside>
 
 <div class="main-content">
@@ -107,7 +120,12 @@
             </thead>
             <tbody>
             <tr th:each="p : ${archivedProducts}">
-                <td><img th:src="${p.imageUrl}" alt="img" class="product-img"></td>
+                <td>
+                    <div class="product-thumb">
+                        <img th:if="${p.imageUrl != null and !#strings.isEmpty(p.imageUrl)}" th:src="${p.imageUrl}" alt="Product Image" class="product-img" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+                        <div class="thumb-fallback" th:hidden="${p.imageUrl != null and !#strings.isEmpty(p.imageUrl)}"><i class="fa-solid fa-gem"></i></div>
+                    </div>
+                </td>
                 <td style="font-weight: 700;" th:text="${p.name}"></td>
                 <td th:text="${p.stock} + ' pcs'"></td>
                 <td><span class="badge-cart"><i class="fa-solid fa-cart-shopping"></i> <span th:text="${cartCounts.get(p.id) ?: 0}"></span></span></td>
@@ -115,7 +133,7 @@
                     <a th:href="@{/restore/{id}(id=${p.id})}" class="btn-restore"><i class="fa-solid fa-rotate-left"></i> Restore</a>
 
                     <a th:href="@{/permanent-delete/{id}(id=${p.id})}" class="btn-hard-del"
-                       onclick="return confirm('⚠️ WARNING: This will PERMANENTLY DELETE the product and instantly remove it from customer carts! Are you sure?');">
+                       onclick="return confirm('WARNING: This will permanently delete the product and remove it from customer carts. Are you sure?');">
                         <i class="fa-solid fa-skull-crossbones"></i> Permanent Delete
                     </a>
                 </td>

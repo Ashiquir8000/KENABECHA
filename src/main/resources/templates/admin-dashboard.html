@@ -41,35 +41,32 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-right: 1px solid var(--glass-border);
+            background: #180407;
+            border-right: 1px solid rgba(197, 160, 89, 0.15);
             display: flex;
             flex-direction: column;
-            padding: 30px 0;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.05);
+            padding: 26px 0 18px;
             z-index: 100;
         }
 
         .sidebar-header {
             text-align: center;
             padding: 0 20px 30px 20px;
-            border-bottom: 1px solid rgba(117, 15, 34, 0.15);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
             margin-bottom: 20px;
         }
 
         .sidebar-header i {
             font-size: 3rem;
-            color: var(--ruby-red);
+            color: #C5A059;
             margin-bottom: 15px;
-            filter: drop-shadow(0 3px 5px rgba(117, 15, 34, 0.3));
         }
 
         .sidebar-header h2 {
-            font-family: 'Cinzel', serif;
-            color: var(--text-dark);
-            font-size: 1.4rem;
+            font-family: 'Playfair Display', serif;
+            color: #EADFD5;
+            font-size: 1.15rem;
+            letter-spacing: 0.04em;
             margin: 0;
             font-weight: 900;
         }
@@ -88,22 +85,21 @@
 
         .sidebar-menu a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: #EADFD5;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 12px 20px;
-            border-radius: 12px;
+            padding: 0 14px;
             transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.4);
             line-height: 1.4;
         }
 
         .sidebar-menu a:hover, .sidebar-menu a.active {
-            background: var(--ruby-red);
-            color: white;
-            box-shadow: 0 5px 15px rgba(117, 15, 34, 0.2);
+            background: #750F22;
+            color: #FFFFFF;
+            border-left: 3px solid #C5A059;
+            border-radius: 10px;
             transform: none;
         }
 
@@ -129,7 +125,8 @@
             position: relative;
             border-radius: 20px;
             overflow: hidden;
-            background: linear-gradient(135deg, #4A0E17 0%, #2A080D 100%);
+            background: linear-gradient(135deg, #380810 0%, #1D0408 100%);
+            border: 1px solid rgba(197, 160, 89, 0.3);
             padding: 50px 40px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             display: flex;
@@ -161,84 +158,99 @@
         .banner-text p {
             font-size: 1.05rem;
             margin: 0;
-            opacity: 0.9;
+            color: #C5A059;
+            opacity: 1;
         }
 
         .btn-add-product {
             position: relative;
             z-index: 2;
-            background: #fff;
-            color: var(--ruby-red);
+            background: #C5A059;
+            color: #230508;
             text-decoration: none;
-            padding: 14px 25px;
+            padding: 12px 26px;
             border-radius: 30px;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 10px;
             transition: all 0.3s;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 18px rgba(197, 160, 89, 0.22);
         }
 
         .btn-add-product:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-            background: #fdfdfd;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 10px 26px rgba(197, 160, 89, 0.34);
+            background: #C5A059;
         }
 
         /* Quick Analytics Cards */
         .analytics-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 25px;
         }
 
         .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: #FFFFFF;
+            border: 1px solid #EFEAE4;
+            border-radius: 16px;
             padding: 25px;
             display: flex;
             align-items: center;
             gap: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             transition: transform 0.3s;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.6);
+            background: #FFFFFF;
         }
 
         .stat-icon {
             width: 60px;
             height: 60px;
             border-radius: 15px;
-            background: rgba(117, 15, 34, 0.1);
+            background: rgba(117, 15, 34, 0.08);
             color: var(--ruby-red);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
         .stat-info h4 {
             margin: 0;
-            font-size: 0.9rem;
-            color: #555;
+            font-size: 0.78rem;
+            color: #615B57;
             font-weight: 600;
             text-transform: uppercase;
         }
 
         .stat-info h2 {
             margin: 5px 0 0 0;
-            font-family: 'Cinzel', serif;
+            font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
             color: var(--text-dark);
         }
+
+        .stat-icon.stat-icon-gold { background: #F4EBD9; color: #7A5B20; }
+        .stat-icon.stat-icon-emerald { background: rgba(27, 94, 56, 0.08); color: #1B5E38; }
+        .store-status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #F7F4EE; color: #4C463F; font: 600 0.82rem 'Poppins', sans-serif; }
+        .store-status-pill::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #1B5E38; box-shadow: 0 0 0 3px rgba(27, 94, 56, 0.1); }
+        .stat-info h2 { color: #1A1A1A; }
+        .quick-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .btn-store { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border: 1px solid rgba(255,255,255,0.32); border-radius: 30px; color: #F8F6F3; background: rgba(255,255,255,0.08); text-decoration: none; font-weight: 500; transition: background 0.2s, border-color 0.2s; }
+        .btn-store:hover { background: rgba(255,255,255,0.16); border-color: rgba(197,160,89,0.55); }
+        .sidebar-profile { margin: 18px 14px 0; padding: 14px 10px 0; border-top: 1px solid rgba(197,160,89,0.18); display: flex; align-items: center; gap: 10px; color: #EADFD5; }
+        .profile-avatar { width: 38px; height: 38px; flex: 0 0 38px; display: grid; place-items: center; border-radius: 50%; background: rgba(197,160,89,0.14); color: #C5A059; border: 1px solid rgba(197,160,89,0.25); }
+        .profile-details { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+        .profile-details strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.84rem; }
+        .profile-details span { color: #C5A059; font-size: 0.72rem; }
+        .sidebar-logout { color: #EADFD5; padding: 9px; border: 1px solid rgba(234,223,213,0.2); border-radius: 9px; background: transparent; cursor: pointer; }
+        .sidebar-logout:hover { color: #FFFFFF; border-color: #C5A059; background: rgba(117,15,34,0.45); }
 
         /* ---------------------------------
            Dedicated Central Staff Intercom Section
@@ -427,6 +439,14 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
+        .category-quick-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+        .category-chip { padding: 8px 13px; border: 1px solid #E2DCD5; border-radius: 999px; color: #615B57; background: #FFFFFF; cursor: pointer; font: 500 0.82rem 'Poppins', sans-serif; transition: 0.2s ease; }
+        .category-chip:hover, .category-chip.active { color: #750F22; border-color: rgba(117,15,34,0.35); background: rgba(117,15,34,0.07); }
+        .category-filter-select { position: fixed; top: -10000px; width: 1px; height: 1px; padding: 0; border: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+        .catalog-toolbar { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; padding: 18px 20px; background: #FFFFFF; border: 1px solid #EFEAE4; border-radius: 16px; }
+        .catalog-toolbar-top { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+        .catalog-toolbar .search-box { flex: 1 1 280px; }
+
         .search-box {
             position: relative;
             flex: 1;
@@ -510,11 +530,9 @@
            Glassmorphic Data Table
            --------------------------------- */
         .table-container {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 25px;
-            border: 1px solid var(--glass-border);
+            background: #FFFFFF;
+            border-radius: 20px;
+            border: 1px solid #EFEAE4;
             padding: 30px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.05);
         }
@@ -536,7 +554,7 @@
         }
 
         .btn-trash-gateway {
-            background: rgba(117, 15, 34, 0.15);
+            background: #FFFFFF;
             color: var(--ruby-red);
             padding: 10px 20px;
             border-radius: 12px;
@@ -546,7 +564,7 @@
             align-items: center;
             gap: 10px;
             transition: all 0.3s;
-            border: 1px solid rgba(117, 15, 34, 0.2);
+            border: 1px solid rgba(117, 15, 34, 0.24);
         }
 
         .btn-trash-gateway:hover {
@@ -564,34 +582,35 @@
         th {
             text-align: left;
             padding: 15px;
-            color: #555;
+            background: #FAF8F5;
+            color: #615B57;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             letter-spacing: 1px;
         }
 
         td {
             padding: 15px;
-            background: rgba(255, 255, 255, 0.6);
-            border-top: 1px solid rgba(255,255,255,0.8);
-            border-bottom: 1px solid rgba(255,255,255,0.8);
+            background: #FFFFFF;
+            border-top: 1px solid #EFEAE4;
+            border-bottom: 1px solid #EFEAE4;
             transition: all 0.3s;
             vertical-align: middle;
         }
 
         td:first-child {
-            border-left: 1px solid rgba(255,255,255,0.8);
+            border-left: 1px solid #EFEAE4;
             border-radius: 15px 0 0 15px;
             font-weight: 600;
         }
         td:last-child {
-            border-right: 1px solid rgba(255,255,255,0.8);
+            border-right: 1px solid #EFEAE4;
             border-radius: 0 15px 15px 0;
         }
 
         tr:hover td {
-            background: rgba(255, 255, 255, 0.9);
+            background: #FFFFFF;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
@@ -600,14 +619,19 @@
             height: 60px;
             object-fit: cover;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid #EFEAE4;
         }
+
+        .product-thumb { width: 60px; height: 60px; }
+        .thumb-fallback { width: 60px; height: 60px; display: grid; place-items: center; border: 1px solid #EFEAE4; border-radius: 12px; background: #F8F6F3; color: #C5A059; }
+        .thumb-fallback[hidden] { display: none; }
 
         .product-name {
             font-weight: 700;
             color: var(--text-dark);
             font-size: 1.05rem;
         }
+        .price-value { color: #7A5B20; font-weight: 700; white-space: nowrap; }
 
         .badge {
             padding: 6px 12px;
@@ -616,11 +640,11 @@
             font-weight: 600;
         }
 
-        .badge-category { background: rgba(117, 15, 34, 0.1); color: var(--ruby-red); border: 1px solid rgba(117, 15, 34, 0.2); }
-        .badge-stock { background: rgba(46, 125, 50, 0.1); color: #2e7d32; border: 1px solid rgba(46, 125, 50, 0.2); }
-        .badge-low-stock { background: rgba(255, 152, 0, 0.1); color: #e65100; border: 1px solid rgba(255, 152, 0, 0.2); }
-        .badge-out-stock { background: rgba(211, 47, 47, 0.1); color: #d32f2f; border: 1px solid rgba(211, 47, 47, 0.2); }
-        .badge-cart { background: rgba(255, 152, 0, 0.1); color: #e65100; border: 1px solid rgba(255, 152, 0, 0.2); }
+        .badge-category { background: rgba(117, 15, 34, 0.07); color: #750F22; border: 1px solid rgba(117, 15, 34, 0.16); }
+        .badge-stock { background: #F7F4EE; color: #615B57; border: 1px solid #EFEAE4; }
+        .badge-low-stock, .badge-cart { background: #F4EBD9; color: #7A5B20; border: 1px solid rgba(197, 160, 89, 0.25); }
+        .badge-out-stock { background: rgba(117, 15, 34, 0.07); color: #750F22; border: 1px solid rgba(117, 15, 34, 0.2); }
+        .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
 
         .action-btns { display: flex; gap: 10px; }
         .btn-action {
@@ -637,10 +661,10 @@
             gap: 5px;
             text-decoration: none;
         }
-        .btn-edit { background: rgba(33, 150, 243, 0.15); color: #1976D2; }
-        .btn-edit:hover { background: #1976D2; color: white; }
-        .btn-delete { background: rgba(211, 47, 47, 0.15); color: #d32f2f; }
-        .btn-delete:hover { background: #d32f2f; color: white; }
+        .btn-edit { background: transparent; color: #7A5B20; border: 1px solid #C5A059; }
+        .btn-edit:hover { background: #C5A059; color: white; }
+        .btn-delete { background: transparent; color: #750F22; border: 1px solid #DCA8B1; }
+        .btn-delete:hover { background: #750F22; color: white; }
 
         /* ---------------------------------
            Soft Delete Modal (Glassmorphic)
@@ -668,16 +692,20 @@
         .modal-product-info img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; }
         .modal-stats { margin-top: 8px; font-size: 0.9rem; color: #555; }
         .modal-notice {
-            font-size: 0.85rem; color: #666; background: rgba(255, 193, 7, 0.15);
-            padding: 15px; border-left: 4px solid #ffc107; margin-bottom: 25px; border-radius: 5px; line-height: 1.5;
+            font-size: 0.85rem; color: #615B57; background: #F4EBD9;
+            padding: 15px; border-left: 4px solid #C5A059; margin-bottom: 25px; border-radius: 5px; line-height: 1.5;
         }
 
         .modal-actions { display: flex; justify-content: flex-end; gap: 12px; }
-        .btn-cancel { background: #e0e0e0; color: #333; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif;}
+        .btn-cancel { background: #EFEAE4; color: #333; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif;}
         .btn-confirm { background: var(--ruby-red); color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; font-family: 'Poppins', sans-serif;}
 
-        footer { margin-top: 20px; text-align: center; padding: 20px; color: #666; font-size: 0.95rem; font-weight: 500; }
+        footer { margin-top: 20px; text-align: center; padding: 20px; color: #615B57; font-size: 0.95rem; font-weight: 500; }
         hr { display: none; }
+
+        @media (max-width: 1100px) {
+            .analytics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
     </style>
     <link rel="stylesheet" th:href="@{/mobile-fix.css}">
 </head>
@@ -687,8 +715,8 @@
 
 <aside class="sidebar">
     <div class="sidebar-header">
-        <i class="fa-solid fa-chess-king"></i>
-        <h2>Admin Panel</h2>
+        <i class="fa-solid fa-crown" style="color: #C5A059;"></i>
+        <h2>KARUKAJ ADMIN</h2>
     </div>
     <ul class="sidebar-menu">
         <li>
@@ -698,9 +726,19 @@
             <a th:href="@{/admin/archived}"><i class="fa-solid fa-trash-can"></i> Trash Bin</a>
         </li>
         <li>
-            <a href="/home"><i class="fa-solid fa-globe"></i> View Live Site</a>
+            <a href="/home"><i class="fa-solid fa-globe"></i> Open Web Store</a>
         </li>
     </ul>
+    <div class="sidebar-profile">
+        <div class="profile-avatar"><i class="fa-solid fa-user-shield"></i></div>
+        <div class="profile-details">
+            <strong th:text="${session.loggedInUser != null ? session.loggedInUser.userName : 'Administrator'}">Administrator</strong>
+            <span>Super Admin</span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button class="sidebar-logout" type="submit" aria-label="Log out"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </form>
+    </div>
 </aside>
 
 <!-- Single Column Scrollable Vertical Flow -->
@@ -712,9 +750,14 @@
             <h1>Product Management Console</h1>
             <p>Monitor, manage, and update your premium inventory from one place.</p>
         </div>
-        <a href="/prodF" class="btn-add-product">
-            <i class="fa-solid fa-circle-plus"></i> Add New Product
-        </a>
+        <div class="quick-actions">
+            <a href="/prodF" class="btn-add-product">
+                <i class="fa-solid fa-plus"></i> Add New Product
+            </a>
+            <a href="/home" class="btn-store">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Web Store
+            </a>
+        </div>
     </div>
 
     <!-- 2. KPI Metrics Grid -->
@@ -722,22 +765,29 @@
         <div class="stat-card">
             <div class="stat-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
             <div class="stat-info">
-                <h4>Total Active</h4>
+                <h4>Total Active Catalog</h4>
                 <h2 th:text="${#lists.size(catalogue)}">0</h2>
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon" style="color: #1976D2; background: rgba(33,150,243,0.1);"><i class="fa-solid fa-tags"></i></div>
+            <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
             <div class="stat-info">
-                <h4>Categories</h4>
-                <h2>Active</h2>
+                <h4>Curated Categories</h4>
+                <h2 th:text="${categories.size()}">0</h2>
             </div>
         </div>
         <div class="stat-card">
-            <div class="stat-icon" style="color: #2e7d32; background: rgba(46,125,50,0.1);"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="stat-icon stat-icon-gold"><i class="fa-solid fa-triangle-exclamation"></i></div>
             <div class="stat-info">
-                <h4>Inventory Status</h4>
-                <h2>Live</h2>
+                <h4>Inventory Health</h4>
+                <h2><span th:text="${lowStockCount}">0</span> Low Stock</h2>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon stat-icon-emerald"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="stat-info">
+                <h4>Store Status</h4>
+                <span class="store-status-pill">Live &amp; Operational</span>
             </div>
         </div>
     </div>
@@ -766,7 +816,7 @@
             <!-- Right: Chat Console Pane -->
             <div class="chat-console-pane">
                 <div class="chat-console-header" id="chatHeaderTitle">
-                    <i class="fa-solid fa-circle-dot" style="color: #2e7d32; font-size: 0.7rem;"></i> Select a staff ID to start messaging
+                    <i class="fa-solid fa-circle-dot" style="                    color: #1B5E38; font-size: 0.7rem;"></i> Select a staff ID to start messaging
                 </div>
                 <div class="chat-console-body" id="chatBody">
                     <div style="text-align: center; color: #888; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">
@@ -785,13 +835,21 @@
     </div>
 
     <!-- 4. Search & Filter Control Bar -->
-    <div class="filter-container">
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="Search by Product Name or ID..." onkeyup="applyFilters()">
+    <div class="catalog-toolbar">
+        <div class="catalog-toolbar-top">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search by Product Name or ID..." onkeyup="applyFilters()">
+            </div>
+            <a th:href="@{/admin/archived}" class="btn-trash-gateway">
+                <i class="fa-solid fa-trash-can"></i> Trash Bin <span th:text="${archivedCount}">0</span>
+            </a>
         </div>
-
-        <select id="categoryFilter" class="filter-select" onchange="applyFilters()">
+        <div class="category-quick-filters" aria-label="Filter products by category">
+            <button type="button" class="category-chip active" data-category="" onclick="filterCategory(this)">All Categories</button>
+            <button type="button" class="category-chip" th:each="cat : ${categories}" th:data-category="${cat}" th:text="${cat == 'ROYAL_ACCECORIES' ? 'Royal Accessories' : #strings.capitalizeWords(#strings.replace(cat, '_', ' '))}" onclick="filterCategory(this)"></button>
+        </div>
+        <select id="categoryFilter" class="category-filter-select" tabindex="-1" aria-label="Selected category">
             <option value="">All Categories</option>
             <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat == 'ROYAL_ACCECORIES' ? 'Royal Accessories' : #strings.capitalizeWords(#strings.replace(cat, '_', ' '))}"></option>
         </select>
@@ -821,10 +879,6 @@
         <div class="table-header">
             <h3><i class="fa-solid fa-list-check"></i> Live Product Catalog</h3>
 
-            <!-- Trash Bin Gateway Button -->
-            <a th:href="@{/admin/archived}" class="btn-trash-gateway">
-                <i class="fa-solid fa-trash-can"></i> Trash Bin (<span th:text="${archivedCount}">0</span>)
-            </a>
         </div>
 
         <table id="productTable">
@@ -834,7 +888,7 @@
                 <th>Image</th>
                 <th>Product Name</th>
                 <th>Category</th>
-                <th>Price ($)</th>
+                <th>Price (BDT)</th>
                 <th>Stock</th>
                 <th>Active Carts</th>
                 <th>Actions</th>
@@ -850,10 +904,15 @@
                 th:data-stock="${cattt.stock}">
 
                 <td th:text="${cattt.id}"></td>
-                <td><img th:src="${cattt.imageUrl}" alt="Product Image" class="product-img"></td>
+                <td>
+                    <div class="product-thumb">
+                        <img th:if="${cattt.imageUrl != null and !#strings.isEmpty(cattt.imageUrl)}" th:src="${cattt.imageUrl}" alt="Product Image" class="product-img" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
+                        <div class="thumb-fallback" th:hidden="${cattt.imageUrl != null and !#strings.isEmpty(cattt.imageUrl)}"><i class="fa-solid fa-gem"></i></div>
+                    </div>
+                </td>
                 <td class="product-name" th:text="${cattt.name}"></td>
                 <td><span class="badge badge-category" th:text="${cattt.category == 'ROYAL_ACCECORIES' ? 'Royal Accessories' : #strings.capitalizeWords(#strings.replace(cattt.category, '_', ' '))}"></span></td>
-                <td style="font-weight: 700; color: var(--text-dark);" th:text="${cattt.price}"></td>
+                <td class="price-value" th:text="${'৳ ' + #numbers.formatDecimal(cattt.price, 1, 'COMMA', 2, 'POINT')}"></td>
 
                 <!-- Dynamic Stock Badge -->
                 <td>
@@ -956,6 +1015,12 @@
     }
 
     // Filter Logic
+    function filterCategory(button) {
+        document.getElementById('categoryFilter').value = button.dataset.category;
+        document.querySelectorAll('.category-chip').forEach(chip => chip.classList.toggle('active', chip === button));
+        applyFilters();
+    }
+
     function applyFilters() {
         const query = document.getElementById('searchInput').value.trim().toLowerCase();
         const selectedCat = document.getElementById('categoryFilter').value;
@@ -1019,6 +1084,7 @@
     function resetAllFilters() {
         document.getElementById('searchInput').value = '';
         document.getElementById('categoryFilter').value = '';
+        document.querySelectorAll('.category-chip').forEach(chip => chip.classList.toggle('active', chip.dataset.category === ''));
         document.getElementById('stockFilter').value = '';
         document.getElementById('sortOption').value = 'default';
         applyFilters();
@@ -1064,7 +1130,7 @@
         document.getElementById('messageInput').disabled = false;
         document.getElementById('sendBtn').disabled = false;
         document.getElementById('messageInput').placeholder = "Type message to Staff ID: " + currentReceiverId + "...";
-        document.getElementById('chatHeaderTitle').innerHTML = `<i class="fa-solid fa-circle-dot" style="color: #2e7d32; font-size: 0.7rem;"></i> Connected with Staff ID: ${currentReceiverId}`;
+        document.getElementById('chatHeaderTitle').innerHTML = `<i class="fa-solid fa-circle-dot" style="color: #1B5E38; font-size: 0.7rem;"></i> Connected with Staff ID: ${currentReceiverId}`;
 
         loadChatHistory();
     }

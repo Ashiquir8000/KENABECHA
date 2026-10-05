@@ -79,6 +79,9 @@ public class CatalogController {
         Set<String> uniqueCategories = activeProducts.stream()
                 .map(Product::getCategory)
                 .collect(Collectors.toSet());
+        long lowStockCount = activeProducts.stream()
+                .filter(product -> product.getStock() > 0 && product.getStock() <= 5)
+                .count();
 
         Map<Integer, Integer> cartCounts = new HashMap<>();
         for(Product p : activeProducts) {
@@ -89,6 +92,7 @@ public class CatalogController {
         model.addAttribute("cartCounts", cartCounts);
         model.addAttribute("archivedCount", archivedCount);
         model.addAttribute("categories", uniqueCategories);
+        model.addAttribute("lowStockCount", lowStockCount);
         return "admin-dashboard";
     }
 

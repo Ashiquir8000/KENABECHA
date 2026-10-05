@@ -303,9 +303,19 @@
         }
 
         .category-icon {
-            font-size: 2.8rem;
-            color: var(--ruby-red);
-            margin-bottom: 25px;
+            font-size: 1.65rem;
+            color: #750F22;
+        }
+
+        .category-icon-badge {
+            width: 76px;
+            height: 76px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 22px;
+            border-radius: 50%;
+            background: rgba(117, 15, 34, 0.06);
+            border: 1px solid rgba(117, 15, 34, 0.08);
         }
 
         .glass-card a {
@@ -316,7 +326,7 @@
         .glass-card button {
             background-color: #FFFFFF;
             color: var(--text-dark);
-            border: 1px solid #E0E0E0;
+            border: 1px solid #EFEAE4;
             padding: 12px 0;
             border-radius: 30px;
             font-weight: 600;
@@ -520,19 +530,19 @@
     <h3>Browse by Category</h3>
     <ul class="category-grid">
         <li class="glass-card">
-            <i class="fa-solid fa-shirt category-icon"></i>
-            <a href="/category/DRESS"><button type="button">Dress</button></a>
+            <span class="category-icon-badge"><i class="fa-solid fa-ribbon category-icon"></i></span>
+            <a href="/category/DRESS"><button type="button">Dress Collection</button></a>
         </li>
         <li class="glass-card">
-            <i class="fa-solid fa-basket-shopping category-icon"></i>
+            <span class="category-icon-badge"><i class="fa-solid fa-crown category-icon"></i></span>
             <a href="/category/FESTIVE_&amp;_PARTY_WEAR"><button type="button">Festive &amp; Party Wear</button></a>
         </li>
         <li class="glass-card">
-            <i class="fa-solid fa-plug category-icon"></i>
+            <span class="category-icon-badge"><i class="fa-solid fa-gem category-icon"></i></span>
             <a href="/category/ROYAL_ACCECORIES"><button type="button">Royal Accessories</button></a>
         </li>
         <li class="glass-card">
-            <i class="fa-solid fa-blender category-icon"></i>
+            <span class="category-icon-badge"><i class="fa-solid fa-ring category-icon"></i></span>
             <a href="/category/WEDDING_COLLECTION"><button type="button">Wedding Collection</button></a>
         </li>
     </ul>
