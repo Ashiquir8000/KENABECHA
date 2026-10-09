@@ -35,8 +35,11 @@
         /* ---------------------------------
            Glassmorphic Sidebar
            --------------------------------- */
+        /* ---------------------------------
+           Glassmorphic Sidebar
+           --------------------------------- */
         .sidebar {
-            width: 280px;
+            width: 260px;
             height: 100vh;
             position: fixed;
             top: 0;
@@ -107,17 +110,43 @@
            Main Content Area (Vertical Flow)
            --------------------------------- */
         .main-content {
-            margin-left: 280px;
-            width: calc(100% - 280px);
-            max-width: calc(100% - 280px);
+            margin-left: 260px;
+            flex: 1 1 0%;
+            min-width: 0;
+            overflow-x: hidden;
             padding: 40px;
             box-sizing: border-box;
             min-height: 100vh;
-            min-width: 0;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             gap: 35px;
+        }
+
+        @media screen and (max-width: 991px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: column;
+                padding: 10px 0;
+                border-right: none;
+                border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+            }
+            .sidebar-menu {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 10px;
+            }
+            .sidebar-menu li {
+                white-space: nowrap;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 16px;
+            }
         }
 
         /* Dashboard Banner */
@@ -188,7 +217,7 @@
         /* Quick Analytics Cards */
         .analytics-grid {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 25px;
         }
 
@@ -303,31 +332,46 @@
             border-bottom: 1px solid rgba(0,0,0,0.08);
         }
 
-        .staff-input-group {
+        .staff-tabs {
             display: flex;
+            flex-direction: column;
             gap: 8px;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
-        .staff-input-group input {
-            flex-grow: 1;
-            padding: 8px 12px;
-            border-radius: 10px;
+        .staff-tab {
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
             border: 1px solid rgba(117, 15, 34, 0.2);
-            outline: none;
-            background: #fff;
-            font-size: 0.85rem;
-        }
-
-        .staff-input-group button {
-            background: var(--ruby-red);
-            color: white;
-            border: none;
-            padding: 8px 15px;
+            padding: 10px 15px;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
             font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .staff-tab:hover, .staff-tab.active {
+            background: var(--ruby-red);
+            color: white;
+            border-color: var(--ruby-red);
+        }
+
+        @media screen and (max-width: 767px) {
+            .intercom-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            .chat-console-pane {
+                height: 400px;
+            }
+            .staff-list-pane {
+                margin-bottom: 15px;
+            }
         }
 
         .chat-console-pane {
@@ -723,6 +767,12 @@
             <a href="/adminF" class="active"><i class="fa-solid fa-gauge-high"></i> Dashboard Home</a>
         </li>
         <li>
+            <a th:href="@{/moderator}"><i class="fa-solid fa-user-shield"></i> Moderator Hub</a>
+        </li>
+        <li>
+            <a th:href="@{/inventory-dashboard}"><i class="fa-solid fa-boxes-packing"></i> Inventory Workshop</a>
+        </li>
+        <li>
             <a th:href="@{/admin/archived}"><i class="fa-solid fa-trash-can"></i> Trash Bin</a>
         </li>
         <li>
@@ -753,6 +803,12 @@
         <div class="quick-actions">
             <a href="/prodF" class="btn-add-product">
                 <i class="fa-solid fa-plus"></i> Add New Product
+            </a>
+            <a th:href="@{/moderator}" class="btn-store">
+                <i class="fa-solid fa-user-shield"></i> Moderator
+            </a>
+            <a th:href="@{/inventory-dashboard}" class="btn-store">
+                <i class="fa-solid fa-boxes-packing"></i> Inventory
             </a>
             <a href="/home" class="btn-store">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Web Store
@@ -804,9 +860,14 @@
                 <div style="font-size: 0.85rem; color: #666; line-height: 1.4;">
                     Enter a staff member's ID to open a direct live messaging channel.
                 </div>
-                <div class="staff-input-group">
-                    <input type="number" id="receiverIdInput" placeholder="Staff ID (e.g. 2)">
-                    <button onclick="startStaffChat()">Connect</button>
+                <div class="staff-tabs">
+                    <!-- Assuming Moderator is ID 2 and Inventory Manager is ID 3 for now -->
+                    <button class="staff-tab" onclick="startStaffChat(2, 'Moderator')">
+                        <i class="fa-solid fa-user-shield"></i> Moderator Hub
+                    </button>
+                    <button class="staff-tab" onclick="startStaffChat(3, 'Inventory Manager')">
+                        <i class="fa-solid fa-boxes-packing"></i> Inventory Workshop
+                    </button>
                 </div>
                 <div style="margin-top: auto; font-size: 0.75rem; color: #888; text-align: center;">
                     Secure STOMP WebSocket Protocol
@@ -1105,7 +1166,9 @@
     function connectWebSocket() {
         if(stompClient !== null) return;
 
-        const socket = new SockJS('/ws');
+        const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
+        const host = window.location.host;
+        const socket = new SockJS(`${protocol}//${host}/ws`);
         stompClient = Stomp.over(socket);
         stompClient.debug = null;
 
@@ -1124,17 +1187,19 @@
         if(currentAdminId > 0) connectWebSocket();
     });
 
-    function startStaffChat() {
-        const inputId = parseInt(document.getElementById('receiverIdInput').value);
-        if(!inputId) return alert("Please enter a valid Staff ID!");
-
-        currentReceiverId = inputId;
+    function startStaffChat(id, role) {
+        currentReceiverId = id;
         document.getElementById('messageInput').disabled = false;
         document.getElementById('sendBtn').disabled = false;
-        document.getElementById('messageInput').placeholder = "Type message to Staff ID: " + currentReceiverId + "...";
-        document.getElementById('chatHeaderTitle').innerHTML = `<i class="fa-solid fa-circle-dot" style="color: #1B5E38; font-size: 0.7rem;"></i> Connected with Staff ID: ${currentReceiverId}`;
+        document.getElementById('messageInput').placeholder = "Type message to " + role + "...";
+        document.getElementById('chatHeaderTitle').innerHTML = `<i class="fa-solid fa-circle-dot" style="color: #1B5E38; font-size: 0.7rem;"></i> Connected with ${role}`;
 
         loadChatHistory();
+        
+        if (event && event.currentTarget) {
+            document.querySelectorAll('.staff-tab').forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
     }
 
     function loadChatHistory() {
