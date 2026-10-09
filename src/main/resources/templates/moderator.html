@@ -113,9 +113,17 @@
 
         <!-- Internal Staff Section -->
         <div style="background: #F7F4EE; padding: 8px 15px; font-size: 0.85rem; font-weight: 600; color: var(--text-dark); border-bottom: 1px solid var(--glass-border);">
-            <i class="fa-solid fa-building-shield"></i> INTERNAL STAFF
+            <i class="fa-solid fa-building-shield"></i> INTERNAL STAFF INTERCOM
         </div>
-        <ul class="user-list" style="flex: none; max-height: 120px;">
+        <ul class="user-list" style="flex: none; max-height: 160px;">
+            <li class="user-item" id="adminStaffItem"
+                onclick="selectAdminIntercom()">
+                <div class="user-avatar" style="background: #F4EBD9; color: var(--gold-accent);"><i class="fa-solid fa-user-shield"></i></div>
+                <div class="user-info">
+                    <h4>Central Admin</h4>
+                    <p>Executive Intercom</p>
+                </div>
+            </li>
             <li class="user-item" th:if="${inventoryUser != null}"
                 th:data-id="${inventoryUser.id}"
                 th:data-name="${inventoryUser.userName}"
@@ -208,11 +216,15 @@
 <script th:inline="javascript">
     let stompClient = null;
     let currentActiveUserId = null;
-    let currentChatMode = 'CUSTOMER'; // CUSTOMER or STAFF
+    let currentChatMode = 'STAFF_ADMIN'; // Default to STAFF_ADMIN intercom
+    const staffIntercomHistory = [];
 
     const modId = /*[[${session.loggedInUser != null ? session.loggedInUser.id : 0}]]*/ 0;
+    const modUserName = /*[[${session.loggedInUser != null ? session.loggedInUser.userName : 'Moderator'}]]*/ 'Moderator';
 
     function connectCockpit() {
+        if (stompClient !== null && stompClient.connected) return;
+
         const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
         const host = window.location.host;
         const socket = new SockJS(`${protocol}//${host}/ws`);
@@ -220,12 +232,14 @@
         stompClient.debug = null;
 
         stompClient.connect({}, function (frame) {
+            console.log("[STOMP] Moderator Cockpit connected successfully to broker");
             document.getElementById('livePulse').classList.add('active');
             document.getElementById('livePulse').title = "WebSocket Connected";
 
             // 1. Listen for Customer Messages (Global Topic)
             stompClient.subscribe('/topic/moderator', function (message) {
                 const msg = JSON.parse(message.body);
+                console.log("[STOMP] Customer message received:", msg);
                 playAudio();
 
                 if (currentChatMode === 'CUSTOMER' && currentActiveUserId && String(msg.userId) === String(currentActiveUserId)) {
@@ -239,29 +253,96 @@
                 }
             });
 
-            // 2. Listen for Staff Messages (Targeted to Moderator's personal queue)
-            if(modId > 0) {
-                stompClient.subscribe('/topic/user/' + modId, function (message) {
-                    const msg = JSON.parse(message.body);
-                    playAudio();
-
-                    if (msg.senderId) {
-                        const isMine = String(msg.senderId) === String(modId);
-                        
-                        if (currentChatMode === 'STAFF' && (String(msg.senderId) === String(currentActiveUserId) || String(msg.receiverId) === String(currentActiveUserId))) {
-                            appendMessage(msg.content, isMine ? 'msg-moderator' : 'msg-customer');
-                        } else if (!isMine) {
-                            showToast("Internal Staff Alert from: " + msg.senderName);
-                        }
-                    }
-                });
-            }
+            // 2. Listen for Unified Staff Intercom Broadcast (/topic/staff.intercom)
+            stompClient.subscribe('/topic/staff.intercom', function(messageOutput) {
+                const msg = JSON.parse(messageOutput.body);
+                console.log("[STOMP] Received:", msg);
+                renderStaffIncomingMessage(msg);
+            });
+        }, function(error) {
+            console.error("[STOMP] Moderator connection error:", error);
         });
     }
 
     function playAudio() {
         const audio = document.getElementById('chatAudio');
         if (audio) audio.play().catch(e => {});
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // Select Central Admin Intercom
+    function selectAdminIntercom() {
+        currentChatMode = 'STAFF_ADMIN';
+        currentActiveUserId = 'ADMIN';
+
+        document.getElementById('activeUserName').innerText = "Central Admin [EXECUTIVE INTERCOM]";
+        const panel = document.getElementById('chatPanel');
+        panel.style.opacity = '1';
+        panel.style.pointerEvents = 'auto';
+
+        document.getElementById('quickRepliesBox').style.display = 'none';
+
+        // Update active highlight in user list
+        document.querySelectorAll('.user-item').forEach(el => el.classList.remove('active-staff'));
+        const adminItem = document.getElementById('adminStaffItem');
+        if (adminItem) {
+            adminItem.classList.add('active-staff');
+            adminItem.style.background = '';
+        }
+
+        const chatThread = document.getElementById('chatThread');
+        chatThread.innerHTML = '';
+
+        if (staffIntercomHistory.length === 0) {
+            chatThread.innerHTML = '<div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">Live intercom channel with Central Admin. Type a message to begin!</div>';
+        } else {
+            staffIntercomHistory.forEach(msg => {
+                const isMine = (msg.senderRole === 'MODERATOR');
+                const className = isMine ? 'msg-moderator' : 'msg-customer';
+                const senderTag = isMine ? 'You (Moderator)' : `${msg.sender} [${msg.senderRole}]`;
+                const timeTag = msg.timestamp ? ` <span style="font-size:0.75rem; opacity:0.7; margin-left:6px;">${msg.timestamp}</span>` : '';
+                appendBubbleWithHeader(senderTag + timeTag, msg.content, className);
+            });
+        }
+
+        const input = document.getElementById('modMsgInput');
+        if (input) {
+            input.placeholder = "Broadcast or reply to Central Admin...";
+            input.focus();
+        }
+    }
+
+    function renderStaffIncomingMessage(msg) {
+        staffIntercomHistory.push(msg);
+
+        // Check if message is meant for moderator, broadcast, or sent by moderator
+        const isForMod = (msg.receiverRole === 'MODERATOR' || msg.receiverRole === 'ALL' || msg.senderRole === 'MODERATOR');
+        if (!isForMod) {
+            console.log("[STOMP] Message not targeted to Moderator:", msg);
+            return;
+        }
+
+        playAudio();
+
+        if (currentChatMode === 'STAFF_ADMIN') {
+            const isMine = (msg.senderRole === 'MODERATOR');
+            const className = isMine ? 'msg-moderator' : 'msg-customer';
+            const senderTag = isMine ? 'You (Moderator)' : `${msg.sender} [${msg.senderRole}]`;
+            const timeTag = msg.timestamp ? ` <span style="font-size:0.75rem; opacity:0.7; margin-left:6px;">${msg.timestamp}</span>` : '';
+            appendBubbleWithHeader(senderTag + timeTag, msg.content, className);
+        } else {
+            if (msg.senderRole !== 'MODERATOR') {
+                showToast("Intercom from " + msg.sender + ": " + msg.content);
+                const adminItem = document.getElementById('adminStaffItem');
+                if (adminItem) {
+                    adminItem.style.background = 'rgba(197, 160, 89, 0.25)';
+                }
+            }
+        }
     }
 
     // Load Customer Chat
@@ -276,11 +357,11 @@
             .catch(err => showError());
     }
 
-    // Load Staff Chat
+    // Load Staff Chat (Warehouse)
     function selectStaff(userId, userName) {
         currentChatMode = 'STAFF';
         setupChatDesk(userId, userName);
-        document.getElementById('quickRepliesBox').style.display = 'none'; // Hide customer quick replies
+        document.getElementById('quickRepliesBox').style.display = 'none';
 
         fetch('/chat/staff/history/' + modId + '/' + userId)
             .then(res => res.json())
@@ -295,15 +376,23 @@
         panel.style.opacity = '1';
         panel.style.pointerEvents = 'auto';
 
+        document.querySelectorAll('.user-item').forEach(el => el.classList.remove('active-staff'));
+
         const chatThread = document.getElementById('chatThread');
-        chatThread.innerHTML = '<div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto;">Loading history...</div>';
+        chatThread.innerHTML = '<div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">Loading history...</div>';
+        
+        const input = document.getElementById('modMsgInput');
+        if (input) {
+            input.placeholder = "Type response...";
+            input.focus();
+        }
     }
 
     function renderHistory(data, type) {
         const chatThread = document.getElementById('chatThread');
         chatThread.innerHTML = '';
         if(data.length === 0) {
-            chatThread.innerHTML = '<div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto;">No previous conversation.</div>';
+            chatThread.innerHTML = '<div style="text-align:center; color: #888; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">No previous conversation.</div>';
         }
 
         data.forEach(msg => {
@@ -317,7 +406,7 @@
 
     function showError() {
         const chatThread = document.getElementById('chatThread');
-        chatThread.innerHTML = '<div style="text-align:center; color: red; font-size: 0.9rem; margin-top: auto;">Failed to load history.</div>';
+        chatThread.innerHTML = '<div style="text-align:center; color: red; font-size: 0.9rem; margin-top: auto; margin-bottom: auto;">Failed to load history.</div>';
     }
 
     function useQuickReply(text) {
@@ -330,25 +419,36 @@
         const inputField = document.getElementById('modMsgInput');
         const content = inputField.value.trim();
 
-        if (content && stompClient && currentActiveUserId) {
-            if (currentChatMode === 'STAFF') {
+        if (content && stompClient) {
+            if (currentChatMode === 'STAFF_ADMIN') {
                 const messageData = {
-                    senderId: modId,
-                    receiverId: currentActiveUserId,
-                    content: content
+                    sender: "Moderator",
+                    senderRole: "MODERATOR",
+                    receiverRole: "ADMIN",
+                    content: content,
+                    timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
                 };
                 stompClient.send("/app/staffchat.send", {}, JSON.stringify(messageData));
-                // Do not append manually; rely on echo via /topic/user/{modId}
-            } else {
+                inputField.value = '';
+            } else if (currentChatMode === 'STAFF' && currentActiveUserId) {
+                const messageData = {
+                    sender: "Moderator",
+                    senderRole: "MODERATOR",
+                    receiverRole: "INVENTORY",
+                    content: content,
+                    timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                };
+                stompClient.send("/app/staffchat.send", {}, JSON.stringify(messageData));
+                inputField.value = '';
+            } else if (currentChatMode === 'CUSTOMER' && currentActiveUserId) {
                 const messageData = {
                     userId: currentActiveUserId,
                     senderType: 'MODERATOR',
                     content: content
                 };
                 stompClient.send("/app/chat.send", {}, JSON.stringify(messageData));
-                // Do not append manually; rely on echo via /topic/moderator
+                inputField.value = '';
             }
-            inputField.value = '';
         }
     }
 
@@ -356,11 +456,34 @@
         if (event.key === 'Enter') sendModeratorMsg();
     }
 
+    function appendBubbleWithHeader(headerText, text, className) {
+        const chatThread = document.getElementById('chatThread');
+        if (!chatThread) return;
+
+        if (chatThread.innerHTML.includes('No previous conversation.') || 
+            chatThread.innerHTML.includes('Live intercom channel with Central Admin') || 
+            chatThread.innerHTML.includes('Select a user from inbox') || 
+            chatThread.innerHTML.includes('Loading history...')) {
+            chatThread.innerHTML = '';
+        }
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'msg-bubble ' + className;
+        msgDiv.innerHTML = `
+            <div style="font-size:0.75rem; font-weight:600; margin-bottom:4px; opacity:0.85;">${headerText}</div>
+            <div style="word-break: break-word;">${escapeHtml(text)}</div>
+        `;
+        chatThread.appendChild(msgDiv);
+        chatThread.scrollTop = chatThread.scrollHeight;
+    }
+
     function appendMessage(text, className) {
         const chatThread = document.getElementById('chatThread');
+        if (!chatThread) return;
         
-        // Remove empty state message if exists
-        if(chatThread.innerHTML.includes('No previous conversation.') || chatThread.innerHTML.includes('Select a user from inbox to start moderating.') || chatThread.innerHTML.includes('Loading history...')) {
+        if (chatThread.innerHTML.includes('No previous conversation.') || 
+            chatThread.innerHTML.includes('Select a user from inbox') || 
+            chatThread.innerHTML.includes('Loading history...')) {
             chatThread.innerHTML = '';
         }
         
@@ -378,7 +501,10 @@
         setTimeout(() => toast.classList.remove('show'), 4000);
     }
 
-    window.onload = connectCockpit;
+    window.onload = function() {
+        connectCockpit();
+        selectAdminIntercom();
+    };
 </script>
 
 </body>

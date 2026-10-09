@@ -9,6 +9,7 @@ import com.example.catalogproject.repository.StaffMessageRepository;
 import com.example.catalogproject.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -69,28 +70,11 @@ public class ChatController {
 
 
     @MessageMapping("/staffchat.send")
-    public void processStaffMessage(@Payload StaffChatRequest request) {
-        User sender = userRepository.findById(request.getSenderId()).orElse(null);
-        User receiver = userRepository.findById(request.getReceiverId()).orElse(null);
-
-        if (sender != null && receiver != null) {
-            StaffMessage message = new StaffMessage();
-            message.setSender(sender);
-            message.setReceiver(receiver);
-            message.setContent(request.getContent());
-            message.setTimestamp(LocalDateTime.now());
-
-            staffMessageRepository.save(message);
-
-            StaffChatResponse response = new StaffChatResponse(
-                    sender.getId(), sender.getUserName(),
-                    receiver.getId(), receiver.getUserName(),
-                    message.getContent()
-            );
-
-            messagingTemplate.convertAndSend("/topic/user/" + sender.getId(), response);
-            messagingTemplate.convertAndSend("/topic/user/" + receiver.getId(), response);
+    public void processStaffMessage(@Payload StaffChatMessage chatMessage) {
+        if (chatMessage.getTimestamp() == null || chatMessage.getTimestamp().isBlank()) {
+            chatMessage.setTimestamp(java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("hh:mm a")));
         }
+        messagingTemplate.convertAndSend("/topic/staff.intercom", chatMessage);
     }
 
     @GetMapping("/chat/staff/history/{userId1}/{userId2}")
@@ -117,6 +101,17 @@ public class ChatController {
         private String userName;
         private String senderType;
         private String content;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class StaffChatMessage {
+        private String sender;      // e.g., "Admin" or "Moderator"
+        private String senderRole;  // "ADMIN", "MODERATOR", "INVENTORY"
+        private String receiverRole;// "MODERATOR", "ADMIN", "ALL"
+        private String content;     // The message body
+        private String timestamp;   // Formatted time
     }
 
     @Data
