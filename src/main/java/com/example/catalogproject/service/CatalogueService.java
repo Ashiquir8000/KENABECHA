@@ -17,14 +17,17 @@ public class CatalogueService {
     private final CategoryTypeRepository categoryTypeRepository;
     private final UserRepository userRepository;
 
+    @org.springframework.cache.annotation.Cacheable("categories")
     public List<Product> findByCategory(String category) {
         return categoryTypeRepository.findByCategory(category);
     }
 
+    @org.springframework.cache.annotation.CacheEvict(value = "categories", allEntries = true)
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 
+    @org.springframework.cache.annotation.Cacheable("categories")
     public List<Product> getProducts() {
         return productRepository.findAll();
     }
@@ -33,6 +36,7 @@ public class CatalogueService {
         return productRepository.findById(id).orElse(null);
     }
 
+    @org.springframework.cache.annotation.CacheEvict(value = "categories", allEntries = true)
     public void deleteProductByID(Integer id) {
         productRepository.deleteById(id);
     }

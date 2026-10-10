@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/home", "/register", "/login", "/proDetail/**", "/category/**", "/search/visual", "/images/**", "/css/**", "/js/**", "/mobile-fix.css").permitAll()
                         .requestMatchers("/adminF", "/prodF", "/edit/**", "/delete/**", "/admin/archived", "/restore/**", "/permanent-delete/**").hasRole("ADMIN")
                         .requestMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")
-                        .requestMatchers("/inventory/**").hasAnyRole("ADMIN", "MODERATOR", "INVENTORY_MANAGER")
+                        .requestMatchers("/inventory", "/inventory/**").hasAnyRole("ADMIN", "MODERATOR", "INVENTORY_MANAGER")
                         .requestMatchers("/cart/**", "/buy/**", "/checkout", "/addReview", "/place-order", "/ws/**").authenticated()
                         .anyRequest().authenticated()
                 )

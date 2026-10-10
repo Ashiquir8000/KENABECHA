@@ -42,6 +42,8 @@ public class OrderService {
         cartService.clearCart(user);
         return savedOrder;
     }
-
+    public List<CustomerOrder> getOrdersByUser(User user) {
+        return customerOrderRepository.findByUserOrderByOrderDateDesc(user);
+    }
 
 }

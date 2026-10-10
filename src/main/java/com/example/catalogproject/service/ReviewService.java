@@ -18,4 +18,8 @@ public class ReviewService {
     public void deleteReviewById(Integer id) {
         reviewRepository.deleteById(id);
     }
+
+    public java.util.List<Review> getReviewsByUser(com.example.catalogproject.entity.User user) {
+        return reviewRepository.findByUserOrderByIdDesc(user);
+    }
 }

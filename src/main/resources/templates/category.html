@@ -139,6 +139,9 @@
             <li th:if="${session.loggedInUser != null and session.loggedInUser.userName == 'admin'}">
                 <a th:href="@{/adminF}"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
             </li>
+            <li th:if="${session.loggedInUser != null}">
+                <a th:href="@{/profile}"><i class="fa-solid fa-user"></i> Profile</a>
+            </li>
             <li><a th:href="@{/cart}"><i class="fa-solid fa-bag-shopping"></i> Cart</a></li>
         </ul>
     </nav>
