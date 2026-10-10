@@ -186,6 +186,16 @@
                     alert("New message from Moderator: " + msg.senderName);
                 }
             });
+
+            // Subscribe to Admin messages via proven pattern
+            stompClient.subscribe('/topic/inventory', function(message) {
+                const msg = JSON.parse(message.body);
+                if (msg.senderType === 'ADMIN_TO_INVENTORY') {
+                    const audio = document.getElementById('chatAudio');
+                    if (audio) audio.play().catch(e => {});
+                    alert("Message from Admin: " + msg.content);
+                }
+            });
         });
     }
 

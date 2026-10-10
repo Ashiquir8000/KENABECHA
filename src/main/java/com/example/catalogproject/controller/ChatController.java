@@ -46,8 +46,13 @@ public class ChatController {
 
             ChatResponse response = new ChatResponse(user.getId(), user.getUserName(), message.getSenderType(), message.getContent());
 
-            messagingTemplate.convertAndSend("/topic/moderator", response);
-            messagingTemplate.convertAndSend("/topic/user/" + user.getId(), response);
+            if ("ADMIN_TO_INVENTORY".equals(chatDTO.getSenderType())) {
+                messagingTemplate.convertAndSend("/topic/inventory", response);
+                messagingTemplate.convertAndSend("/topic/user/" + user.getId(), response);
+            } else {
+                messagingTemplate.convertAndSend("/topic/moderator", response);
+                messagingTemplate.convertAndSend("/topic/user/" + user.getId(), response);
+            }
         }
     }
 

@@ -236,13 +236,27 @@
             document.getElementById('livePulse').classList.add('active');
             document.getElementById('livePulse').title = "WebSocket Connected";
 
-            // 1. Listen for Customer Messages (Global Topic)
+            // 1. Listen for Customer & Admin Messages (Global Topic)
             stompClient.subscribe('/topic/moderator', function (message) {
                 const msg = JSON.parse(message.body);
-                console.log("[STOMP] Customer message received:", msg);
+                console.log("[MODERATOR CHAT RECV]", msg);
                 playAudio();
 
-                if (currentChatMode === 'CUSTOMER' && currentActiveUserId && String(msg.userId) === String(currentActiveUserId)) {
+                if (msg.senderType === 'ADMIN') {
+                    // It's an admin message
+                    // Keep track of admin's real userId so we can reply
+                    window.actualAdminUserId = msg.userId; 
+                    
+                    if (currentChatMode === 'STAFF_ADMIN') {
+                        appendBubbleWithHeader(`${msg.userName || 'Admin'} [ADMIN] <span style="font-size:0.75rem; opacity:0.7; margin-left:6px;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`, msg.content, 'msg-customer');
+                    } else {
+                        showToast("Intercom from Admin: " + msg.content);
+                        const adminItem = document.getElementById('adminStaffItem');
+                        if (adminItem) {
+                            adminItem.style.background = 'rgba(197, 160, 89, 0.25)';
+                        }
+                    }
+                } else if (currentChatMode === 'CUSTOMER' && currentActiveUserId && String(msg.userId) === String(currentActiveUserId)) {
                     if (msg.senderType === 'CUSTOMER') {
                         appendMessage(msg.content, 'msg-customer');
                     } else if (msg.senderType === 'MODERATOR') {
@@ -251,13 +265,6 @@
                 } else if(msg.senderType === 'CUSTOMER') {
                     showToast("New message from Customer: " + msg.userName);
                 }
-            });
-
-            // 2. Listen for Unified Staff Intercom Broadcast (/topic/staff.intercom)
-            stompClient.subscribe('/topic/staff.intercom', function(messageOutput) {
-                const msg = JSON.parse(messageOutput.body);
-                console.log("[STOMP] Received:", msg);
-                renderStaffIncomingMessage(msg);
             });
         }, function(error) {
             console.error("[STOMP] Moderator connection error:", error);
@@ -421,14 +428,20 @@
 
         if (content && stompClient) {
             if (currentChatMode === 'STAFF_ADMIN') {
+                if (!window.actualAdminUserId) {
+                    showToast("Cannot reply yet. Waiting for Admin to send a message.");
+                    return;
+                }
                 const messageData = {
-                    sender: "Moderator",
-                    senderRole: "MODERATOR",
-                    receiverRole: "ADMIN",
-                    content: content,
-                    timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                    userId: window.actualAdminUserId,
+                    senderType: 'MODERATOR',
+                    content: content
                 };
-                stompClient.send("/app/staffchat.send", {}, JSON.stringify(messageData));
+                stompClient.send("/app/chat.send", {}, JSON.stringify(messageData));
+                
+                // Optimistically render our own message
+                appendBubbleWithHeader(`You (Moderator) <span style="font-size:0.75rem; opacity:0.7; margin-left:6px;">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>`, content, 'msg-moderator');
+
                 inputField.value = '';
             } else if (currentChatMode === 'STAFF' && currentActiveUserId) {
                 const messageData = {
