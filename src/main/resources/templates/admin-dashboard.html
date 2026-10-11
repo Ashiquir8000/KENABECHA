@@ -970,8 +970,7 @@
                 <td th:text="${cattt.id}"></td>
                 <td>
                     <div class="product-thumb">
-                        <img th:if="${cattt.imageUrl != null and !#strings.isEmpty(cattt.imageUrl)}" th:src="${cattt.imageUrl}" alt="Product Image" class="product-img" onerror="this.hidden=true; this.nextElementSibling.hidden=false;">
-                        <div class="thumb-fallback" th:hidden="${cattt.imageUrl != null and !#strings.isEmpty(cattt.imageUrl)}"><i class="fa-solid fa-gem"></i></div>
+                        <img th:src="${cattt.imageUrl}" alt="Product Image" class="product-img" onerror="this.onerror=null; this.src='https://placehold.co/400x500?text=Karukaj';">
                     </div>
                 </td>
                 <td class="product-name" th:text="${cattt.name}"></td>

@@ -30,6 +30,7 @@ public class CatalogController {
     private final FileStorageService fileStorageService;
     private final CloudVisionService cloudVisionService;
     private final InventoryManagerService inventoryManagerService;
+    private final CloudinaryService cloudinaryService;
 
     @GetMapping({"/","/home"})
     public String showHomeInterface() {
@@ -150,12 +151,14 @@ public class CatalogController {
         }
 
         if (file != null && !file.isEmpty()) {
-            String imageUrl = fileStorageService.storeFile(file);
-            product.setImageUrl(imageUrl);
+            String uploadedUrl = cloudinaryService.uploadImage(file);
+            if (uploadedUrl != null && !uploadedUrl.isEmpty()) {
+                product.setImageUrl(uploadedUrl);
+            }
             try {
                 product.setImageEmbedding(cloudVisionService.getEmbeddingFromCloud(file));
             } catch (Exception e) {
-                log.error("Failed to generate image embedding from cloud API", e);
+                log.error("Failed to generate image embedding", e);
             }
         } else if (product.getId() != null) {
             Product existing = catalogueService.getProductById(product.getId());
@@ -170,7 +173,7 @@ public class CatalogController {
         }
 
         if (product.getImageUrl() == null || product.getImageUrl().isEmpty()) {
-            product.setImageUrl("/images/default.png");
+            product.setImageUrl("https://placehold.co/400x500?text=Karukaj");
         }
 
         catalogueService.saveProduct(product);
