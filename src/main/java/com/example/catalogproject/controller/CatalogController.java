@@ -337,11 +337,10 @@ public class CatalogController {
         if (file.isEmpty()) return "redirect:/home";
 
         List<Double> queryVector = cloudVisionService.getEmbeddingFromCloud(file);
-        List<Product> allProducts = catalogueService.getProducts();
+        List<Product> allProducts = catalogueService.getActiveProductsWithEmbeddings();
 
         List<Product> matchedProducts = allProducts.stream()
-                // Visual Search থেকেও ডিলিট হওয়া প্রোডাক্ট বাদ দেওয়া হলো
-                .filter(p -> !p.isDeleted() && p.getImageEmbedding() != null && !p.getImageEmbedding().isEmpty())
+                .filter(p -> p.getImageEmbedding() != null && !p.getImageEmbedding().isEmpty())
                 .map(p -> new Object() {
                     final Product product = p;
                     final double score = cloudVisionService.calculateCosineSimilarity(queryVector, p.getImageEmbedding());

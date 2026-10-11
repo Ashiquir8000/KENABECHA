@@ -130,6 +130,13 @@
     <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" placeholder="Search for products...">
+        <!-- Visual Image Search Camera Trigger -->
+        <form th:action="@{/search/visual}" method="post" enctype="multipart/form-data" id="visualSearchForm" style="display: flex; align-items: center; margin: 0;">
+            <label for="visualSearchInput" title="Visual Search by Image" style="cursor: pointer; display: flex; align-items: center; margin: 0; padding-left: 8px; color: var(--ruby-red);">
+                <i class="fa-solid fa-camera" style="font-size: 1.15rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></i>
+            </label>
+            <input type="file" id="visualSearchInput" name="imageFile" accept="image/*" style="display: none;" onchange="if(this.files.length > 0) document.getElementById('visualSearchForm').submit();">
+        </form>
     </div>
 
     <nav>

@@ -471,6 +471,17 @@
 <header>
     <h2>KARUKAJ</h2>
 
+    <div class="header-search-wrap" style="display: flex; align-items: center; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(117, 15, 34, 0.2); border-radius: 30px; padding: 6px 16px; margin: 0 15px;">
+        <form th:action="@{/search/visual}" method="post" enctype="multipart/form-data" id="homeVisualSearchForm" style="display: flex; align-items: center; margin: 0;">
+            <label for="homeVisualSearchInput" title="Visual Image Search" style="cursor: pointer; display: flex; align-items: center; gap: 8px; margin: 0; font-size: 0.88rem; font-weight: 500; color: #333;">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--ruby-red);"></i>
+                <span>Search by Image</span>
+                <i class="fa-solid fa-camera" style="color: var(--ruby-red); font-size: 1.1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></i>
+            </label>
+            <input type="file" id="homeVisualSearchInput" name="imageFile" accept="image/*" style="display: none;" onchange="if(this.files.length > 0) document.getElementById('homeVisualSearchForm').submit();">
+        </form>
+    </div>
+
     <div id="mobile-menu-toggle" onclick="toggleNavMenu()">
         <i class="fa-solid fa-bars"></i>
     </div>
@@ -511,7 +522,15 @@
     <div class="hero-content">
         <h1>Modern Elegance, <br><span>Curated for You.</span></h1>
         <p>Find the best premium products across multiple categories. Discover trends that match your unique style and everyday needs.</p>
-        <a href="#categories" class="hero-cta">Explore Collections &rarr;</a>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+            <a href="#categories" class="hero-cta">Explore Collections &rarr;</a>
+            <form th:action="@{/search/visual}" method="post" enctype="multipart/form-data" id="heroVisualSearchForm" style="display: inline-flex; margin: 0;">
+                <label for="heroVisualSearchInput" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 30px; background: rgba(255,255,255,0.85); border: 1.5px solid var(--ruby-red); cursor: pointer; font-weight: 600; color: var(--ruby-red); font-size: 0.95rem; box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: all 0.3s ease;">
+                    <i class="fa-solid fa-camera"></i> Visual Image Search
+                </label>
+                <input type="file" id="heroVisualSearchInput" name="imageFile" accept="image/*" style="display: none;" onchange="if(this.files.length > 0) document.getElementById('heroVisualSearchForm').submit();">
+            </form>
+        </div>
     </div>
     
     <div class="hero-visuals">

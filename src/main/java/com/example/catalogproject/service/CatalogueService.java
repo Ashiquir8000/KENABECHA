@@ -32,6 +32,10 @@ public class CatalogueService {
         return productRepository.findAll();
     }
 
+    public List<Product> getActiveProductsWithEmbeddings() {
+        return productRepository.findAllActiveWithEmbeddings();
+    }
+
     public Product getProductById(Integer id) {
         return productRepository.findById(id).orElse(null);
     }
