@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import java.util.concurrent.CompletableFuture;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -24,26 +26,34 @@ public class DataVectorInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        List<Product> products = productRepository.findAll();
-        for (Product product : products) {
-            if (product.getImageEmbedding() == null || product.getImageEmbedding().isEmpty()) {
-                if (product.getImageUrl() != null && product.getImageUrl().startsWith("/images/")) {
-                    String fileName = product.getImageUrl().replace("/images/", "");
-                    Path filePath = Paths.get("uploads").toAbsolutePath().resolve(fileName);
-                    File imageFile = filePath.toFile();
+        CompletableFuture.runAsync(() -> {
+            try {
+                log.info("Starting background vector calculation for existing products...");
+                List<Product> products = productRepository.findAll();
+                for (Product product : products) {
+                    if (product.getImageEmbedding() == null || product.getImageEmbedding().isEmpty()) {
+                        if (product.getImageUrl() != null && product.getImageUrl().startsWith("/images/")) {
+                            String fileName = product.getImageUrl().replace("/images/", "");
+                            Path filePath = Paths.get("uploads").toAbsolutePath().resolve(fileName);
+                            File imageFile = filePath.toFile();
 
-                    if (imageFile.exists()) {
-                        try (FileInputStream input = new FileInputStream(imageFile)) {
-                            List<Double> embedding = visionService.getEmbeddingFromInputStream(input);
-                            product.setImageEmbedding(embedding);
-                            productRepository.save(product);
-                            log.info("Successfully generated embedding for product: {}", product.getName());
-                        } catch (Exception e) {
-                            log.error("Failed to generate vector for: {}", product.getName(), e);
+                            if (imageFile.exists()) {
+                                try (FileInputStream input = new FileInputStream(imageFile)) {
+                                    List<Double> embedding = visionService.getEmbeddingFromInputStream(input);
+                                    product.setImageEmbedding(embedding);
+                                    productRepository.save(product);
+                                    log.info("Successfully generated embedding for product: {}", product.getName());
+                                } catch (Exception e) {
+                                    log.error("Failed to generate vector for: {}", product.getName(), e);
+                                }
+                            }
                         }
                     }
                 }
+                log.info("Completed background vector calculation.");
+            } catch (Exception ex) {
+                log.error("Error during background vector calculation", ex);
             }
-        }
+        });
     }
 }
