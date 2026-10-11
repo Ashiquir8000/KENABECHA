@@ -441,8 +441,8 @@
                 <span th:text="${error}"></span>
             </div>
 
-            <form action="/login" method="post">
-
+            <form th:action="@{/login}" method="post">
+                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <input type="hidden" name="redirectTo" th:value="${redirectTo != null ? redirectTo : ''}"/>
 
                 <div class="input-group">

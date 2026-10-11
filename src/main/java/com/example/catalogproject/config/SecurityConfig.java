@@ -28,23 +28,26 @@ public class SecurityConfig {
                 // CSRF ডিজেবল করা হলো যাতে লগইন, রেজিস্ট্রেশন বা অন্য কোনো POST রিকোয়েস্ট ব্লক না হয়
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home", "/register", "/login", "/proDetail/**", "/category/**", "/search/visual", "/images/**", "/css/**", "/js/**", "/mobile-fix.css").permitAll()
+                        .requestMatchers("/", "/home", "/register", "/login", "/error", "/proDetail/**", "/category/**", "/search/**", "/search/visual", "/images/**", "/css/**", "/js/**", "/mobile-fix.css", "/static/**", "/favicon.ico").permitAll()
                         .requestMatchers("/adminF", "/prodF", "/edit/**", "/delete/**", "/admin/archived", "/restore/**", "/permanent-delete/**").hasRole("ADMIN")
                         .requestMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")
                         .requestMatchers("/inventory", "/inventory/**").hasAnyRole("ADMIN", "MODERATOR", "INVENTORY_MANAGER")
-                        .requestMatchers("/cart/**", "/buy/**", "/checkout", "/addReview", "/place-order", "/ws/**").authenticated()
+                        .requestMatchers("/profile", "/profile/**", "/profile/update", "/cart/**", "/buy/**", "/checkout", "/addReview", "/place-order", "/ws/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
+                        .failureUrl("/login?error=true")
                         .successHandler((request, response, authentication) -> {
                             String username = authentication.getName();
                             User user = catalogueService.getUserByUserName(username);
                             HttpSession session = request.getSession();
-                            session.setAttribute("loggedInUser", user);
+                            if (user != null) {
+                                session.setAttribute("loggedInUser", user);
+                            }
                             SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
-                            if (savedRequest != null) {
+                            if (savedRequest != null && savedRequest.getRedirectUrl() != null && !savedRequest.getRedirectUrl().contains("/login")) {
                                 response.sendRedirect(savedRequest.getRedirectUrl());
                             } else {
                                 response.sendRedirect("/home");

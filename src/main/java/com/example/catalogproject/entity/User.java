@@ -24,8 +24,8 @@ public class User {
     
     private String userPhoneNumber;
 
-    @ElementCollection
-    private List<String> mobileNumbers;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> mobileNumbers = new java.util.ArrayList<>();
 
     @Embedded
     private Adress address;

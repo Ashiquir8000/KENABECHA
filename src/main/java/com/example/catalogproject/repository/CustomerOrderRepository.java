@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface CustomerOrderRepository extends JpaRepository<CustomerOrder, Integer> {
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = {"orderItems", "orderItems.product"})
     List<CustomerOrder> findByUserOrderByOrderDateDesc(User user);
     
 }

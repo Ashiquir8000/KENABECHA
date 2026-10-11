@@ -7,5 +7,6 @@ import com.example.catalogproject.entity.User;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = {"product"})
     List<Review> findByUserOrderByIdDesc(User user);
 }

@@ -54,8 +54,10 @@ public class CatalogueService {
             List<String> validNumbers = user.getMobileNumbers().stream()
                     .filter(num -> num != null && !num.trim().isEmpty())
                     .map(String::trim)
-                    .toList();
+                    .collect(java.util.stream.Collectors.toCollection(java.util.ArrayList::new));
             user.setMobileNumbers(validNumbers);
+        } else {
+            user.setMobileNumbers(new java.util.ArrayList<>());
         }
         return userRepository.save(user);
     }
