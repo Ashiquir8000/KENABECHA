@@ -11,11 +11,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -144,39 +146,62 @@ public class CatalogController {
     }
 
     @PostMapping("/prodF")
-    public String addProduct(@Valid @ModelAttribute Product product, BindingResult bindingResult,
-                             @RequestParam("imageFile") MultipartFile file) {
+    public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult,
+                             @RequestParam(value = "file", required = false) MultipartFile file) {
         if (bindingResult.hasErrors()) {
             return "product-form";
         }
 
+        log.info("Received file: {}, size: {}", file != null ? file.getOriginalFilename() : "NULL", file != null ? file.getSize() : 0);
+
+        byte[] fileBytes = null;
         if (file != null && !file.isEmpty()) {
-            String uploadedUrl = cloudinaryService.uploadImage(file);
-            if (uploadedUrl != null && !uploadedUrl.isEmpty()) {
-                product.setImageUrl(uploadedUrl);
-            }
             try {
-                product.setImageEmbedding(cloudVisionService.getEmbeddingFromCloud(file));
+                fileBytes = file.getBytes();
             } catch (Exception e) {
-                log.error("Failed to generate image embedding", e);
+                log.warn("Could not read file bytes for async embedding: {}", e.getMessage());
+            }
+            String secureUrl = cloudinaryService.uploadImage(file);
+            if (secureUrl != null) {
+                product.setImageUrl(secureUrl);
             }
         } else if (product.getId() != null) {
+            // Keep the existing image if no new file is uploaded
             Product existing = catalogueService.getProductById(product.getId());
             if (existing != null) {
-                if (product.getImageUrl() == null || product.getImageUrl().isEmpty()) {
-                    product.setImageUrl(existing.getImageUrl());
-                }
-                if (product.getImageEmbedding() == null || product.getImageEmbedding().isEmpty()) {
+                product.setImageUrl(existing.getImageUrl());
+                if (existing.getImageEmbedding() != null) {
                     product.setImageEmbedding(existing.getImageEmbedding());
                 }
             }
         }
 
         if (product.getImageUrl() == null || product.getImageUrl().isEmpty()) {
-            product.setImageUrl("https://placehold.co/400x500?text=Karukaj");
+            product.setImageUrl("https://placehold.co/400x500?text=Karukaj+Exclusive");
         }
 
-        catalogueService.saveProduct(product);
+        Product savedProduct = catalogueService.saveProduct(product);
+
+        // Async non-blocking feature embedding generation - never blocks save latency
+        if (fileBytes != null && fileBytes.length > 0) {
+            final byte[] asyncBytes = fileBytes;
+            final Integer prodId = savedProduct.getId();
+            CompletableFuture.runAsync(() -> {
+                try (ByteArrayInputStream bais = new ByteArrayInputStream(asyncBytes)) {
+                    List<Double> embedding = cloudVisionService.getEmbeddingFromInputStream(bais);
+                    if (embedding != null && !embedding.isEmpty()) {
+                        Product p = catalogueService.getProductById(prodId);
+                        if (p != null) {
+                            p.setImageEmbedding(embedding);
+                            catalogueService.saveProduct(p);
+                        }
+                    }
+                } catch (Exception e) {
+                    log.error("Async visual embedding failed for product {}", prodId, e);
+                }
+            });
+        }
+
         return "redirect:/adminF";
     }
 

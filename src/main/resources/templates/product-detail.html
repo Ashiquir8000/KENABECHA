@@ -149,8 +149,8 @@
 <section class="main-content">
     <div class="product-showcase">
         <div class="image-side">
-            <img th:src="${product.imageUrl}"
-                 onerror="this.onerror=null; this.src='https://placehold.co/400x500?text=Karukaj';"
+            <img th:src="${product.imageUrl != null and !product.imageUrl.isEmpty() ? product.imageUrl : 'https://placehold.co/400x500?text=Karukaj+Exclusive'}"
+                 onerror="this.onerror=null; this.src='https://placehold.co/400x500?text=Karukaj+Exclusive';"
                  alt="Product Image">
         </div>
 

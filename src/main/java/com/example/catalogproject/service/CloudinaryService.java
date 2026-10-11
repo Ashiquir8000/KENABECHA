@@ -19,16 +19,19 @@ public class CloudinaryService {
     public String uploadImage(MultipartFile file) {
         if (file == null || file.isEmpty()) return null;
         try {
+            log.info("Uploading image to Cloudinary: {}", file.getOriginalFilename());
             @SuppressWarnings("rawtypes")
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             if (uploadResult != null && uploadResult.get("secure_url") != null) {
-                return uploadResult.get("secure_url").toString();
+                String secureUrl = uploadResult.get("secure_url").toString();
+                log.info("Cloudinary upload success. URL: {}", secureUrl);
+                return secureUrl;
             }
+            log.warn("Cloudinary upload response did not contain secure_url");
             return null;
         } catch (Exception e) {
-            log.error("Cloudinary upload failed: {}", e.getMessage());
+            log.error("Cloudinary upload failed: {}", e.getMessage(), e);
             return null;
         }
     }
 }
-

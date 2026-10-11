@@ -176,8 +176,8 @@
         <ul class="products-grid">
             <li class="product-card" th:each="catsss : ${catalu}">
                 <div class="product-image-container">
-                    <img th:src="${catsss.imageUrl}"
-                         onerror="this.onerror=null; this.src='https://placehold.co/400x500?text=Karukaj';"
+                    <img th:src="${catsss.imageUrl != null and !catsss.imageUrl.isEmpty() ? catsss.imageUrl : 'https://placehold.co/400x500?text=Karukaj+Exclusive'}"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x500?text=Karukaj+Exclusive';"
                          alt="Product Image">
                 </div>
                 <div class="product-info">
