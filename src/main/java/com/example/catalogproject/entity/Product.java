@@ -41,6 +41,10 @@ public class Product {
 
     private String imageUrl;
 
+    public String getImage() {
+        return this.imageUrl;
+    }
+
     @NotBlank(message = "Product details are required")
     private String details;
 
@@ -58,5 +62,5 @@ public class Product {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "product_image_embeddings", joinColumns = @JoinColumn(name = "product_id"))
     @Column(name = "embedding_value")
-    private List<Double> imageEmbedding;
+    private List<Double> imageEmbedding = new java.util.ArrayList<>();
 }

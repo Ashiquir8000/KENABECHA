@@ -28,7 +28,7 @@ public class SecurityConfig {
                 // CSRF ডিজেবল করা হলো যাতে লগইন, রেজিস্ট্রেশন বা অন্য কোনো POST রিকোয়েস্ট ব্লক না হয়
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home", "/register", "/login", "/error", "/proDetail/**", "/category/**", "/search/**", "/search/visual", "/images/**", "/css/**", "/js/**", "/mobile-fix.css", "/static/**", "/favicon.ico").permitAll()
+                        .requestMatchers("/", "/home", "/register", "/login", "/error", "/proDetail/**", "/category/**", "/search/**", "/search/visual", "/images/**", "/uploads/**", "/css/**", "/js/**", "/mobile-fix.css", "/static/**", "/favicon.ico").permitAll()
                         .requestMatchers("/adminF", "/prodF", "/edit/**", "/delete/**", "/admin/archived", "/restore/**", "/permanent-delete/**").hasRole("ADMIN")
                         .requestMatchers("/moderator/**").hasAnyRole("ADMIN", "MODERATOR")
                         .requestMatchers("/inventory", "/inventory/**").hasAnyRole("ADMIN", "MODERATOR", "INVENTORY_MANAGER")

@@ -149,15 +149,28 @@ public class CatalogController {
             return "product-form";
         }
 
-        String imageUrl = fileStorageService.storeFile(file);
-        product.setImageUrl(imageUrl);
-
-        if (!file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
+            String imageUrl = fileStorageService.storeFile(file);
+            product.setImageUrl(imageUrl);
             try {
                 product.setImageEmbedding(cloudVisionService.getEmbeddingFromCloud(file));
             } catch (Exception e) {
                 log.error("Failed to generate image embedding from cloud API", e);
             }
+        } else if (product.getId() != null) {
+            Product existing = catalogueService.getProductById(product.getId());
+            if (existing != null) {
+                if (product.getImageUrl() == null || product.getImageUrl().isEmpty()) {
+                    product.setImageUrl(existing.getImageUrl());
+                }
+                if (product.getImageEmbedding() == null || product.getImageEmbedding().isEmpty()) {
+                    product.setImageEmbedding(existing.getImageEmbedding());
+                }
+            }
+        }
+
+        if (product.getImageUrl() == null || product.getImageUrl().isEmpty()) {
+            product.setImageUrl("/images/default.png");
         }
 
         catalogueService.saveProduct(product);

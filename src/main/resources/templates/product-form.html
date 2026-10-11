@@ -449,8 +449,12 @@
 
                     <div class="input-group">
                         <label><i class="fa-solid fa-image" style="color: var(--ruby-red);"></i> Product Image</label>
+                        <input type="hidden" th:field="*{imageUrl}" />
                         <!-- Thymeleaf File Upload Input -->
-                        <input type="file" name="imageFile" accept="image/*" class="form-control" required style="margin-top: 5px;">
+                        <input type="file" name="imageFile" accept="image/*" class="form-control" th:required="${product.imageUrl == null or #strings.isEmpty(product.imageUrl)}" style="margin-top: 5px;">
+                        <small th:if="${product.imageUrl != null and !#strings.isEmpty(product.imageUrl)}" style="color: #666; display: block; margin-top: 4px;">
+                            Current Image: <span th:text="${product.imageUrl}"></span> (Upload new file to replace)
+                        </small>
                     </div>
 
                     <div class="input-group">
