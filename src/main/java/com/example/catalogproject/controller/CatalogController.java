@@ -149,6 +149,7 @@ public class CatalogController {
     public String addProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult,
                              @RequestParam(value = "file", required = false) MultipartFile file) {
         if (bindingResult.hasErrors()) {
+            log.warn("Validation errors while saving product: {}", bindingResult.getAllErrors());
             return "product-form";
         }
 
@@ -162,8 +163,16 @@ public class CatalogController {
                 log.warn("Could not read file bytes for async embedding: {}", e.getMessage());
             }
             String secureUrl = cloudinaryService.uploadImage(file);
-            if (secureUrl != null) {
+            if (secureUrl != null && !secureUrl.isEmpty()) {
                 product.setImageUrl(secureUrl);
+            } else if (product.getId() != null) {
+                Product existing = catalogueService.getProductById(product.getId());
+                if (existing != null) {
+                    product.setImageUrl(existing.getImageUrl());
+                    if (existing.getImageEmbedding() != null) {
+                        product.setImageEmbedding(existing.getImageEmbedding());
+                    }
+                }
             }
         } else if (product.getId() != null) {
             // Keep the existing image if no new file is uploaded

@@ -21,9 +21,19 @@
     }
 
     aside, .sidebar, .admin-sidebar {
-        position: static !important;
+        width: 260px !important;
+        position: fixed !important;
+        height: 100vh !important;
+        top: 0 !important;
         left: 0 !important;
         transform: none !important;
+    }
+
+    main, .main-content, .dashboard-content {
+        margin-left: 260px !important;
+        width: calc(100% - 260px) !important;
+        max-width: calc(100% - 260px) !important;
+        flex: 1 1 0% !important;
     }
 }
 
@@ -202,18 +212,18 @@
     /* ----------------------------------------------------------------------
        C. ADMIN DASHBOARD (/adminF) - BANNER, CARDS & TABLE ACCORDION
        ---------------------------------------------------------------------- */
-    /* সাইডবার ড্রয়ার */
+    /* সাইডবার রেসপন্সিভ */
     aside, .sidebar, .admin-sidebar {
-        position: fixed !important;
+        width: 100% !important;
+        height: auto !important;
+        position: relative !important;
         top: 0 !important;
-        left: -280px !important;
-        width: 260px !important;
-        height: 100vh !important;
-        background: #ffffff !important;
-        z-index: 100000 !important;
-        box-shadow: 4px 0 25px rgba(0,0,0,0.2) !important;
-        transition: left 0.3s ease-in-out !important;
-        padding-top: 60px !important;
+        left: 0 !important;
+        transform: none !important;
+        box-shadow: none !important;
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+        z-index: 10 !important;
     }
 
     aside.active, .sidebar.active, .admin-sidebar.active {
@@ -226,12 +236,13 @@
 
     /* মেইন কন্টেন্ট এলাকা: ফোর্স ১০০% উইডথ ও ব্লক ফ্লো */
     main, .main-content, .dashboard-content {
-        width: 100vw !important;
-        max-width: 100vw !important;
+        width: 100% !important;
+        max-width: 100% !important;
         margin-left: 0 !important;
-        padding: 70px 14px 40px 14px !important;
+        padding: 15px !important;
         box-sizing: border-box !important;
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
         overflow-x: hidden !important;
     }
 
