@@ -55,13 +55,17 @@ public class CatalogController {
 
     @GetMapping("/proDetail/{id}")
     public String showProductDetailScene(@PathVariable("id") Integer id, Model model) {
-        Product existingProduct = catalogueService.getProductById(id);
-        // কাস্টমার যেন ডিলিট করা প্রোডাক্টের লিংকে সরাসরি ঢুকতে না পারে
-        if (existingProduct != null && !existingProduct.isDeleted()) {
-            model.addAttribute("product", existingProduct);
+        try {
+            Product product = catalogueService.getProductById(id);
+            if (product == null || product.isDeleted()) {
+                return "redirect:/adminF";
+            }
+            model.addAttribute("product", product);
             return "product-detail";
+        } catch (Exception e) {
+            log.error("Error loading product detail for id {}: ", id, e);
+            return "redirect:/adminF";
         }
-        return "redirect:/home";
     }
 
     // ==========================================
